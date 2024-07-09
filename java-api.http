@@ -4,15 +4,28 @@ Content-Type: application/json
 
 {
   "destination": "Florianópolis, SC",
-  "starts_at": "2024-06-25T21:51:54.7342",
-  "ends_at": "2024-06-25T21:51:54.7342",
+  "starts_at": "2024-07-15T10:30:00.0000",
+  "ends_at": "2024-07-19T12:00:00.0000",
   "emails_to_invite": ["mayk.brito@rocketseat.com"],
   "owner_name": "Fernanda Kipper",
   "owner_email": "fernanda.kipper@rocketseat.com"
 }
 
 ### tripId
-@tripId = 0bfa1ff5-4cf3-4172-801f-b3a2421b76ea
+@tripId = d83ef780-436e-4e9d-972e-331a544ca8e3
 
 ### Get trip by ID
 GET http://localhost:8080/trips/{{tripId}}
+
+### Update trip by ID
+PUT http://localhost:8080/trips/{{tripId}}
+Content-Type: application/json
+
+{
+  "destination": "Porto Alegre, RS",
+  "starts_at": "2024-07-17T10:30:00.0000",
+  "ends_at": "2024-07-22T12:00:00.0000"
+}
+
+### Confirm trip by ID
+GET http://localhost:8080/trips/{{tripId}}/confirm
