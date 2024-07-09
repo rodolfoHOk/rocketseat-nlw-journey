@@ -8,4 +8,8 @@
 
 ### Bibliotecas adicionais
 
--
+- expo-font
+- expo-google-fonts/inter
+- clsx
+- react-native-svg
+- lucide-react-native
