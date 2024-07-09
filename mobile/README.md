@@ -13,3 +13,8 @@
 - clsx
 - react-native-svg
 - lucide-react-native
+- react-native-calendars
+- expo-blur
+- axios
+- zod
+- react-native-async-storage/async-storage
