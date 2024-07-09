@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ### tripId
-@tripId = 33bd6687-da43-40a0-94fd-62f2faa70dfc
+@tripId = 0bfa1ff5-4cf3-4172-801f-b3a2421b76ea
 
 ### Get trip by ID
 GET http://localhost:8080/trips/{{tripId}}
