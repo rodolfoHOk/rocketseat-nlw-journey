@@ -17,11 +17,11 @@ import { Button } from '@/components/button';
 import { Modal } from '@/components/modal';
 import { Calendar } from '@/components/calendar';
 import { GuestEmail } from '@/components/email';
+import { Loading } from '@/components/loading';
 import { calendarUtils, DatesSelected } from '@/utils/calendarUtils';
 import { validateInput } from '@/utils/validateInput';
 import { tripStorage } from '@/storage/trip';
 import { tripServer } from '@/server/trip-server';
-import { Loading } from '@/components/loading';
 
 enum StepForm {
   TRIP_DETAILS = 1,
@@ -130,8 +130,8 @@ export default function Index() {
       setIsCreatingTrip(true);
       const newTrip = await tripServer.create({
         destination,
-        starts_at: dayjs(selectedDates.startsAt?.dateString).toISOString(),
-        ends_at: dayjs(selectedDates.endsAt?.dateString).toISOString(),
+        starts_at: dayjs(selectedDates.startsAt?.dateString).toString(),
+        ends_at: dayjs(selectedDates.endsAt?.dateString).toString(),
         emails_to_invite: emailsToInvite,
       });
       Alert.alert('Nova viagem', 'Viagem criada com sucesso!', [
