@@ -1,0 +1,18 @@
+### Create Trip
+POST http://localhost:8080/trips
+Content-Type: application/json
+
+{
+  "destination": "Florianópolis, SC",
+  "starts_at": "2024-06-25T21:51:54.7342",
+  "ends_at": "2024-06-25T21:51:54.7342",
+  "emails_to_invite": ["mayk.brito@rocketseat.com"],
+  "owner_name": "Fernanda Kipper",
+  "owner_email": "fernanda.kipper@rocketseat.com"
+}
+
+### tripId
+@tripId = 33bd6687-da43-40a0-94fd-62f2faa70dfc
+
+### Get trip by ID
+GET http://localhost:8080/trips/{{tripId}}
