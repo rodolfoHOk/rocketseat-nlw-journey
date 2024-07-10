@@ -21,6 +21,16 @@ public class ParticipantService {
         this.participantRepository.save(ownerParticipant);
     }
 
+    public List<ParticipantData> getAllParticipantsByTripId(UUID tripId){
+        return this.participantRepository.findByTripId(tripId).stream()
+                .map(participant -> new ParticipantData(
+                        participant.getId(),
+                        participant.getName(),
+                        participant.getEmail(),
+                        participant.getIsConfirmed()))
+                .toList();
+    }
+
     public ParticipantCreateResponse registerParticipantToTrip(String email, Trip trip) {
         Participant participant = new Participant(email, trip);
         participant = this.participantRepository.save(participant);

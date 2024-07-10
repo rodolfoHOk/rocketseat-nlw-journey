@@ -1,6 +1,7 @@
 package br.com.rocketseat.hiokdev.planner_java.trip;
 
 import br.com.rocketseat.hiokdev.planner_java.participant.ParticipantCreateResponse;
+import br.com.rocketseat.hiokdev.planner_java.participant.ParticipantData;
 import br.com.rocketseat.hiokdev.planner_java.participant.ParticipantRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.participant.ParticipantService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -67,6 +69,12 @@ public class TripController {
             return ResponseEntity.ok(rawTrip);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/participants")
+    public ResponseEntity<List<ParticipantData>> getAllParticipants(@PathVariable UUID id){
+        List<ParticipantData> participantList = this.participantService.getAllParticipantsByTripId(id);
+        return ResponseEntity.ok(participantList);
     }
 
     @PostMapping("/{id}/invite")
