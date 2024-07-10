@@ -1,5 +1,8 @@
 package br.com.rocketseat.hiokdev.planner_java.trip;
 
+import br.com.rocketseat.hiokdev.planner_java.activity.ActivityRequestPayload;
+import br.com.rocketseat.hiokdev.planner_java.activity.ActivityResponse;
+import br.com.rocketseat.hiokdev.planner_java.activity.ActivityService;
 import br.com.rocketseat.hiokdev.planner_java.participant.ParticipantCreateResponse;
 import br.com.rocketseat.hiokdev.planner_java.participant.ParticipantData;
 import br.com.rocketseat.hiokdev.planner_java.participant.ParticipantRequestPayload;
@@ -27,8 +30,8 @@ import java.util.UUID;
 public class TripController {
 
     private final TripRepository tripRepository;
-
     private final ParticipantService participantService;
+    private final ActivityService activityService;
 
     @PostMapping
     public ResponseEntity<TripCreateResponse> createTrip(@RequestBody TripRequestPayload payload) {
@@ -87,6 +90,17 @@ public class TripController {
                 this.participantService.triggerConfirmationEmailToParticipant(payload.email());
             }
             return ResponseEntity.ok(participantResponse);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/{id}/activities")
+    public ResponseEntity<ActivityResponse> registerActivity(@PathVariable UUID id, @RequestBody ActivityRequestPayload payload) {
+        Optional<Trip> trip = this.tripRepository.findById(id);
+        if(trip.isPresent()){
+            Trip rawTrip = trip.get();
+            ActivityResponse activityResponse = this.activityService.registerActivity(payload, rawTrip);
+            return ResponseEntity.ok(activityResponse);
         }
         return ResponseEntity.notFound().build();
     }
