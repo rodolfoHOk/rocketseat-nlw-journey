@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ### Trip Id
-@tripId = 3e399e9f-dbf5-4c04-93cc-c65a978fed7c
+@tripId = f31948fb-a1fb-46ee-86d3-f9119f7e727c
 
 ### Get trip by ID
 GET http://localhost:8080/trips/{{tripId}}
@@ -60,3 +60,6 @@ Content-Type: application/json
   "title": "Check-in no hotel",
   "occurs_at": "2024-07-17T12:00:00.000"
 }
+
+### List Activities by trip ID 
+GET http://localhost:8080/trips/{{tripId}}/activities

@@ -1,5 +1,6 @@
 package br.com.rocketseat.hiokdev.planner_java.trip;
 
+import br.com.rocketseat.hiokdev.planner_java.activity.ActivityData;
 import br.com.rocketseat.hiokdev.planner_java.activity.ActivityRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.activity.ActivityResponse;
 import br.com.rocketseat.hiokdev.planner_java.activity.ActivityService;
@@ -103,6 +104,12 @@ public class TripController {
             return ResponseEntity.ok(activityResponse);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/activities")
+    public ResponseEntity<List<ActivityData>> getAllActivities(@PathVariable UUID id){
+        List<ActivityData> activityDataList = this.activityService.getAllActivitiesByTripId(id);
+        return ResponseEntity.ok(activityDataList);
     }
 
 }
