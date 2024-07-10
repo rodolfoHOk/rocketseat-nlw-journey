@@ -9,8 +9,12 @@
 
 ### Bibliotecas adicionais
 
+-
+
+### Bibliotecas cli
+
 - github.com/discord-gophers/goapi-gen
-- github.com/go-chi/chi/v5
+- github.com/jackc/tern/v2@latest
 
 ## Guia
 
