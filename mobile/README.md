@@ -19,6 +19,30 @@
 - zod
 - react-native-async-storage/async-storage
 
+## Galeria de imagens
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-01.png" alt="NLW Journey Mobile 01" height="400"/>
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-02.png" alt="NLW Journey Mobile 02" height="400"/>
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-03.png" alt="NLW Journey Mobile 03" height="400"/>
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-04.png" alt="NLW Journey Mobile 04" height="400"/>
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-05.png" alt="NLW Journey Mobile 05" height="400"/>
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-06.png" alt="NLW Journey Mobile 06" height="400"/>
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-07.png" alt="NLW Journey Mobile 07" height="400"/>
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-08.png" alt="NLW Journey Mobile 08" height="400"/>
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-09.png" alt="NLW Journey Mobile 09" height="400"/>
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-10.png" alt="NLW Journey Mobile 10" height="400"/>
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-11.png" alt="NLW Journey Mobile 11" height="400"/>
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-12.png" alt="NLW Journey Mobile 12" height="400"/>
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-13.png" alt="NLW Journey Mobile 13" height="400"/>
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-14.png" alt="NLW Journey Mobile 14" height="400"/>
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-15.png" alt="NLW Journey Mobile 15" height="400"/>
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-16.png" alt="NLW Journey Mobile 16" height="400"/>
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-mobile-17.png" alt="NLW Journey Mobile 17" height="400"/>
+
 ## Rodar
 
 ### Requisitos
@@ -49,7 +73,7 @@ A. Por terminal
 
 - npx expo prebuild
 - npx expo run:android
-- npx uri-scheme open "planner://trip/c305eea0-1388-409a-8f15-debea3e21d2f?participant=2f4e0c72-cf4e-45cb-86ba-d0954bbcb351" --android
+- npx uri-scheme open "planner://trip/46d156c0-c966-4b8f-89ac-a41b46ac7d37?participant=f057f9dd-d775-4b22-8b60-bc97a69df1b8" --android
 
 B. Por simulador de e-mail
 
