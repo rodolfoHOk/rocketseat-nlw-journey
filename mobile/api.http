@@ -1,0 +1,7 @@
+## Test invite participant
+POST http://localhost:3333/trips/c305eea0-1388-409a-8f15-debea3e21d2f/invites
+Content-Type: application/json
+
+{
+  "email": "test.app.link@email.com"
+}
