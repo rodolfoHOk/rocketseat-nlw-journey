@@ -41,7 +41,8 @@
 
 ### sqlc
 
--
+- sqlc generate -f ./internal/pgstore/sqlc.yaml
+- go mod tidy
 
 ## Links
 
