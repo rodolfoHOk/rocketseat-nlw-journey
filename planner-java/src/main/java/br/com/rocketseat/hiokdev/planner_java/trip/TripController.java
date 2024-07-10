@@ -4,6 +4,7 @@ import br.com.rocketseat.hiokdev.planner_java.activity.ActivityData;
 import br.com.rocketseat.hiokdev.planner_java.activity.ActivityRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.activity.ActivityResponse;
 import br.com.rocketseat.hiokdev.planner_java.activity.ActivityService;
+import br.com.rocketseat.hiokdev.planner_java.link.LinkData;
 import br.com.rocketseat.hiokdev.planner_java.link.LinkRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.link.LinkResponse;
 import br.com.rocketseat.hiokdev.planner_java.link.LinkService;
@@ -133,6 +134,12 @@ public class TripController {
             return ResponseEntity.ok(linkResponse);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/links")
+    public ResponseEntity<List<LinkData>> getAllLinks(@PathVariable UUID id){
+        List<LinkData> linkDataList = this.linkService.getAllLinksByTripId(id);
+        return ResponseEntity.ok(linkDataList);
     }
 
 }
