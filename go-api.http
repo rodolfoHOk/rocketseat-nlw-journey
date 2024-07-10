@@ -1,0 +1,53 @@
+### Create Trip
+POST http://localhost:8080/trips
+Content-Type: application/json
+
+{
+  "destination": "Florianópolis, SC",
+  "starts_at": "2024-07-15T10:30:00Z",
+  "ends_at": "2024-07-19T12:00:00Z",
+  "emails_to_invite": ["mayk.brito@rocketseat.com"],
+  "owner_name": "Fernanda Kipper",
+  "owner_email": "fernanda.kipper@rocketseat.com"
+}
+
+### Trip Id
+@tripId = d04df196-bd2c-4100-9ec7-70f119b04eb3
+
+### Get trip by ID
+GET http://localhost:8080/trips/{{tripId}}
+
+### Update trip by ID
+PUT http://localhost:8080/trips/{{tripId}}
+Content-Type: application/json
+
+{
+  "destination": "Porto Alegre, RS",
+  "starts_at": "2024-07-17T10:30:00Z",
+  "ends_at": "2024-07-22T12:00:00Z"
+}
+
+### Confirm trip by ID
+GET http://localhost:8080/trips/{{tripId}}/confirm
+
+### Get participants by trip ID
+GET http://localhost:8080/trips/{{tripId}}/participants
+
+### Invite participant
+POST http://localhost:8080/trips/{{tripId}}/invite
+Content-Type: application/json
+
+{
+  "email": "diego.fernandes@rocketseat.com"
+}
+
+### Participant ID
+@participantId = 9d7031cb-a842-4a8c-9fd7-f94b1e7aa94b
+
+### Confirm participant by ID
+POST http://localhost:8080/participants/{{participantId}}/confirm
+Content-Type: application/json
+
+{
+  "name": "Mayk Brito"
+}
