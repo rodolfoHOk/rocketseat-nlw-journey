@@ -30,7 +30,7 @@ public class TripController {
     public ResponseEntity<TripCreateResponse> createTrip(@RequestBody TripRequestPayload payload) {
         var newTrip = new Trip(payload);
         newTrip = this.tripRepository.save(newTrip);
-        this.participantService.registerParticipantsToTrip(payload.emails_to_invite(), newTrip.getId());
+        this.participantService.registerParticipantsToTrip(payload.emails_to_invite(), newTrip);
         return ResponseEntity.status(HttpStatus.CREATED).body(new TripCreateResponse(newTrip.getId()));
     }
 
@@ -48,7 +48,7 @@ public class TripController {
             rawTrip.setDestination(payload.destination());
             rawTrip.setStartsAt(LocalDateTime.parse(payload.starts_at(), DateTimeFormatter.ISO_DATE_TIME));
             rawTrip.setEndsAt(LocalDateTime.parse(payload.ends_at(), DateTimeFormatter.ISO_DATE_TIME));
-            this.tripRepository.save(rawTrip);
+            rawTrip = this.tripRepository.save(rawTrip);
             return ResponseEntity.ok(rawTrip);
         }
         return ResponseEntity.notFound().build();
@@ -61,7 +61,7 @@ public class TripController {
             Trip rawTrip = trip.get();
             rawTrip.setIsConfirmed(true);
             this.participantService.triggerConfirmationEmailToParticipants(id);
-            this.tripRepository.save(rawTrip);
+            rawTrip = this.tripRepository.save(rawTrip);
             return ResponseEntity.ok(rawTrip);
         }
         return ResponseEntity.notFound().build();

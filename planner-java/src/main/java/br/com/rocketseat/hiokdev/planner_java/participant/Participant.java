@@ -41,4 +41,18 @@ public class Participant {
     @JoinColumn(name = "trip_id", nullable = false)
     private Trip trip;
 
+    public Participant(String email, Trip trip){
+        this.name = "";
+        this.email = email;
+        this.isConfirmed = false;
+        this.trip = trip;
+    }
+
+    public Participant(Trip trip){
+        this.name = trip.getOwnerName();
+        this.email = trip.getOwnerEmail();
+        this.isConfirmed = true;
+        this.trip = trip;
+    }
+
 }

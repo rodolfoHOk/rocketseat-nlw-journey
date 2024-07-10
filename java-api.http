@@ -11,8 +11,8 @@ Content-Type: application/json
   "owner_email": "fernanda.kipper@rocketseat.com"
 }
 
-### tripId
-@tripId = ff1ea6e8-1782-4fd3-b722-d134f9d23aa4
+### Trip Id
+@tripId = bb168b66-b519-40d0-a76c-1d3e8e62733e
 
 ### Get trip by ID
 GET http://localhost:8080/trips/{{tripId}}
@@ -29,3 +29,14 @@ Content-Type: application/json
 
 ### Confirm trip by ID
 GET http://localhost:8080/trips/{{tripId}}/confirm
+
+### Participant ID
+@participantId = f05afb03-9d3d-4fe2-be3c-624400a024e9
+
+### Confirm participant by ID
+POST http://localhost:8080/participants/{{participantId}}/confirm
+Content-Type: application/json
+
+{
+  "name": "Mayk Brito"
+}
