@@ -4,6 +4,9 @@ import br.com.rocketseat.hiokdev.planner_java.activity.ActivityData;
 import br.com.rocketseat.hiokdev.planner_java.activity.ActivityRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.activity.ActivityResponse;
 import br.com.rocketseat.hiokdev.planner_java.activity.ActivityService;
+import br.com.rocketseat.hiokdev.planner_java.link.LinkRequestPayload;
+import br.com.rocketseat.hiokdev.planner_java.link.LinkResponse;
+import br.com.rocketseat.hiokdev.planner_java.link.LinkService;
 import br.com.rocketseat.hiokdev.planner_java.participant.ParticipantCreateResponse;
 import br.com.rocketseat.hiokdev.planner_java.participant.ParticipantData;
 import br.com.rocketseat.hiokdev.planner_java.participant.ParticipantRequestPayload;
@@ -33,6 +36,9 @@ public class TripController {
     private final TripRepository tripRepository;
     private final ParticipantService participantService;
     private final ActivityService activityService;
+    private final LinkService linkService;
+
+    // Trips endpoints
 
     @PostMapping
     public ResponseEntity<TripCreateResponse> createTrip(@RequestBody TripRequestPayload payload) {
@@ -75,6 +81,8 @@ public class TripController {
         return ResponseEntity.notFound().build();
     }
 
+    // Trip participants endpoints
+
     @GetMapping("/{id}/participants")
     public ResponseEntity<List<ParticipantData>> getAllParticipants(@PathVariable UUID id){
         List<ParticipantData> participantList = this.participantService.getAllParticipantsByTripId(id);
@@ -95,6 +103,8 @@ public class TripController {
         return ResponseEntity.notFound().build();
     }
 
+    // Trip participants activities
+
     @PostMapping("/{id}/activities")
     public ResponseEntity<ActivityResponse> registerActivity(@PathVariable UUID id, @RequestBody ActivityRequestPayload payload) {
         Optional<Trip> trip = this.tripRepository.findById(id);
@@ -110,6 +120,19 @@ public class TripController {
     public ResponseEntity<List<ActivityData>> getAllActivities(@PathVariable UUID id){
         List<ActivityData> activityDataList = this.activityService.getAllActivitiesByTripId(id);
         return ResponseEntity.ok(activityDataList);
+    }
+
+    // Trip links endpoints
+
+    @PostMapping("/{id}/links")
+    public ResponseEntity<LinkResponse> registerLink(@PathVariable UUID id, @RequestBody LinkRequestPayload payload) {
+        Optional<Trip> trip = this.tripRepository.findById(id);
+        if(trip.isPresent()){
+            Trip rawTrip = trip.get();
+            LinkResponse linkResponse = this.linkService.registerLink(payload, rawTrip);
+            return ResponseEntity.ok(linkResponse);
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }
