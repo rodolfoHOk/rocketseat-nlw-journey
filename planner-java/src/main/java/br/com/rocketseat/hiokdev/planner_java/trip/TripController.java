@@ -1,5 +1,7 @@
 package br.com.rocketseat.hiokdev.planner_java.trip;
 
+import br.com.rocketseat.hiokdev.planner_java.participant.ParticipantCreateResponse;
+import br.com.rocketseat.hiokdev.planner_java.participant.ParticipantRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.participant.ParticipantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -63,6 +65,20 @@ public class TripController {
             this.participantService.triggerConfirmationEmailToParticipants(id);
             rawTrip = this.tripRepository.save(rawTrip);
             return ResponseEntity.ok(rawTrip);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/{id}/invite")
+    public ResponseEntity<ParticipantCreateResponse> inviteParticipant(@PathVariable UUID id, @RequestBody ParticipantRequestPayload payload) {
+        Optional<Trip> trip = this.tripRepository.findById(id);
+        if(trip.isPresent()){
+            Trip rawTrip = trip.get();
+            ParticipantCreateResponse participantResponse = this.participantService.registerParticipantToTrip(payload.email(), rawTrip);
+            if(rawTrip.getIsConfirmed()) {
+                this.participantService.triggerConfirmationEmailToParticipant(payload.email());
+            }
+            return ResponseEntity.ok(participantResponse);
         }
         return ResponseEntity.notFound().build();
     }

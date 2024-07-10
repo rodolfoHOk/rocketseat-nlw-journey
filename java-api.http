@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ### Trip Id
-@tripId = bb168b66-b519-40d0-a76c-1d3e8e62733e
+@tripId = 2e366f2f-0067-4507-a7b6-9e9a41d48b3f
 
 ### Get trip by ID
 GET http://localhost:8080/trips/{{tripId}}
@@ -39,4 +39,12 @@ Content-Type: application/json
 
 {
   "name": "Mayk Brito"
+}
+
+### Invite participant
+POST http://localhost:8080/trips/{{tripId}}/invite
+Content-Type: application/json
+
+{
+  "email": "diego.fernandes@rocketseat.com"
 }
