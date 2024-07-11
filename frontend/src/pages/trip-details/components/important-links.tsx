@@ -1,4 +1,5 @@
 import { Link2, Plus } from 'lucide-react';
+import { Button } from '../../../components/button';
 
 export function ImportantLinks() {
   return (
@@ -41,11 +42,11 @@ export function ImportantLinks() {
         </div>
       </div>
 
-      <button className="w-full h-10 bg-zinc-800 text-zinc-200 rounded-lg font-medium flex items-center justify-center gap-2 hover:bg-zinc-700 transition-colors duration-200">
+      <Button variant="secondary" size="full">
         <Plus className="size-5" />
 
         <span>Cadastrar novo link</span>
-      </button>
+      </Button>
     </div>
   );
 }

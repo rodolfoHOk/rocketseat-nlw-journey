@@ -1,5 +1,7 @@
 import { FormEvent } from 'react';
-import { Mail, User, X } from 'lucide-react';
+import { Mail, User } from 'lucide-react';
+import { CloseButton } from '../../../../components/close-button';
+import { Button } from '../../../../components/button';
 
 interface ConfirmTripModalProps {
   closeConfirmTripModal: () => void;
@@ -19,12 +21,7 @@ export function ConfirmTripModal({
               Confirmar criação de viagem
             </h2>
 
-            <button>
-              <X
-                className="size-5 text-zinc-400 hover:text-zinc-300 transition-colors duration-200"
-                onClick={closeConfirmTripModal}
-              />
-            </button>
+            <CloseButton handleClose={closeConfirmTripModal} />
           </div>
 
           <p className="text-sm text-zinc-400">
@@ -63,12 +60,9 @@ export function ConfirmTripModal({
             />
           </div>
 
-          <button
-            type="submit"
-            className="w-full h-10 bg-lime-300 text-lime-950 rounded-lg font-medium flex items-center justify-center gap-2 hover:bg-lime-400 transition-colors duration-200"
-          >
+          <Button type="submit" variant="primary" size="full">
             <span>Confirmar criação da viagem</span>
-          </button>
+          </Button>
         </form>
       </div>
     </div>
