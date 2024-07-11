@@ -68,3 +68,4 @@
 - [Github: pgx](https://github.com/jackc/pgx)
 - [Github: uuid](https://github.com/google/uuid)
 - [Github: tern](https://github.com/jackc/tern)
+- [Github: validator](https://github.com/go-playground/validator)

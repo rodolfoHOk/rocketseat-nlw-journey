@@ -2,9 +2,11 @@ package api
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"net/http"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -16,6 +18,7 @@ import (
 type store interface {
 	ConfirmParticipant(context.Context, uuid.UUID) error
 	// CreateActivity(context.Context, spec.CreateActivityRequest) (uuid.UUID, error)
+	CreateTrip(context.Context, *pgxpool.Pool, spec.CreateTripRequest) (uuid.UUID, error)
 	// CreateTripLink(context.Context, spec.CreateTripRequest) (uuid.UUID, error)
 	GetParticipant(context.Context, uuid.UUID) (pgstore.GetParticipantRow, error)
 	// GetParticipants(context.Context, uuid.UUID) ([]pgstore.Participant, error)
@@ -27,14 +30,19 @@ type store interface {
 }
 
 type API struct {
-	store  store
-	logger *zap.Logger
+	store     store
+	logger    *zap.Logger
+	validator *validator.Validate
+	pool      *pgxpool.Pool
 }
 
 func NewApi(pool *pgxpool.Pool, logger *zap.Logger) API {
+	validator := validator.New(validator.WithRequiredStructEnabled())
 	return API{
 		pgstore.New(pool),
 		logger,
+		validator,
+		pool,
 	}
 }
 
@@ -69,7 +77,23 @@ func (api API) PatchParticipantsParticipantIDConfirm(w http.ResponseWriter, r *h
 // Create a new trip
 // (POST /trips)
 func (api API) PostTrips(w http.ResponseWriter, r *http.Request) *spec.Response {
-	panic("not implemented") // TODO: Implement
+	var body spec.CreateTripRequest
+	err := json.NewDecoder(r.Body).Decode(&body)
+	if err != nil {
+		spec.PostTripsJSON400Response(spec.Error{Message: "invalid json: " + err.Error()})
+	}
+
+	if err := api.validator.Struct(body); err != nil {
+		return spec.PostTripsJSON400Response(spec.Error{Message: "invalid input: " + err.Error()})
+	}
+
+	tripID, err := api.store.CreateTrip(r.Context(), api.pool, body)
+	if err != nil {
+		println(err.Error())
+		return spec.PostTripsJSON400Response(spec.Error{Message: "failed to create trip, try again"})
+	}
+
+	return spec.PostTripsJSON201Response(spec.CreateTripResponse{TripID: tripID.String()})
 }
 
 // Get a trip details.

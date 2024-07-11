@@ -2,7 +2,7 @@
 
 CREATE TABLE IF NOT EXISTS participants (
   "id" uuid PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
-  "name" VARCHAR(255) NOT NULL,
+  "name" VARCHAR(255) NOT NULL DEFAULT '',
   "email" VARCHAR(255) NOT NULL,
   "is_confirmed" BOOLEAN NOT NULL DEFAULT FALSE,
   "trip_id" uuid NOT NULL,

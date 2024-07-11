@@ -45,7 +45,7 @@ Content-Type: application/json
 @participantId = 9d7031cb-a842-4a8c-9fd7-f94b1e7aa94b
 
 ### Confirm participant by ID
-POST http://localhost:8080/participants/{{participantId}}/confirm
+PATCH http://localhost:8080/participants/{{participantId}}/confirm
 Content-Type: application/json
 
 {
