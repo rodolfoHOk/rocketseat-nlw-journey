@@ -2,6 +2,7 @@ import { FormEvent } from 'react';
 import { Mail, User } from 'lucide-react';
 import { CloseButton } from '../../../../components/close-button';
 import { Button } from '../../../../components/button';
+import { FormField } from '../../../../components/form-field';
 
 interface ConfirmTripModalProps {
   closeConfirmTripModal: () => void;
@@ -38,27 +39,25 @@ export function ConfirmTripModal({
         </div>
 
         <form onSubmit={createTrip} className="space-y-3">
-          <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2 hover:opacity-80 transition-opacity duration-200">
+          <FormField>
             <User className="text-zinc-400 size-5" />
 
-            <input
+            <FormField.Input
               type="text"
               name="name"
               placeholder="Seu nome completo"
-              className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
             />
-          </div>
+          </FormField>
 
-          <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2 hover:opacity-80 transition-opacity duration-200">
+          <FormField>
             <Mail className="text-zinc-400 size-5" />
 
-            <input
+            <FormField.Input
               type="email"
               name="email"
               placeholder="Seu e-mail pessoal"
-              className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
             />
-          </div>
+          </FormField>
 
           <Button type="submit" variant="primary" size="full">
             <span>Confirmar criação da viagem</span>

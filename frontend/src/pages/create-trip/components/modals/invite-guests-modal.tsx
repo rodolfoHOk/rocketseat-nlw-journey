@@ -2,6 +2,7 @@ import { FormEvent } from 'react';
 import { AtSign, Plus, X } from 'lucide-react';
 import { CloseButton } from '../../../../components/close-button';
 import { Button } from '../../../../components/button';
+import { FormField } from '../../../../components/form-field';
 
 interface InviteGuestsModalProps {
   emailsToInvite: string[];
@@ -58,16 +59,15 @@ export function InviteGuestsModal({
           onSubmit={addNewEmailToInvites}
           className="p-2.5 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2"
         >
-          <div className="px-2 flex items-center flex-1 gap-2 hover:opacity-80 transition-opacity duration-200">
+          <FormField border="borderless" width="flex">
             <AtSign className="text-zinc-400 size-5" />
 
-            <input
+            <FormField.Input
               type="email"
               name="email"
               placeholder="Digite o email do convidado"
-              className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
             />
-          </div>
+          </FormField>
 
           <Button type="submit" variant="primary">
             <span>Convidar</span>

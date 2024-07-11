@@ -1,6 +1,7 @@
 import { Calendar, Tag } from 'lucide-react';
 import { Button } from '../../../../components/button';
 import { CloseButton } from '../../../../components/close-button';
+import { FormField } from '../../../../components/form-field';
 
 interface CreateActivityModalProps {
   closeCreateActivityModal: () => void;
@@ -25,26 +26,21 @@ export function CreateActivityModal({
         </div>
 
         <form className="space-y-3">
-          <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
+          <FormField>
             <Tag className="text-zinc-400 size-5" />
 
-            <input
-              name="title"
-              placeholder="Qual a atividade?"
-              className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
-            />
-          </div>
+            <FormField.Input name="title" placeholder="Qual a atividade?" />
+          </FormField>
 
-          <div className="h-14 flex-1 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
+          <FormField>
             <Calendar className="text-zinc-400 size-5" />
 
-            <input
+            <FormField.Input
               type="datetime-local"
               name="occurs_at"
               placeholder="Data e horário da atividade"
-              className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
             />
-          </div>
+          </FormField>
 
           <Button variant="primary" size="full" type="submit">
             <span>Salvar atividade</span>
