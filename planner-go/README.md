@@ -6,13 +6,16 @@
 - Docker
 - PostgreSQL
 - MailPit
+- Rest
 
 ### Bibliotecas adicionais
 
 - github.com/jackc/pgx/v5
+- github.com/go-chi/chi/middleware
 - github.com/go-chi/chi/v5
 - github.com/google/uuid
 - go.uber.org/zap
+- github.com/go-playground/validator/v10
 - github.com/phenpessoa/gutils/netutils/httputils
 - github.com/wneessen/go-mail
 
@@ -20,13 +23,13 @@
 
 - github.com/discord-gophers/goapi-gen
 - github.com/jackc/tern/v2@latest
+- github.com/sqlc-dev/sqlc
 
 ## Guia
 
-### go lang
+### go init
 
 - go mod init github.com/rodolfoHOk/rocketseat-nlw-journey/planner-go
-- go run ./cmd/journey/journey.go
 
 ### goapi-gen
 
@@ -55,6 +58,10 @@
 
 - criar gen.go
 - go generate ./...
+
+### go run
+
+- go run ./cmd/journey/journey.go
 
 ### vscode with go extension
 

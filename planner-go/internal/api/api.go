@@ -21,16 +21,16 @@ type mailer interface {
 
 type store interface {
 	ConfirmParticipant(context.Context, uuid.UUID) error
-	// CreateActivity(context.Context, spec.CreateActivityRequest) (uuid.UUID, error)
+	// CreateActivity(context.Context, pgstore.CreateActivityParams) (uuid.UUID, error)
 	CreateTrip(context.Context, *pgxpool.Pool, spec.CreateTripRequest) (uuid.UUID, error)
-	// CreateTripLink(context.Context, spec.CreateTripRequest) (uuid.UUID, error)
+	// CreateTripLink(context.Context, pgstore.CreateTripLinkParams) (uuid.UUID, error)
 	GetParticipant(context.Context, uuid.UUID) (pgstore.GetParticipantRow, error)
-	// GetParticipants(context.Context, uuid.UUID) ([]pgstore.Participant, error)
-	// GetTrip(context.Context, uuid.UUID) (pgstore.Trip, error)
-	// GetTripActivities(context.Context, uuid.UUID) ([]pgstore.Activity, error)
-	// GetTripLinks(context.Context, uuid.UUID) ([]pgstore.Link, error)
-	// InsertTrip(context.Context, spec.CreateLinkRequest) (uuid.UUID, error)
-	// UpdateTrip(context.Context, spec.UpdateTripRequest) error
+	// GetParticipants(context.Context, uuid.UUID) ([]pgstore.GetParticipantsRow, error)
+	// GetTrip(context.Context, uuid.UUID) (pgstore.GetTripRow, error)
+	// GetTripActivities(context.Context, uuid.UUID) ([]pgstore.GetTripActivitiesRow, error)
+	// GetTripLinks(context.Context, uuid.UUID) ([]pgstore.GetTripLinksRow, error)
+	// InsertTrip(context.Context, pgstore.InsertTripParams) (uuid.UUID, error)
+	// UpdateTrip(context.Context, pgstore.UpdateTripParams) error
 }
 
 type API struct {
