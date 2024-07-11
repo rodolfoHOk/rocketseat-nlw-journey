@@ -5,3 +5,4 @@
 - Typescript / Javascript
 - Vite.js
 - React.js
+- Tailwind CSS
