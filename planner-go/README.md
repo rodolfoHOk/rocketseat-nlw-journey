@@ -9,7 +9,11 @@
 
 ### Bibliotecas adicionais
 
--
+- github.com/jackc/pgx/v5
+- github.com/go-chi/chi/v5
+- github.com/google/uuid
+- go.uber.org/zap
+- github.com/phenpessoa/gutils/netutils/httputils
 
 ### Bibliotecas cli
 
@@ -18,9 +22,10 @@
 
 ## Guia
 
-### Iniciar projeto Go
+### go lang
 
 - go mod init github.com/rodolfoHOk/rocketseat-nlw-journey/planner-go
+- go run ./cmd/journey/journey.go
 
 ### goapi-gen
 
@@ -41,8 +46,18 @@
 
 ### sqlc
 
+- criar sqlc.yaml
 - sqlc generate -f ./internal/pgstore/sqlc.yaml
 - go mod tidy
+
+### go gen
+
+- criar gen.go
+- go generate ./...
+
+### vscode with go extension
+
+- ctrl + shift + p -> Go: generate interface stubs -> api API spec.ServerInterface
 
 ## Links
 
