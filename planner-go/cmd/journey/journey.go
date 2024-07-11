@@ -16,6 +16,7 @@ import (
 	"github.com/phenpessoa/gutils/netutils/httputils"
 	"github.com/rodolfoHOk/rocketseat.nlw-journey/planner-go/internal/api"
 	"github.com/rodolfoHOk/rocketseat.nlw-journey/planner-go/internal/api/spec"
+	"github.com/rodolfoHOk/rocketseat.nlw-journey/planner-go/internal/mail/mailpit"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -61,6 +62,7 @@ func run(ctx context.Context) error {
 	si := api.NewApi(
 		pool,
 		logger,
+		mailpit.NewMailPit(pool),
 	)
 
 	r := chi.NewMux()

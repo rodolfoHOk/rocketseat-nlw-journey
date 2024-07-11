@@ -14,6 +14,7 @@
 - github.com/google/uuid
 - go.uber.org/zap
 - github.com/phenpessoa/gutils/netutils/httputils
+- github.com/wneessen/go-mail
 
 ### Bibliotecas cli
 
@@ -69,3 +70,4 @@
 - [Github: uuid](https://github.com/google/uuid)
 - [Github: tern](https://github.com/jackc/tern)
 - [Github: validator](https://github.com/go-playground/validator)
+- [Github: go-mail](https://github.com/wneessen/go-mail)
