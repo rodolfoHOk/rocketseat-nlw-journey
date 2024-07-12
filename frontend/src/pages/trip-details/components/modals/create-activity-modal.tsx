@@ -1,7 +1,10 @@
+import { FormEvent } from 'react';
+import { useParams } from 'react-router-dom';
 import { Calendar, Tag } from 'lucide-react';
 import { Modal } from '../../../../components/modal';
 import { FormField } from '../../../../components/form-field';
 import { Button } from '../../../../components/button';
+import { api } from '../../../../lib/axios';
 
 interface CreateActivityModalProps {
   closeCreateActivityModal: () => void;
@@ -10,6 +13,20 @@ interface CreateActivityModalProps {
 export function CreateActivityModal({
   closeCreateActivityModal,
 }: CreateActivityModalProps) {
+  const { tripId } = useParams();
+
+  async function createActivity(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const title = data.get('title')?.toString();
+    const occurs_at = data.get('occurs_at')?.toString();
+    await api.post(`/trips/${tripId}/activities`, {
+      title,
+      occurs_at,
+    });
+    window.document.location.reload();
+  }
+
   return (
     <Modal handleClose={closeCreateActivityModal}>
       <Modal.Header>
@@ -21,7 +38,7 @@ export function CreateActivityModal({
       </Modal.Header>
 
       <Modal.Content>
-        <form className="space-y-3">
+        <form onSubmit={createActivity} className="space-y-3">
           <FormField>
             <Tag className="text-zinc-400 size-5" />
 
