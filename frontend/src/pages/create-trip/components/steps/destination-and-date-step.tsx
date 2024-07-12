@@ -4,8 +4,8 @@ import { DateRange } from 'react-day-picker';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { FormField } from '../../../../components/form-field';
+import { RangeDatePickerModal } from '../../../../components/range-date-picker-modal';
 import { Button } from '../../../../components/button';
-import { RangeDatePickerModal } from '../modals/range-date-picker-modal';
 
 interface DestinationAndDateStepProps {
   isGuestsInputOpen: boolean;

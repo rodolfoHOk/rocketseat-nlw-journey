@@ -1,6 +1,6 @@
 import { DateRange, DayPicker } from 'react-day-picker';
 import { ptBR } from 'date-fns/locale';
-import { Modal } from '../../../../components/modal';
+import { Modal } from './modal';
 
 interface RangeDatePickerModalProps {
   tripStartAndEndDates: DateRange | undefined;

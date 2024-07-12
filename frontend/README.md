@@ -29,6 +29,7 @@
 - adicionado NewInviteModal (novo recurso)
 - customização do DayPicker: ptBR, cores, desabilitar data passadas (melhoria)
 - customização do input datetime-local, desabilitar datas fora da viagem (melhoria)
+- adicionado UpdateTripModal (novo recurso)
 -
 
 ## Links

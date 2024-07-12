@@ -31,10 +31,10 @@ export function CreateLinkModal({
   return (
     <Modal handleClose={closeCreateLinkModal}>
       <Modal.Header>
-        <Modal.Title>Cadastrar atividade</Modal.Title>
+        <Modal.Title>Cadastrar link</Modal.Title>
 
         <Modal.SubTitle>
-          Todos convidados podem visualizar as atividades.
+          Todos convidados podem visualizar os links.
         </Modal.SubTitle>
       </Modal.Header>
 

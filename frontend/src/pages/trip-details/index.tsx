@@ -9,10 +9,12 @@ import { ManagerGuestsModal } from './components/modals/manager-guests-modal';
 import { ConfirmPresenceModal } from './components/modals/confirm-presence-modal';
 import { useSearchParams } from 'react-router-dom';
 import { NewInviteModal } from './components/modals/new-invite-modal';
+import { UpdateTripModal } from './components/modals/update-trip-modal';
 
 export function TripDetailsPage() {
   const [urlParams, _] = useSearchParams();
 
+  const [isUpdateTripModalOpen, setIsUpdateTripModalOpen] = useState(false);
   const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] =
     useState(false);
   const [isCreateLinkModalOpen, setIsCreateLinkModalOpen] = useState(false);
@@ -21,6 +23,15 @@ export function TripDetailsPage() {
   const [isConfirmPresenceModalOpen, setIsConfirmPresenceModalOpen] =
     useState(false);
   const [isNewInviteModalOpen, setIsNewInviteModalOpen] = useState(false);
+
+  function openUpdateTripModal() {
+    closeManagerGuestsModal();
+    setIsUpdateTripModalOpen(true);
+  }
+
+  function closeUpdateTripModal() {
+    setIsUpdateTripModalOpen(false);
+  }
 
   function openCreateActivityModal() {
     setIsCreateActivityModalOpen(true);
@@ -72,7 +83,7 @@ export function TripDetailsPage() {
 
   return (
     <div className="max-w-6xl px-6 py-10 mx-auto space-y-8">
-      <DestinationAndDateHeader />
+      <DestinationAndDateHeader openUpdateTripModal={openUpdateTripModal} />
 
       <main className="flex gap-16 px-4">
         <Activities openCreateActivityModal={openCreateActivityModal} />
@@ -85,6 +96,10 @@ export function TripDetailsPage() {
           <Guests openManagerGuestsModal={openManagerGuestsModal} />
         </div>
       </main>
+
+      {isUpdateTripModalOpen && (
+        <UpdateTripModal closeUpdateTripModal={closeUpdateTripModal} />
+      )}
 
       {isCreateActivityModalOpen && (
         <CreateActivityModal
