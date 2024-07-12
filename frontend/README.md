@@ -25,6 +25,8 @@
 - busca de links da viagem da API (novo recurso)
 - adicionado CreateLinkModal (novo recurso)
 - adicionado ManagerGuestsModal (novo recurso)
+- adicionado ConfirmPresenceModal (novo recurso)
+- adicionado NewInviteModal (novo recurso)
 -
 
 ## Links

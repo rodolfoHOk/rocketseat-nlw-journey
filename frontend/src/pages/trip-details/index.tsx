@@ -8,9 +8,10 @@ import { CreateLinkModal } from './components/modals/create-link-modal';
 import { ManagerGuestsModal } from './components/modals/manager-guests-modal';
 import { ConfirmPresenceModal } from './components/modals/confirm-presence-modal';
 import { useSearchParams } from 'react-router-dom';
+import { NewInviteModal } from './components/modals/new-invite-modal';
 
 export function TripDetailsPage() {
-  const [urlParams, _] = useSearchParams({ participantId: '' });
+  const [urlParams, _] = useSearchParams();
 
   const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] =
     useState(false);
@@ -19,6 +20,7 @@ export function TripDetailsPage() {
     useState(false);
   const [isConfirmPresenceModalOpen, setIsConfirmPresenceModalOpen] =
     useState(false);
+  const [isNewInviteModalOpen, setIsNewInviteModalOpen] = useState(false);
 
   function openCreateActivityModal() {
     setIsCreateActivityModalOpen(true);
@@ -53,8 +55,17 @@ export function TripDetailsPage() {
     setIsConfirmPresenceModalOpen(false);
   }
 
+  function openNewInviteModal() {
+    closeManagerGuestsModal();
+    setIsNewInviteModalOpen(true);
+  }
+
+  function closeNewInviteModal() {
+    setIsNewInviteModalOpen(false);
+  }
+
   useEffect(() => {
-    if (urlParams.get('participantId')) {
+    if (urlParams.get('participant')) {
       openConfirmPresenceModal();
     }
   }, []);
@@ -89,7 +100,7 @@ export function TripDetailsPage() {
         <ManagerGuestsModal
           closeManagerGuestsModal={closeManagerGuestsModal}
           openConfirmPresenceModal={openConfirmPresenceModal}
-          openNewInviteModal={() => console.log('todo: open new invite modal')}
+          openNewInviteModal={openNewInviteModal}
         />
       )}
 
@@ -97,6 +108,10 @@ export function TripDetailsPage() {
         <ConfirmPresenceModal
           closeConfirmPresenceModal={closeConfirmPresenceModal}
         />
+      )}
+
+      {isNewInviteModalOpen && (
+        <NewInviteModal closeNewInviteModal={closeNewInviteModal} />
       )}
     </div>
   );

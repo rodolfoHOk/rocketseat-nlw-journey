@@ -24,7 +24,7 @@ export function ConfirmPresenceModal({
   const [trip, setTrip] = useState<Trip | undefined>();
   const [participants, setParticipants] = useState<Participant[]>([]);
 
-  const participantId = searchParams.get('participantId');
+  const participantId = searchParams.get('participant');
 
   async function confirmPresence(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -44,7 +44,7 @@ export function ConfirmPresenceModal({
       email,
     });
     if (participantId) {
-      searchParams.delete('participantId');
+      searchParams.delete('participant');
       setSearchParams(searchParams);
     }
     navigate(0);
@@ -78,12 +78,13 @@ export function ConfirmPresenceModal({
         <Modal.Title>Confirmar participação</Modal.Title>
 
         <Modal.SubTitle>
-          {`Você foi convidado(a) para participar de uma viagem para `}`
+          {`Você foi convidado(a) para participar de uma viagem para `}
           <span className="font-semibold text-zinc-100">
             {trip?.destination}
           </span>
           {` nas datas de `}
-          <span className="font-semibold text-zinc-100">{displayedDate}</span>.
+          <span className="font-semibold text-zinc-100">{displayedDate}</span>
+          {'.'}
           <br />
           <br />
           {`Para confirmar sua presença na viagem, preencha os dados abaixo:`}
@@ -99,8 +100,9 @@ export function ConfirmPresenceModal({
               <select
                 name="selectedId"
                 className="bg-transparent text-lg outline-none"
+                defaultValue=""
               >
-                <option value="" disabled selected>
+                <option value="" disabled>
                   Selecione o participante a confirmar
                 </option>
                 {participants.map((participant) => (
@@ -134,7 +136,11 @@ export function ConfirmPresenceModal({
           </FormField>
 
           <Button variant="primary" size="full" type="submit">
-            <span>Salvar link</span>
+            <span>
+              {participantId
+                ? 'Confirmar minha presença'
+                : 'Confirmar presença'}
+            </span>
           </Button>
         </form>
       </Modal.Content>
