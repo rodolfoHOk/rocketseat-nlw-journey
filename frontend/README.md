@@ -14,6 +14,7 @@
 - tailwind-variants
 - react-day-picker
 - date-fns
+- axios
 
 ## Links
 

@@ -8,20 +8,24 @@ import { RangeDatePickerModal } from '../modals/range-date-picker-modal';
 
 interface DestinationAndDateStepProps {
   isGuestsInputOpen: boolean;
+  destination: string;
+  tripStartAndEndDates: DateRange | undefined;
   openGuestsInput: () => void;
   closeGuestsInput: () => void;
+  setDestination: (destination: string) => void;
+  setTripStartAndEndDates: (dates: DateRange | undefined) => void;
 }
 
 export function DestinationAndDateStep({
   isGuestsInputOpen,
+  destination,
+  tripStartAndEndDates,
   openGuestsInput,
   closeGuestsInput,
+  setDestination,
+  setTripStartAndEndDates,
 }: DestinationAndDateStepProps) {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-
-  const [tripStartAndEndDates, setTripStartAndEndDates] = useState<
-    DateRange | undefined
-  >();
 
   function openDatePicker() {
     setIsDatePickerOpen(true);
@@ -48,6 +52,8 @@ export function DestinationAndDateStep({
           type="text"
           placeholder="Para onde você vai?"
           disabled={isGuestsInputOpen}
+          value={destination}
+          onChange={(event) => setDestination(event.target.value)}
         />
       </FormField>
 

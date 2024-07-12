@@ -5,13 +5,21 @@ import { FormField } from '../../../../components/form-field';
 import { Button } from '../../../../components/button';
 
 interface ConfirmTripModalProps {
+  ownerName: string;
+  ownerEmail: string;
   closeConfirmTripModal: () => void;
   createTrip: (event: FormEvent<HTMLFormElement>) => void;
+  setOwnerName: (ownerName: string) => void;
+  setOwnerEmail: (ownerEmail: string) => void;
 }
 
 export function ConfirmTripModal({
+  ownerName,
+  ownerEmail,
   closeConfirmTripModal,
   createTrip,
+  setOwnerName,
+  setOwnerEmail,
 }: ConfirmTripModalProps) {
   return (
     <Modal handleClose={closeConfirmTripModal}>
@@ -40,6 +48,8 @@ export function ConfirmTripModal({
               type="text"
               name="name"
               placeholder="Seu nome completo"
+              value={ownerName}
+              onChange={(event) => setOwnerName(event.target.value)}
             />
           </FormField>
 
@@ -50,6 +60,8 @@ export function ConfirmTripModal({
               type="email"
               name="email"
               placeholder="Seu e-mail pessoal"
+              value={ownerEmail}
+              onChange={(event) => setOwnerEmail(event.target.value)}
             />
           </FormField>
 
