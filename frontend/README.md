@@ -16,6 +16,14 @@
 - date-fns
 - axios
 
+## Diferenças em relação ao eventos
+
+- criado componente CloseButton (refatoração)
+- criado componente FormField (refatoração)
+- criado componente Modal (refatoração)
+- criado componente RangeDatePickerModal (refatoração)
+- busca de links da API
+
 ## Links
 
 - [Vite.js Guide](https://vitejs.dev/guide/)
