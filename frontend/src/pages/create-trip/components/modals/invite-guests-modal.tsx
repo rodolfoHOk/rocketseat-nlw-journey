@@ -1,8 +1,8 @@
 import { FormEvent } from 'react';
 import { AtSign, Plus, X } from 'lucide-react';
-import { CloseButton } from '../../../../components/close-button';
-import { Button } from '../../../../components/button';
+import { Modal } from '../../../../components/modal';
 import { FormField } from '../../../../components/form-field';
+import { Button } from '../../../../components/button';
 
 interface InviteGuestsModalProps {
   emailsToInvite: string[];
@@ -18,21 +18,17 @@ export function InviteGuestsModal({
   removeEmailFromInvites,
 }: InviteGuestsModalProps) {
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
-      <div className="w-[640px] rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <h2 className="font-lg font-semibold">Selecionar convidados</h2>
+    <Modal width="lg" handleClose={closeGuestsModal}>
+      <Modal.Header>
+        <Modal.Title>Selecionar convidados</Modal.Title>
 
-            <CloseButton handleClose={closeGuestsModal} />
-          </div>
+        <Modal.SubTitle>
+          Os convidados irão receber e-mails para confirmar a participação na
+          viagem.
+        </Modal.SubTitle>
+      </Modal.Header>
 
-          <p className="text-sm text-zinc-400">
-            Os convidados irão receber e-mails para confirmar a participação na
-            viagem.
-          </p>
-        </div>
-
+      <Modal.Content>
         <div className="flex flex-wrap gap-2">
           {emailsToInvite.map((email) => {
             return (
@@ -75,7 +71,7 @@ export function InviteGuestsModal({
             <Plus className="size-5" />
           </Button>
         </form>
-      </div>
-    </div>
+      </Modal.Content>
+    </Modal>
   );
 }

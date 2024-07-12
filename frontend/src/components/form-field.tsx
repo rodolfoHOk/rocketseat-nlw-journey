@@ -52,7 +52,6 @@ function Input({ inputWidth, ...props }: InputProps) {
   return <input className={inputVariants({ inputWidth })} {...props} />;
 }
 
-FormField.Root = FormField;
 FormField.Input = Input;
 
 export { FormField };

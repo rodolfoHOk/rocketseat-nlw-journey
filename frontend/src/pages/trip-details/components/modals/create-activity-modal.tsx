@@ -1,7 +1,7 @@
 import { Calendar, Tag } from 'lucide-react';
 import { Button } from '../../../../components/button';
-import { CloseButton } from '../../../../components/close-button';
 import { FormField } from '../../../../components/form-field';
+import { Modal } from '../../../../components/modal';
 
 interface CreateActivityModalProps {
   closeCreateActivityModal: () => void;
@@ -11,20 +11,16 @@ export function CreateActivityModal({
   closeCreateActivityModal,
 }: CreateActivityModalProps) {
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
-      <div className="w-[540px] rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <h2 className="font-lg font-semibold">Cadastrar atividade</h2>
+    <Modal handleClose={closeCreateActivityModal}>
+      <Modal.Header>
+        <Modal.Title>Cadastrar atividade</Modal.Title>
 
-            <CloseButton handleClose={closeCreateActivityModal} />
-          </div>
+        <Modal.SubTitle>
+          Todos convidados podem visualizar as atividades.
+        </Modal.SubTitle>
+      </Modal.Header>
 
-          <p className="text-sm text-zinc-400">
-            Todos convidados podem visualizar as atividades.
-          </p>
-        </div>
-
+      <Modal.Content>
         <form className="space-y-3">
           <FormField>
             <Tag className="text-zinc-400 size-5" />
@@ -46,7 +42,7 @@ export function CreateActivityModal({
             <span>Salvar atividade</span>
           </Button>
         </form>
-      </div>
-    </div>
+      </Modal.Content>
+    </Modal>
   );
 }
