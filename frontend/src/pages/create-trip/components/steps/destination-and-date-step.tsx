@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { ArrowRight, Calendar, MapPin, Settings2 } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { FormField } from '../../../../components/form-field';
 import { Button } from '../../../../components/button';
-import { format } from 'date-fns';
 import { RangeDatePickerModal } from '../modals/range-date-picker-modal';
 
 interface DestinationAndDateStepProps {
@@ -37,9 +38,11 @@ export function DestinationAndDateStep({
 
   const displayedDate =
     tripStartAndEndDates && tripStartAndEndDates.from && tripStartAndEndDates.to
-      ? format(tripStartAndEndDates.from, "d' de 'LLL")
+      ? format(tripStartAndEndDates.from, "d' de 'LLL", { locale: ptBR })
           .concat(' até ')
-          .concat(format(tripStartAndEndDates.to, "d' de 'LLL"))
+          .concat(
+            format(tripStartAndEndDates.to, "d' de 'LLL", { locale: ptBR })
+          )
       : null;
 
   return (

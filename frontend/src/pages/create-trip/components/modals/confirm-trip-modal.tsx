@@ -1,10 +1,15 @@
 import { FormEvent } from 'react';
 import { Mail, User } from 'lucide-react';
+import { DateRange } from 'react-day-picker';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { Modal } from '../../../../components/modal';
 import { FormField } from '../../../../components/form-field';
 import { Button } from '../../../../components/button';
 
 interface ConfirmTripModalProps {
+  destination: string;
+  tripStartAndEndDates: DateRange;
   ownerName: string;
   ownerEmail: string;
   closeConfirmTripModal: () => void;
@@ -14,6 +19,8 @@ interface ConfirmTripModalProps {
 }
 
 export function ConfirmTripModal({
+  destination,
+  tripStartAndEndDates,
   ownerName,
   ownerEmail,
   closeConfirmTripModal,
@@ -21,6 +28,17 @@ export function ConfirmTripModal({
   setOwnerName,
   setOwnerEmail,
 }: ConfirmTripModalProps) {
+  const displayedDate =
+    tripStartAndEndDates && tripStartAndEndDates.from && tripStartAndEndDates.to
+      ? format(tripStartAndEndDates.from, "d' de 'LLLL", { locale: ptBR })
+          .concat(' a ')
+          .concat(
+            format(tripStartAndEndDates.to, "d' de 'LLLL ' de 'yyyy", {
+              locale: ptBR,
+            })
+          )
+      : null;
+
   return (
     <Modal handleClose={closeConfirmTripModal}>
       <Modal.Header>
@@ -28,13 +46,9 @@ export function ConfirmTripModal({
 
         <Modal.SubTitle>
           {`Para concluir a criação da viagem para `}
-          <span className="font-semibold text-zinc-100">
-            {`Florianópolis, Brasil`}
-          </span>
+          <span className="font-semibold text-zinc-100">{destination}</span>
           {` nas datas de `}
-          <span className="font-semibold text-zinc-100">
-            {`16 a 27 de Agosto de 2024`}
-          </span>
+          <span className="font-semibold text-zinc-100">{displayedDate}</span>
           {` preencha seus dados abaixo:`}
         </Modal.SubTitle>
       </Modal.Header>

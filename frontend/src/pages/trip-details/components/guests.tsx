@@ -4,7 +4,7 @@ import { CheckCircle2, CircleDashed, UserCog } from 'lucide-react';
 import { Button } from '../../../components/button';
 import { api } from '../../../lib/axios';
 
-interface Participant {
+export interface Participant {
   id: string;
   name: string | null;
   email: string;

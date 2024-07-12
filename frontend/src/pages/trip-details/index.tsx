@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CreateActivityModal } from './components/modals/create-activity-modal';
 import { ImportantLinks } from './components/important-links';
 import { Guests } from './components/guests';
@@ -6,12 +6,18 @@ import { Activities } from './components/activities';
 import { DestinationAndDateHeader } from './components/destination-and-date-header';
 import { CreateLinkModal } from './components/modals/create-link-modal';
 import { ManagerGuestsModal } from './components/modals/manager-guests-modal';
+import { ConfirmPresenceModal } from './components/modals/confirm-presence-modal';
+import { useSearchParams } from 'react-router-dom';
 
 export function TripDetailsPage() {
+  const [urlParams, _] = useSearchParams({ participantId: '' });
+
   const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] =
     useState(false);
   const [isCreateLinkModalOpen, setIsCreateLinkModalOpen] = useState(false);
   const [isManagerGuestsModalOpen, setIsManagerGuestsModalOpen] =
+    useState(false);
+  const [isConfirmPresenceModalOpen, setIsConfirmPresenceModalOpen] =
     useState(false);
 
   function openCreateActivityModal() {
@@ -37,6 +43,21 @@ export function TripDetailsPage() {
   function closeManagerGuestsModal() {
     setIsManagerGuestsModalOpen(false);
   }
+
+  function openConfirmPresenceModal() {
+    closeManagerGuestsModal();
+    setIsConfirmPresenceModalOpen(true);
+  }
+
+  function closeConfirmPresenceModal() {
+    setIsConfirmPresenceModalOpen(false);
+  }
+
+  useEffect(() => {
+    if (urlParams.get('participantId')) {
+      openConfirmPresenceModal();
+    }
+  }, []);
 
   return (
     <div className="max-w-6xl px-6 py-10 mx-auto space-y-8">
@@ -67,10 +88,14 @@ export function TripDetailsPage() {
       {isManagerGuestsModalOpen && (
         <ManagerGuestsModal
           closeManagerGuestsModal={closeManagerGuestsModal}
-          openConfirmPresenceModal={() =>
-            console.log('todo: open confirm presence modal')
-          }
+          openConfirmPresenceModal={openConfirmPresenceModal}
           openNewInviteModal={() => console.log('todo: open new invite modal')}
+        />
+      )}
+
+      {isConfirmPresenceModalOpen && (
+        <ConfirmPresenceModal
+          closeConfirmPresenceModal={closeConfirmPresenceModal}
         />
       )}
     </div>
