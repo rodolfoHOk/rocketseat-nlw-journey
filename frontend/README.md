@@ -16,13 +16,14 @@
 - date-fns
 - axios
 
-## Diferenças em relação ao eventos
+## Diferenças em relação ao evento
 
 - criado componente CloseButton (refatoração)
 - criado componente FormField (refatoração)
 - criado componente Modal (refatoração)
 - criado componente RangeDatePickerModal (refatoração)
-- busca de links da API
+- busca de links da viagem da API (novo recurso)
+- adicionado CreateLinkModal (novo recurso)
 
 ## Links
 

@@ -1,35 +1,35 @@
 import { FormEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Calendar, Tag } from 'lucide-react';
+import { Link2, Tag } from 'lucide-react';
 import { Modal } from '../../../../components/modal';
 import { FormField } from '../../../../components/form-field';
 import { Button } from '../../../../components/button';
 import { api } from '../../../../lib/axios';
 
-interface CreateActivityModalProps {
-  closeCreateActivityModal: () => void;
+interface CreateLinkModalProps {
+  closeCreateLinkModal: () => void;
 }
 
-export function CreateActivityModal({
-  closeCreateActivityModal,
-}: CreateActivityModalProps) {
+export function CreateLinkModal({
+  closeCreateLinkModal,
+}: CreateLinkModalProps) {
   const { tripId } = useParams();
   const navigate = useNavigate();
 
-  async function createActivity(event: FormEvent<HTMLFormElement>) {
+  async function createLink(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const title = data.get('title')?.toString();
-    const occurs_at = data.get('occurs_at')?.toString();
-    await api.post(`/trips/${tripId}/activities`, {
+    const url = data.get('url')?.toString();
+    await api.post(`/trips/${tripId}/links`, {
       title,
-      occurs_at,
+      url,
     });
     navigate(0);
   }
 
   return (
-    <Modal handleClose={closeCreateActivityModal}>
+    <Modal handleClose={closeCreateLinkModal}>
       <Modal.Header>
         <Modal.Title>Cadastrar atividade</Modal.Title>
 
@@ -39,25 +39,21 @@ export function CreateActivityModal({
       </Modal.Header>
 
       <Modal.Content>
-        <form onSubmit={createActivity} className="space-y-3">
+        <form onSubmit={createLink} className="space-y-3">
           <FormField>
             <Tag className="text-zinc-400 size-5" />
 
-            <FormField.Input name="title" placeholder="Qual a atividade?" />
+            <FormField.Input name="title" placeholder="Título do link" />
           </FormField>
 
           <FormField>
-            <Calendar className="text-zinc-400 size-5" />
+            <Link2 className="text-zinc-400 size-5" />
 
-            <FormField.Input
-              type="datetime-local"
-              name="occurs_at"
-              placeholder="Data e horário da atividade"
-            />
+            <FormField.Input name="url" placeholder="URL" />
           </FormField>
 
           <Button variant="primary" size="full" type="submit">
-            <span>Salvar atividade</span>
+            <span>Salvar link</span>
           </Button>
         </form>
       </Modal.Content>
