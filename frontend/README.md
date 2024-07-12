@@ -12,6 +12,8 @@
 - lucide-react
 - react-router-dom
 - tailwind-variants
+- react-day-picker
+- date-fns
 
 ## Links
 
@@ -19,3 +21,4 @@
 - [Tailwind CSS with Vite Guide](https://tailwindcss.com/docs/guides/vite)
 - [React Router Tutorial](https://reactrouter.com/en/main/start/tutorial)
 - [Tailwind Variants Docs](https://www.tailwind-variants.org/docs/getting-started)
+- [React DayPicker Docs](https://daypicker.dev/)

@@ -1,7 +1,7 @@
 import { Calendar, Tag } from 'lucide-react';
-import { Button } from '../../../../components/button';
-import { FormField } from '../../../../components/form-field';
 import { Modal } from '../../../../components/modal';
+import { FormField } from '../../../../components/form-field';
+import { Button } from '../../../../components/button';
 
 interface CreateActivityModalProps {
   closeCreateActivityModal: () => void;

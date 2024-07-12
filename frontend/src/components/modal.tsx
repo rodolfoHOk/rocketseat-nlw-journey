@@ -15,6 +15,7 @@ const modalVariants = tv({
   variants: {
     width: {
       default: 'w-[540px]',
+      fit: 'w-fit',
       lg: 'w-[640px]',
     },
   },

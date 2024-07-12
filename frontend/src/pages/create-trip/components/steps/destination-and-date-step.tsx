@@ -1,6 +1,10 @@
+import { useState } from 'react';
 import { ArrowRight, Calendar, MapPin, Settings2 } from 'lucide-react';
-import { Button } from '../../../../components/button';
+import { DateRange } from 'react-day-picker';
 import { FormField } from '../../../../components/form-field';
+import { Button } from '../../../../components/button';
+import { format } from 'date-fns';
+import { RangeDatePickerModal } from '../modals/range-date-picker-modal';
 
 interface DestinationAndDateStepProps {
   isGuestsInputOpen: boolean;
@@ -13,6 +17,27 @@ export function DestinationAndDateStep({
   openGuestsInput,
   closeGuestsInput,
 }: DestinationAndDateStepProps) {
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+
+  const [tripStartAndEndDates, setTripStartAndEndDates] = useState<
+    DateRange | undefined
+  >();
+
+  function openDatePicker() {
+    setIsDatePickerOpen(true);
+  }
+
+  function closeDatePicker() {
+    setIsDatePickerOpen(false);
+  }
+
+  const displayedDate =
+    tripStartAndEndDates && tripStartAndEndDates.from && tripStartAndEndDates.to
+      ? format(tripStartAndEndDates.from, "d' de 'LLL")
+          .concat(' até ')
+          .concat(format(tripStartAndEndDates.to, "d' de 'LLL"))
+      : null;
+
   return (
     <div className="h-16 bg-zinc-900 px-4 rounded-xl flex items-center gap-3 shadow-shape">
       <FormField border="borderless" width="flex">
@@ -26,16 +51,25 @@ export function DestinationAndDateStep({
         />
       </FormField>
 
-      <FormField border="borderless">
+      <button
+        className="flex items-center gap-2 text-left w-[240px]"
+        disabled={isGuestsInputOpen}
+        onClick={openDatePicker}
+      >
         <Calendar className="size-5 text-zinc-400" />
 
-        <FormField.Input
-          inputWidth="fixed"
-          type="text"
-          placeholder="Quando?"
-          disabled={isGuestsInputOpen}
+        <span className="text-lg text-zinc-400 w-40 flex-1">
+          {displayedDate || 'Quando?'}
+        </span>
+      </button>
+
+      {isDatePickerOpen && (
+        <RangeDatePickerModal
+          tripStartAndEndDates={tripStartAndEndDates}
+          closeDatePicker={closeDatePicker}
+          setTripStartAndEndDates={setTripStartAndEndDates}
         />
-      </FormField>
+      )}
 
       <div className="w-px h-6 bg-zinc-800" />
 
