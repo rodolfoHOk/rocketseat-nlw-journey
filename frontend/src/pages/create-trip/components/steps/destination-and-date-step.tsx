@@ -61,7 +61,7 @@ export function DestinationAndDateStep({
       </FormField>
 
       <button
-        className="flex items-center gap-2 text-left w-[240px]"
+        className="flex items-center gap-2 text-left w-[240px] hover:opacity-80 transition-opacity duration-200"
         disabled={isGuestsInputOpen}
         onClick={openDatePicker}
       >

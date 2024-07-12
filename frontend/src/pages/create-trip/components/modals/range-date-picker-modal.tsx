@@ -1,4 +1,5 @@
 import { DateRange, DayPicker } from 'react-day-picker';
+import { ptBR } from 'date-fns/locale';
 import { Modal } from '../../../../components/modal';
 
 interface RangeDatePickerModalProps {
@@ -21,6 +22,7 @@ export function RangeDatePickerModal({
       <Modal.Content>
         <DayPicker
           mode="range"
+          locale={ptBR}
           disabled={{ before: new Date() }}
           selected={tripStartAndEndDates}
           onSelect={setTripStartAndEndDates}

@@ -27,6 +27,8 @@
 - adicionado ManagerGuestsModal (novo recurso)
 - adicionado ConfirmPresenceModal (novo recurso)
 - adicionado NewInviteModal (novo recurso)
+- customização do DayPicker: ptBR, cores, desabilitar data passadas (melhoria)
+- customização do input datetime-local, desabilitar datas fora da viagem (melhoria)
 -
 
 ## Links
