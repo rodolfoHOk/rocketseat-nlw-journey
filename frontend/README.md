@@ -24,6 +24,8 @@
 - criado componente RangeDatePickerModal (refatoração)
 - busca de links da viagem da API (novo recurso)
 - adicionado CreateLinkModal (novo recurso)
+- adicionado ManagerGuestsModal (novo recurso)
+-
 
 ## Links
 
