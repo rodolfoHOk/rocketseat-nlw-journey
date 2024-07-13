@@ -112,7 +112,10 @@ export function TripDetailsPage() {
 
           <div className="w-full h-px bg-zinc-800" />
 
-          <Guests openManagerGuestsModal={openManagerGuestsModal} />
+          <Guests
+            openManagerGuestsModal={openManagerGuestsModal}
+            showAlert={showAlert}
+          />
         </div>
       </main>
 
