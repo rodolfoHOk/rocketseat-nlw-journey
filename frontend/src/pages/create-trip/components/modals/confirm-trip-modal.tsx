@@ -9,7 +9,7 @@ import { Button } from '../../../../components/button';
 
 interface ConfirmTripModalProps {
   destination: string;
-  tripStartAndEndDates: DateRange;
+  tripStartAndEndDates: DateRange | undefined;
   ownerName: string;
   ownerEmail: string;
   closeConfirmTripModal: () => void;

@@ -15,6 +15,7 @@
 - react-day-picker
 - date-fns
 - axios
+- zod
 
 ## Diferenças em relação ao evento
 
@@ -30,7 +31,13 @@
 - customização do DayPicker: ptBR, cores, desabilitar data passadas (melhoria)
 - customização do input datetime-local, desabilitar datas fora da viagem (melhoria)
 - adicionado UpdateTripModal (novo recurso)
+- adicionado validações para o cadastro da viagem
 -
+
+## Ideias de melhorias
+
+- todo: validação de formulários
+- todo: mensagens de erros
 
 ## Links
 

@@ -7,10 +7,15 @@ import { InviteGuestsModal } from './components/modals/invite-guests-modal';
 import { ConfirmTripModal } from './components/modals/confirm-trip-modal';
 import { CreateTripHeader } from './components/create-trip-header';
 import { CreateTripFooter } from './components/create-trip-footer';
+import { Alert } from '../../components/alert';
 import { api } from '../../lib/axios';
+import { validateTripField } from '../../validations/validate-trip-field';
 
 export function CreateTripPage() {
   const navigate = useNavigate();
+
+  const [isShowAlert, setIsShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   const [isGuestsInputOpen, setIsGuestsInputOpen] = useState(false);
   const [isGuestsModalOpen, setIsGuestsModalOpen] = useState(false);
@@ -24,7 +29,40 @@ export function CreateTripPage() {
   const [ownerName, setOwnerName] = useState('');
   const [ownerEmail, setOwnerEmail] = useState('');
 
+  function openAlert(message: string) {
+    setAlertMessage(message);
+    setIsShowAlert(true);
+  }
+
+  function closeAlert() {
+    setIsShowAlert(false);
+  }
+
   function openGuestsInput() {
+    if (!destination.trim()) {
+      openAlert('Preencha o destino para continuar');
+      return;
+    }
+    if (!validateTripField.destination(destination)) {
+      openAlert('Destino deve ter ao menos 4 caracteres');
+      return;
+    }
+    if (
+      !tripStartAndEndDates ||
+      !tripStartAndEndDates.from ||
+      !tripStartAndEndDates.to
+    ) {
+      openAlert('Selecione o período da viagem');
+      return;
+    }
+    if (!validateTripField.startsAt(tripStartAndEndDates?.from?.toString())) {
+      openAlert('Data inicial da viagem inválida');
+      return;
+    }
+    if (!validateTripField.startsAt(tripStartAndEndDates?.to?.toString())) {
+      openAlert('Data final da viagem inválida');
+      return;
+    }
     setIsGuestsInputOpen(true);
   }
 
@@ -41,6 +79,10 @@ export function CreateTripPage() {
   }
 
   function openConfirmTripModal() {
+    if (!validateTripField.emailsToInvite(emailsToInvite)) {
+      openAlert('Um ou mais e-mails de convidados inválido(s)');
+      return;
+    }
     setIsConfirmTripModalOpen(true);
   }
 
@@ -71,16 +113,28 @@ export function CreateTripPage() {
 
   async function createTrip(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!destination) {
+    if (
+      !tripStartAndEndDates ||
+      !tripStartAndEndDates.from ||
+      !tripStartAndEndDates.to
+    ) {
+      openAlert('Período da viagem não informado');
       return;
     }
-    if (!tripStartAndEndDates?.from || !tripStartAndEndDates?.to) {
+    if (!ownerName.trim()) {
+      openAlert('Informe seu nome para continuar');
       return;
     }
-    if (emailsToInvite.length === 0) {
+    if (!validateTripField.ownerName(ownerName)) {
+      openAlert('Nome completo deve ter ao menos 4 caracteres');
       return;
     }
-    if (!ownerName || !ownerEmail) {
+    if (!ownerEmail.trim()) {
+      openAlert('Informe seu e-mail para continuar');
+      return;
+    }
+    if (!validateTripField.ownerEmail(ownerEmail)) {
+      openAlert('E-mail informado inválido');
       return;
     }
     const response = await api.post('/trips', {
@@ -142,6 +196,14 @@ export function CreateTripPage() {
           createTrip={createTrip}
           setOwnerName={setOwnerName}
           setOwnerEmail={setOwnerEmail}
+        />
+      )}
+
+      {isShowAlert && (
+        <Alert
+          title="Plann.er erro"
+          message={alertMessage}
+          closeAlert={closeAlert}
         />
       )}
     </div>
