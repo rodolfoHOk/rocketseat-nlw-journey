@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Button } from '../../../components/button';
 import { api } from '../../../lib/axios';
+import { Loading } from '../../../components/loading';
 
 export interface Trip {
   id: string;
@@ -16,16 +17,31 @@ export interface Trip {
 
 interface DestinationAndDateHeaderProps {
   openUpdateTripModal: () => void;
+  showAlert: (message: string) => void;
 }
 
 export function DestinationAndDateHeader({
   openUpdateTripModal,
+  showAlert,
 }: DestinationAndDateHeaderProps) {
   const { tripId } = useParams();
   const [trip, setTrip] = useState<Trip | undefined>();
 
+  const [isLoadingData, setIsLoadingData] = useState(true);
+
+  async function fetchData() {
+    try {
+      const response = await api.get(`trips/${tripId}`);
+      setTrip(response.data.trip);
+      setIsLoadingData(false);
+    } catch (error) {
+      showAlert('Erro ao tentar buscar dados de links da viagem');
+      setIsLoadingData(false);
+    }
+  }
+
   useEffect(() => {
-    api.get(`trips/${tripId}`).then((response) => setTrip(response.data.trip));
+    fetchData();
   }, [tripId]);
 
   const displayedDate = trip
@@ -39,14 +55,18 @@ export function DestinationAndDateHeader({
       <div className="flex items-center gap-2">
         <MapPin className="size-5 text-zinc-400" />
 
-        <span className="text-zinc-100">{trip?.destination}</span>
+        <span className="text-zinc-100">
+          {isLoadingData ? <Loading color="secondary" /> : trip?.destination}
+        </span>
       </div>
 
       <div className="flex items-center gap-5">
         <div className="flex items-center gap-2">
           <Calendar className="size-5 text-zinc-400" />
 
-          <span className="text-zinc-100">{displayedDate}</span>
+          <span className="text-zinc-100">
+            {isLoadingData ? <Loading color="secondary" /> : displayedDate}
+          </span>
         </div>
 
         <div className="w-px h-6 bg-zinc-800" />
