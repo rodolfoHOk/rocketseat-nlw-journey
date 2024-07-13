@@ -1,19 +1,23 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Calendar, Tag } from 'lucide-react';
+import dayjs from 'dayjs';
 import { Modal } from '../../../../components/modal';
 import { FormField } from '../../../../components/form-field';
 import { Button } from '../../../../components/button';
 import { Trip } from '../destination-and-date-header';
 import { api } from '../../../../lib/axios';
 import { format } from 'date-fns';
+import { validateActivityField } from '../../../../validations/validate-activity-field';
 
 interface CreateActivityModalProps {
   closeCreateActivityModal: () => void;
+  showAlert: (message: string) => void;
 }
 
 export function CreateActivityModal({
   closeCreateActivityModal,
+  showAlert,
 }: CreateActivityModalProps) {
   const { tripId } = useParams();
   const navigate = useNavigate();
@@ -25,11 +29,41 @@ export function CreateActivityModal({
     const data = new FormData(event.currentTarget);
     const title = data.get('title')?.toString();
     const occurs_at = data.get('occurs_at')?.toString();
-    await api.post(`/trips/${tripId}/activities`, {
-      title,
-      occurs_at,
-    });
-    navigate(0);
+    if (!title) {
+      showAlert('Preencha o nome da atividade');
+      return;
+    }
+    if (!occurs_at) {
+      showAlert('Preencha a data e hora da atividade');
+      return;
+    }
+    if (!validateActivityField.title(title)) {
+      showAlert('Nome da atividade deve ter no mínimo 4 caracteres');
+      return;
+    }
+    if (!validateActivityField.occursAt(occurs_at)) {
+      showAlert('Data/Hora informada inválida');
+      return;
+    }
+    if (trip && dayjs(occurs_at).isBefore(trip.starts_at)) {
+      showAlert('Data/Hora informada está fora do período da viagem');
+      return;
+    }
+    if (trip && dayjs(occurs_at).isAfter(trip.ends_at)) {
+      showAlert('Data/Hora informada está fora do período da viagem');
+      return;
+    }
+    try {
+      await api.post(`/trips/${tripId}/activities`, {
+        title,
+        occurs_at,
+      });
+      navigate(0);
+    } catch (error) {
+      showAlert(
+        'Erro ao tentar cadastrar atividade. Tente novamente mais tarde'
+      );
+    }
   }
 
   useEffect(() => {

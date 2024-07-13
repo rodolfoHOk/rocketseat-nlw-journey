@@ -16,6 +16,7 @@
 - date-fns
 - axios
 - zod
+- dayjs
 
 ## Diferenças em relação ao evento
 
@@ -31,13 +32,13 @@
 - customização do DayPicker: ptBR, cores, desabilitar data passadas (melhoria)
 - customização do input datetime-local, desabilitar datas fora da viagem (melhoria)
 - adicionado UpdateTripModal (novo recurso)
-- adicionado validações para o cadastro da viagem
--
-
-## Ideias de melhorias
-
-- todo: validação de formulários
-- todo: mensagens de erros
+- adicionado component Alert (novo recurso)
+- adicionado validações para o cadastro da viagem (novo recurso)
+- adicionado validações para o atualização da viagem (novo recurso)
+- adicionado validações para o cadastro de atividades (novo recurso)
+  <!-- - adicionado validações para o cadastro de links (novo recurso) -->
+  <!-- - adicionado validações para o confirmar presença (novo recurso) -->
+  <!-- - adicionado validações para o enviar novo convite (novo recurso) -->
 
 ## Links
 

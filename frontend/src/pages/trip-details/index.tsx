@@ -120,7 +120,7 @@ export function TripDetailsPage() {
       {isCreateActivityModalOpen && (
         <CreateActivityModal
           closeCreateActivityModal={closeCreateActivityModal}
-          // showAlert={showAlert}
+          showAlert={showAlert}
         />
       )}
 
