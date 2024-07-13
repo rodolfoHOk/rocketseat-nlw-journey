@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link2, Tag } from 'lucide-react';
 import { Modal } from '../../../../components/modal';
@@ -18,6 +18,8 @@ export function CreateLinkModal({
 }: CreateLinkModalProps) {
   const { tripId } = useParams();
   const navigate = useNavigate();
+
+  const [isCreatingLink, setIsCreatingLink] = useState(false);
 
   async function createLink(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -41,6 +43,7 @@ export function CreateLinkModal({
       return;
     }
     try {
+      setIsCreatingLink(true);
       await api.post(`/trips/${tripId}/links`, {
         title,
         url,
@@ -48,6 +51,8 @@ export function CreateLinkModal({
       navigate(0);
     } catch (error) {
       showAlert('Erro ao tentar cadastrar link. Tente novamente mais tarde');
+    } finally {
+      setIsCreatingLink(false);
     }
   }
 
@@ -75,7 +80,12 @@ export function CreateLinkModal({
             <FormField.Input name="url" placeholder="URL" />
           </FormField>
 
-          <Button variant="primary" size="full" type="submit">
+          <Button
+            variant="primary"
+            size="full"
+            type="submit"
+            isLoading={isCreatingLink}
+          >
             <span>Salvar link</span>
           </Button>
         </form>
