@@ -10,6 +10,7 @@ import { ConfirmPresenceModal } from './components/modals/confirm-presence-modal
 import { useSearchParams } from 'react-router-dom';
 import { NewInviteModal } from './components/modals/new-invite-modal';
 import { UpdateTripModal } from './components/modals/update-trip-modal';
+import { Alert } from '../../components/alert';
 
 export function TripDetailsPage() {
   const [urlParams, _] = useSearchParams();
@@ -23,6 +24,9 @@ export function TripDetailsPage() {
   const [isConfirmPresenceModalOpen, setIsConfirmPresenceModalOpen] =
     useState(false);
   const [isNewInviteModalOpen, setIsNewInviteModalOpen] = useState(false);
+
+  const [isShowAlert, setIsShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   function openUpdateTripModal() {
     closeManagerGuestsModal();
@@ -75,6 +79,15 @@ export function TripDetailsPage() {
     setIsNewInviteModalOpen(false);
   }
 
+  function showAlert(message: string) {
+    setAlertMessage(message);
+    setIsShowAlert(true);
+  }
+
+  function closeAlert() {
+    setIsShowAlert(false);
+  }
+
   useEffect(() => {
     if (urlParams.get('participant')) {
       openConfirmPresenceModal();
@@ -98,17 +111,24 @@ export function TripDetailsPage() {
       </main>
 
       {isUpdateTripModalOpen && (
-        <UpdateTripModal closeUpdateTripModal={closeUpdateTripModal} />
+        <UpdateTripModal
+          closeUpdateTripModal={closeUpdateTripModal}
+          showAlert={showAlert}
+        />
       )}
 
       {isCreateActivityModalOpen && (
         <CreateActivityModal
           closeCreateActivityModal={closeCreateActivityModal}
+          // showAlert={showAlert}
         />
       )}
 
       {isCreateLinkModalOpen && (
-        <CreateLinkModal closeCreateLinkModal={closeCreateLinkModal} />
+        <CreateLinkModal
+          closeCreateLinkModal={closeCreateLinkModal}
+          // showAlert={showAlert}
+        />
       )}
 
       {isManagerGuestsModalOpen && (
@@ -122,11 +142,23 @@ export function TripDetailsPage() {
       {isConfirmPresenceModalOpen && (
         <ConfirmPresenceModal
           closeConfirmPresenceModal={closeConfirmPresenceModal}
+          // showAlert={showAlert}
         />
       )}
 
       {isNewInviteModalOpen && (
-        <NewInviteModal closeNewInviteModal={closeNewInviteModal} />
+        <NewInviteModal
+          closeNewInviteModal={closeNewInviteModal}
+          // showAlert={showAlert}
+        />
+      )}
+
+      {isShowAlert && (
+        <Alert
+          title="Plann.er erro"
+          message={alertMessage}
+          closeAlert={closeAlert}
+        />
       )}
     </div>
   );

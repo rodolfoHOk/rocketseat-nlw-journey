@@ -9,13 +9,16 @@ import { FormField } from '../../../../components/form-field';
 import { RangeDatePickerModal } from '../../../../components/range-date-picker-modal';
 import { Button } from '../../../../components/button';
 import { api } from '../../../../lib/axios';
+import { validateTripField } from '../../../../validations/validate-trip-field';
 
 interface UpdateTripModalProps {
   closeUpdateTripModal: () => void;
+  showAlert: (message: string) => void;
 }
 
 export function UpdateTripModal({
   closeUpdateTripModal,
+  showAlert,
 }: UpdateTripModalProps) {
   const { tripId } = useParams();
   const navigate = useNavigate();
@@ -36,18 +39,40 @@ export function UpdateTripModal({
   }
 
   async function updateTrip() {
-    if (!destination) {
+    if (!destination.trim()) {
+      showAlert('Preencha o destino para continuar');
       return;
     }
-    if (!tripStartAndEndDates?.from || !tripStartAndEndDates?.to) {
+    if (!validateTripField.destination(destination)) {
+      showAlert('Destino deve ter ao menos 4 caracteres');
       return;
     }
-    await api.put(`/trips/${tripId}`, {
-      destination,
-      starts_at: tripStartAndEndDates.from,
-      ends_at: tripStartAndEndDates.to,
-    });
-    navigate(0);
+    if (
+      !tripStartAndEndDates ||
+      !tripStartAndEndDates.from ||
+      !tripStartAndEndDates.to
+    ) {
+      showAlert('Selecione o período da viagem para continuar');
+      return;
+    }
+    if (!validateTripField.startsAt(tripStartAndEndDates?.from?.toString())) {
+      showAlert('Data inicial da viagem inválida');
+      return;
+    }
+    if (!validateTripField.startsAt(tripStartAndEndDates?.to?.toString())) {
+      showAlert('Data final da viagem inválida');
+      return;
+    }
+    try {
+      await api.put(`/trips/${tripId}`, {
+        destination,
+        starts_at: tripStartAndEndDates.from,
+        ends_at: tripStartAndEndDates.to,
+      });
+      navigate(0);
+    } catch (error) {
+      showAlert('Erro ao tentar atualizar viagem. Tente novamente mais tarde');
+    }
   }
 
   useEffect(() => {

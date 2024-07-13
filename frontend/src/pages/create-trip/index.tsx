@@ -10,6 +10,7 @@ import { CreateTripFooter } from './components/create-trip-footer';
 import { Alert } from '../../components/alert';
 import { api } from '../../lib/axios';
 import { validateTripField } from '../../validations/validate-trip-field';
+import { validateInviteField } from '../../validations/validate-invite-field';
 
 export function CreateTripPage() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export function CreateTripPage() {
   const [ownerName, setOwnerName] = useState('');
   const [ownerEmail, setOwnerEmail] = useState('');
 
-  function openAlert(message: string) {
+  function showAlert(message: string) {
     setAlertMessage(message);
     setIsShowAlert(true);
   }
@@ -40,11 +41,11 @@ export function CreateTripPage() {
 
   function openGuestsInput() {
     if (!destination.trim()) {
-      openAlert('Preencha o destino para continuar');
+      showAlert('Preencha o destino para continuar');
       return;
     }
     if (!validateTripField.destination(destination)) {
-      openAlert('Destino deve ter ao menos 4 caracteres');
+      showAlert('Destino deve ter ao menos 4 caracteres');
       return;
     }
     if (
@@ -52,15 +53,15 @@ export function CreateTripPage() {
       !tripStartAndEndDates.from ||
       !tripStartAndEndDates.to
     ) {
-      openAlert('Selecione o período da viagem');
+      showAlert('Selecione o período da viagem para continuar');
       return;
     }
     if (!validateTripField.startsAt(tripStartAndEndDates?.from?.toString())) {
-      openAlert('Data inicial da viagem inválida');
+      showAlert('Data inicial da viagem inválida');
       return;
     }
     if (!validateTripField.startsAt(tripStartAndEndDates?.to?.toString())) {
-      openAlert('Data final da viagem inválida');
+      showAlert('Data final da viagem inválida');
       return;
     }
     setIsGuestsInputOpen(true);
@@ -80,7 +81,7 @@ export function CreateTripPage() {
 
   function openConfirmTripModal() {
     if (!validateTripField.emailsToInvite(emailsToInvite)) {
-      openAlert('Um ou mais e-mails de convidados inválido(s)');
+      showAlert('Um ou mais e-mails de convidados inválido(s)');
       return;
     }
     setIsConfirmTripModalOpen(true);
@@ -95,9 +96,15 @@ export function CreateTripPage() {
     const data = new FormData(event.currentTarget);
     const email = data.get('email')?.toString();
     if (!email) {
+      showAlert('Digite um e-mail válido');
+      return;
+    }
+    if (!validateInviteField.email(email)) {
+      showAlert('E-mail informado inválido');
       return;
     }
     if (emailsToInvite.includes(email)) {
+      showAlert('E-mail informado já está na lista');
       return;
     }
     setEmailsToInvite((prevState) => [...prevState, email]);
@@ -118,35 +125,39 @@ export function CreateTripPage() {
       !tripStartAndEndDates.from ||
       !tripStartAndEndDates.to
     ) {
-      openAlert('Período da viagem não informado');
+      showAlert('Período da viagem não informado');
       return;
     }
     if (!ownerName.trim()) {
-      openAlert('Informe seu nome para continuar');
+      showAlert('Informe seu nome para continuar');
       return;
     }
     if (!validateTripField.ownerName(ownerName)) {
-      openAlert('Nome completo deve ter ao menos 4 caracteres');
+      showAlert('Nome completo deve ter ao menos 4 caracteres');
       return;
     }
     if (!ownerEmail.trim()) {
-      openAlert('Informe seu e-mail para continuar');
+      showAlert('Informe seu e-mail para continuar');
       return;
     }
     if (!validateTripField.ownerEmail(ownerEmail)) {
-      openAlert('E-mail informado inválido');
+      showAlert('E-mail informado inválido');
       return;
     }
-    const response = await api.post('/trips', {
-      destination,
-      starts_at: tripStartAndEndDates.from,
-      ends_at: tripStartAndEndDates.to,
-      emails_to_invite: emailsToInvite,
-      owner_name: ownerName,
-      owner_email: ownerEmail,
-    });
-    const { tripId } = response.data;
-    navigate(`/trips/${tripId}`);
+    try {
+      const response = await api.post('/trips', {
+        destination,
+        starts_at: tripStartAndEndDates.from,
+        ends_at: tripStartAndEndDates.to,
+        emails_to_invite: emailsToInvite,
+        owner_name: ownerName,
+        owner_email: ownerEmail,
+      });
+      const { tripId } = response.data;
+      navigate(`/trips/${tripId}`);
+    } catch (error) {
+      showAlert('Erro ao tentar cadastrar viagem. Tente novamente mais tarde');
+    }
   }
 
   return (
