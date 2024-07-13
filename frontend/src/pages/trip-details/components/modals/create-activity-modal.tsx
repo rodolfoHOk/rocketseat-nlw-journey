@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, Tag } from 'lucide-react';
 import { format } from 'date-fns';
@@ -22,6 +22,8 @@ export function CreateActivityModal({
   showAlert,
 }: CreateActivityModalProps) {
   const navigate = useNavigate();
+
+  const [isCreatingActivity, setIsCreatingActivity] = useState(false);
 
   async function createActivity(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -53,6 +55,7 @@ export function CreateActivityModal({
       return;
     }
     try {
+      setIsCreatingActivity(true);
       await api.post(`/trips/${trip?.id}/activities`, {
         title,
         occurs_at,
@@ -62,6 +65,8 @@ export function CreateActivityModal({
       showAlert(
         'Erro ao tentar cadastrar atividade. Tente novamente mais tarde'
       );
+    } finally {
+      setIsCreatingActivity(false);
     }
   }
 
@@ -97,7 +102,12 @@ export function CreateActivityModal({
             )}
           </FormField>
 
-          <Button variant="primary" size="full" type="submit">
+          <Button
+            variant="primary"
+            size="full"
+            type="submit"
+            isLoading={isCreatingActivity}
+          >
             <span>Salvar atividade</span>
           </Button>
         </form>
