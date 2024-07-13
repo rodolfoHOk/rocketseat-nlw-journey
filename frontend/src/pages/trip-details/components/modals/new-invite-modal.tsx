@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Mail } from 'lucide-react';
 import { Modal } from '../../../../components/modal';
@@ -22,7 +22,9 @@ export function NewInviteModal({
   const { tripId } = useParams();
   const navigate = useNavigate();
 
-  async function newInvite(event: FormEvent<HTMLFormElement>) {
+  const [isSendingInvite, setIsSendingInvite] = useState(false);
+
+  async function sendInvite(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get('email')?.toString();
@@ -40,12 +42,15 @@ export function NewInviteModal({
       return;
     }
     try {
+      setIsSendingInvite(true);
       await api.post(`/trips/${tripId}/invites`, {
         email,
       });
       navigate(0);
     } catch (error) {
       showAlert('Erro ao tentar enviar convite. Tente novamente mais tarde');
+    } finally {
+      setIsSendingInvite(false);
     }
   }
 
@@ -60,14 +65,19 @@ export function NewInviteModal({
       </Modal.Header>
 
       <Modal.Content>
-        <form onSubmit={newInvite} className="space-y-3">
+        <form onSubmit={sendInvite} className="space-y-3">
           <FormField>
             <Mail className="text-zinc-400 size-5" />
 
             <FormField.Input type="email" name="email" placeholder="E-mail" />
           </FormField>
 
-          <Button variant="primary" size="full" type="submit">
+          <Button
+            variant="primary"
+            size="full"
+            type="submit"
+            isLoading={isSendingInvite}
+          >
             <span>Enviar convite</span>
           </Button>
         </form>
