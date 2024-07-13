@@ -5,6 +5,7 @@ import { format, isBefore } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Button } from '../../../components/button';
 import { api } from '../../../lib/axios';
+import { Loading } from '../../../components/loading';
 
 interface Activity {
   date: string;
@@ -17,16 +18,31 @@ interface Activity {
 
 interface ActivitiesProps {
   openCreateActivityModal: () => void;
+  showAlert: (message: string) => void;
 }
 
-export function Activities({ openCreateActivityModal }: ActivitiesProps) {
+export function Activities({
+  openCreateActivityModal,
+  showAlert,
+}: ActivitiesProps) {
   const { tripId } = useParams();
   const [activities, setActivities] = useState<Activity[]>([]);
 
+  const [isLoadingData, setIsLoadingData] = useState(true);
+
+  async function fetchData() {
+    try {
+      const response = await api.get(`trips/${tripId}/activities`);
+      setActivities(response.data.activities);
+      setIsLoadingData(false);
+    } catch (error) {
+      showAlert('Erro ao tentar buscar dados de atividades');
+      setIsLoadingData(false);
+    }
+  }
+
   useEffect(() => {
-    api
-      .get(`trips/${tripId}/activities`)
-      .then((response) => setActivities(response.data.activities));
+    fetchData();
   }, [tripId]);
 
   return (
@@ -40,6 +56,8 @@ export function Activities({ openCreateActivityModal }: ActivitiesProps) {
           <span>Cadastrar atividade</span>
         </Button>
       </div>
+
+      {isLoadingData && <Loading color="secondary" size="lg" />}
 
       <div className="space-y-8">
         {activities.map((day) => (
