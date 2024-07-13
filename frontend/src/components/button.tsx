@@ -1,5 +1,6 @@
 import { ComponentProps, ReactNode } from 'react';
 import { tv, VariantProps } from 'tailwind-variants';
+import { Loading } from './loading';
 
 const buttonVariants = tv({
   base: 'px-5 rounded-lg flex items-center justify-center gap-2 font-medium transition-colors duration-200',
@@ -23,12 +24,23 @@ interface ButtonProps
   extends ComponentProps<'button'>,
     VariantProps<typeof buttonVariants> {
   children: ReactNode;
+  isLoading?: boolean;
 }
 
-export function Button({ children, variant, size, ...rest }: ButtonProps) {
+export function Button({
+  isLoading = false,
+  children,
+  variant,
+  size,
+  ...rest
+}: ButtonProps) {
   return (
-    <button className={buttonVariants({ variant, size })} {...rest}>
-      {children}
+    <button
+      className={buttonVariants({ variant, size })}
+      disabled={isLoading}
+      {...rest}
+    >
+      {isLoading ? <Loading /> : children}
     </button>
   );
 }

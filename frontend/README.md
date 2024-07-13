@@ -17,6 +17,7 @@
 - axios
 - zod
 - dayjs
+- clsx
 
 ## Diferenças em relação ao evento
 
@@ -42,7 +43,7 @@
 
 ## Ideias melhorias
 
-- estado de carregando
+- todo: estado de carregando/processando
 
 ## Links
 
