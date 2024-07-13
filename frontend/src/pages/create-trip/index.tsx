@@ -30,6 +30,8 @@ export function CreateTripPage() {
   const [ownerName, setOwnerName] = useState('');
   const [ownerEmail, setOwnerEmail] = useState('');
 
+  const [isCreatingTrip, setIsCreatingTrip] = useState(false);
+
   function showAlert(message: string) {
     setAlertMessage(message);
     setIsShowAlert(true);
@@ -145,6 +147,7 @@ export function CreateTripPage() {
       return;
     }
     try {
+      setIsCreatingTrip(true);
       const response = await api.post('/trips', {
         destination,
         starts_at: tripStartAndEndDates.from,
@@ -157,6 +160,8 @@ export function CreateTripPage() {
       navigate(`/trips/${tripId}`);
     } catch (error) {
       showAlert('Erro ao tentar cadastrar viagem. Tente novamente mais tarde');
+    } finally {
+      setIsCreatingTrip(false);
     }
   }
 
@@ -203,6 +208,7 @@ export function CreateTripPage() {
           tripStartAndEndDates={tripStartAndEndDates}
           ownerName={ownerName}
           ownerEmail={ownerEmail}
+          isCreatingTrip={isCreatingTrip}
           closeConfirmTripModal={closeConfirmTripModal}
           createTrip={createTrip}
           setOwnerName={setOwnerName}

@@ -12,6 +12,7 @@ interface ConfirmTripModalProps {
   tripStartAndEndDates: DateRange | undefined;
   ownerName: string;
   ownerEmail: string;
+  isCreatingTrip: boolean;
   closeConfirmTripModal: () => void;
   createTrip: (event: FormEvent<HTMLFormElement>) => void;
   setOwnerName: (ownerName: string) => void;
@@ -23,6 +24,7 @@ export function ConfirmTripModal({
   tripStartAndEndDates,
   ownerName,
   ownerEmail,
+  isCreatingTrip,
   closeConfirmTripModal,
   createTrip,
   setOwnerName,
@@ -79,7 +81,12 @@ export function ConfirmTripModal({
             />
           </FormField>
 
-          <Button type="submit" variant="primary" size="full">
+          <Button
+            type="submit"
+            variant="primary"
+            size="full"
+            isLoading={isCreatingTrip}
+          >
             <span>Confirmar criação da viagem</span>
           </Button>
         </form>
