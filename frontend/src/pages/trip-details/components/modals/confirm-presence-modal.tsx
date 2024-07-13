@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Mail, SquareMousePointer, User } from 'lucide-react';
 import { format } from 'date-fns';
@@ -7,25 +7,24 @@ import { Modal } from '../../../../components/modal';
 import { FormField } from '../../../../components/form-field';
 import { Button } from '../../../../components/button';
 import { api } from '../../../../lib/axios';
-import { Participant } from '../guests';
-import { Trip } from '../..';
+import { Participant, Trip } from '../..';
 import { validateParticipantField } from '../../../../validations/validate-participant-field';
 
 interface ConfirmPresenceModalProps {
   trip: Trip | undefined;
+  notConfirmedParticipant: Participant[];
   closeConfirmPresenceModal: () => void;
   showAlert: (message: string) => void;
 }
 
 export function ConfirmPresenceModal({
   trip,
+  notConfirmedParticipant,
   closeConfirmPresenceModal,
   showAlert,
 }: ConfirmPresenceModalProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-
-  const [participants, setParticipants] = useState<Participant[]>([]);
 
   const participantId = searchParams.get('participant');
 
@@ -34,6 +33,7 @@ export function ConfirmPresenceModal({
     const data = new FormData(event.currentTarget);
     const name = data.get('name')?.toString();
     const email = data.get('email')?.toString();
+
     let id: string | null | undefined = participantId;
     if (!id) {
       id = data.get('selectedId')?.toString();
@@ -66,18 +66,6 @@ export function ConfirmPresenceModal({
       );
     }
   }
-
-  useEffect(() => {
-    if (!participantId) {
-      api.get(`trips/${trip?.id}/participants`).then((response) => {
-        let participants = response.data.participants as Participant[];
-        participants = participants.filter(
-          (participant) => participant.is_confirmed === false
-        );
-        setParticipants(participants);
-      });
-    }
-  }, [trip]);
 
   const displayedDate = trip
     ? format(trip.starts_at, "d' de 'LLLL", { locale: ptBR })
@@ -118,7 +106,7 @@ export function ConfirmPresenceModal({
                 <option value="" disabled>
                   Selecione o participante a confirmar
                 </option>
-                {participants.map((participant) => (
+                {notConfirmedParticipant.map((participant) => (
                   <option key={participant.id} value={participant.id}>
                     {participant.email}
                   </option>

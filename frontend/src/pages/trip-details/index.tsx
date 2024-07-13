@@ -21,6 +21,13 @@ export interface Trip {
   is_confirmed: boolean;
 }
 
+export interface Participant {
+  id: string;
+  name: string | null;
+  email: string;
+  is_confirmed: boolean;
+}
+
 export function TripDetailsPage() {
   const { tripId } = useParams();
   const [urlParams, _] = useSearchParams();
@@ -40,6 +47,9 @@ export function TripDetailsPage() {
 
   const [trip, setTrip] = useState<Trip | undefined>();
   const [isLoadingTrip, setIsLoadingTrip] = useState(true);
+
+  const [participants, setParticipants] = useState<Participant[]>([]);
+  const [isLoadingParticipants, setIsLoadingData] = useState(true);
 
   function openUpdateTripModal() {
     closeManagerGuestsModal();
@@ -112,8 +122,20 @@ export function TripDetailsPage() {
     }
   }
 
+  async function fetchParticipants() {
+    try {
+      const response = await api.get(`trips/${tripId}/participants`);
+      setParticipants(response.data.participants);
+      setIsLoadingData(false);
+    } catch (error) {
+      showAlert('Erro ao tentar buscar dados de links da viagem');
+      setIsLoadingData(false);
+    }
+  }
+
   useEffect(() => {
     fetchTrip();
+    fetchParticipants();
   }, [tripId]);
 
   useEffect(() => {
@@ -145,8 +167,9 @@ export function TripDetailsPage() {
           <div className="w-full h-px bg-zinc-800" />
 
           <Guests
+            isLoadingParticipants={isLoadingParticipants}
+            participants={participants}
             openManagerGuestsModal={openManagerGuestsModal}
-            showAlert={showAlert}
           />
         </div>
       </main>
@@ -185,6 +208,9 @@ export function TripDetailsPage() {
       {isConfirmPresenceModalOpen && (
         <ConfirmPresenceModal
           trip={trip}
+          notConfirmedParticipant={participants.filter(
+            (participant) => participant.is_confirmed === false
+          )}
           closeConfirmPresenceModal={closeConfirmPresenceModal}
           showAlert={showAlert}
         />
@@ -192,6 +218,7 @@ export function TripDetailsPage() {
 
       {isNewInviteModalOpen && (
         <NewInviteModal
+          participants={participants}
           closeNewInviteModal={closeNewInviteModal}
           showAlert={showAlert}
         />

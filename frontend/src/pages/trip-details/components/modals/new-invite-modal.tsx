@@ -1,32 +1,26 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Mail } from 'lucide-react';
 import { Modal } from '../../../../components/modal';
 import { FormField } from '../../../../components/form-field';
 import { Button } from '../../../../components/button';
-import { Participant } from '../guests';
+import { Participant } from '../..';
 import { api } from '../../../../lib/axios';
 import { validateInviteField } from '../../../../validations/validate-invite-field';
 
 interface NewInviteModalProps {
+  participants: Participant[];
   closeNewInviteModal: () => void;
   showAlert: (message: string) => void;
 }
 
 export function NewInviteModal({
+  participants,
   closeNewInviteModal,
   showAlert,
 }: NewInviteModalProps) {
   const { tripId } = useParams();
   const navigate = useNavigate();
-
-  const [participants, setParticipants] = useState<Participant[]>([]);
-
-  useEffect(() => {
-    api
-      .get(`trips/${tripId}/participants`)
-      .then((response) => setParticipants(response.data.participants));
-  }, [tripId]);
 
   async function newInvite(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

@@ -1,48 +1,24 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { CheckCircle2, CircleDashed, UserCog } from 'lucide-react';
 import { Button } from '../../../components/button';
 import { Loading } from '../../../components/loading';
-import { api } from '../../../lib/axios';
-
-export interface Participant {
-  id: string;
-  name: string | null;
-  email: string;
-  is_confirmed: boolean;
-}
+import { Participant } from '..';
 
 interface GuestsProps {
+  isLoadingParticipants: boolean;
+  participants: Participant[];
   openManagerGuestsModal: () => void;
-  showAlert: (message: string) => void;
 }
 
-export function Guests({ openManagerGuestsModal, showAlert }: GuestsProps) {
-  const { tripId } = useParams();
-  const [participants, setParticipants] = useState<Participant[]>([]);
-
-  const [isLoadingData, setIsLoadingData] = useState(true);
-
-  async function fetchData() {
-    try {
-      const response = await api.get(`trips/${tripId}/participants`);
-      setParticipants(response.data.participants);
-      setIsLoadingData(false);
-    } catch (error) {
-      showAlert('Erro ao tentar buscar dados de links da viagem');
-      setIsLoadingData(false);
-    }
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, [tripId]);
-
+export function Guests({
+  isLoadingParticipants,
+  participants,
+  openManagerGuestsModal,
+}: GuestsProps) {
   return (
     <div className="space-y-6">
       <h2 className="font-semibold text-xl">Convidados</h2>
 
-      {isLoadingData && <Loading color="secondary" size="lg" />}
+      {isLoadingParticipants && <Loading color="secondary" size="lg" />}
 
       <div className="space-y-5">
         {participants.map((participant, index) => (
