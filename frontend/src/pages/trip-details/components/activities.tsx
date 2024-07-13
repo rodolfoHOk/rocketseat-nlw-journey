@@ -4,8 +4,8 @@ import { CircleCheck, CircleDashed, Plus } from 'lucide-react';
 import { format, isBefore } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Button } from '../../../components/button';
-import { api } from '../../../lib/axios';
 import { Loading } from '../../../components/loading';
+import { api } from '../../../lib/axios';
 
 interface Activity {
   date: string;

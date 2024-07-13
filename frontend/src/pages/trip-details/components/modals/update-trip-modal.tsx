@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Calendar, MapPin } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
 import { format } from 'date-fns';
@@ -8,19 +8,21 @@ import { Modal } from '../../../../components/modal';
 import { FormField } from '../../../../components/form-field';
 import { RangeDatePickerModal } from '../../../../components/range-date-picker-modal';
 import { Button } from '../../../../components/button';
+import { Trip } from '../..';
 import { api } from '../../../../lib/axios';
 import { validateTripField } from '../../../../validations/validate-trip-field';
 
 interface UpdateTripModalProps {
+  trip: Trip | undefined;
   closeUpdateTripModal: () => void;
   showAlert: (message: string) => void;
 }
 
 export function UpdateTripModal({
+  trip,
   closeUpdateTripModal,
   showAlert,
 }: UpdateTripModalProps) {
-  const { tripId } = useParams();
   const navigate = useNavigate();
 
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
@@ -64,7 +66,7 @@ export function UpdateTripModal({
       return;
     }
     try {
-      await api.put(`/trips/${tripId}`, {
+      await api.put(`/trips/${trip?.id}`, {
         destination,
         starts_at: tripStartAndEndDates.from,
         ends_at: tripStartAndEndDates.to,
@@ -76,15 +78,13 @@ export function UpdateTripModal({
   }
 
   useEffect(() => {
-    api.get(`trips/${tripId}`).then((response) => {
-      setDestination(response.data.trip.destination);
-      const dateRange: DateRange = {
-        from: new Date(response.data.trip.starts_at),
-        to: new Date(response.data.trip.ends_at),
-      };
-      setTripStartAndEndDates(dateRange);
-    });
-  }, [tripId]);
+    setDestination(trip?.destination || '');
+    const dateRange: DateRange = {
+      from: new Date(trip?.starts_at || ''),
+      to: new Date(trip?.ends_at || ''),
+    };
+    setTripStartAndEndDates(dateRange);
+  }, [trip]);
 
   const displayedDate =
     tripStartAndEndDates && tripStartAndEndDates.from && tripStartAndEndDates.to

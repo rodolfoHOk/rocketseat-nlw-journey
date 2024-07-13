@@ -7,12 +7,22 @@ import { DestinationAndDateHeader } from './components/destination-and-date-head
 import { CreateLinkModal } from './components/modals/create-link-modal';
 import { ManagerGuestsModal } from './components/modals/manager-guests-modal';
 import { ConfirmPresenceModal } from './components/modals/confirm-presence-modal';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { NewInviteModal } from './components/modals/new-invite-modal';
 import { UpdateTripModal } from './components/modals/update-trip-modal';
 import { Alert } from '../../components/alert';
+import { api } from '../../lib/axios';
+
+export interface Trip {
+  id: string;
+  destination: string;
+  starts_at: string;
+  ends_at: string;
+  is_confirmed: boolean;
+}
 
 export function TripDetailsPage() {
+  const { tripId } = useParams();
   const [urlParams, _] = useSearchParams();
 
   const [isUpdateTripModalOpen, setIsUpdateTripModalOpen] = useState(false);
@@ -27,6 +37,9 @@ export function TripDetailsPage() {
 
   const [isShowAlert, setIsShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+
+  const [trip, setTrip] = useState<Trip | undefined>();
+  const [isLoadingTrip, setIsLoadingTrip] = useState(true);
 
   function openUpdateTripModal() {
     closeManagerGuestsModal();
@@ -88,6 +101,21 @@ export function TripDetailsPage() {
     setIsShowAlert(false);
   }
 
+  async function fetchTrip() {
+    try {
+      const response = await api.get(`trips/${tripId}`);
+      setTrip(response.data.trip);
+      setIsLoadingTrip(false);
+    } catch (error) {
+      showAlert('Erro ao tentar buscar dados de links da viagem');
+      setIsLoadingTrip(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchTrip();
+  }, [tripId]);
+
   useEffect(() => {
     if (urlParams.get('participant')) {
       openConfirmPresenceModal();
@@ -97,8 +125,9 @@ export function TripDetailsPage() {
   return (
     <div className="max-w-6xl px-6 py-10 mx-auto space-y-8">
       <DestinationAndDateHeader
+        isLoadingTrip={isLoadingTrip}
+        trip={trip}
         openUpdateTripModal={openUpdateTripModal}
-        showAlert={showAlert}
       />
 
       <main className="flex gap-16 px-4">
@@ -124,6 +153,7 @@ export function TripDetailsPage() {
 
       {isUpdateTripModalOpen && (
         <UpdateTripModal
+          trip={trip}
           closeUpdateTripModal={closeUpdateTripModal}
           showAlert={showAlert}
         />
@@ -131,6 +161,7 @@ export function TripDetailsPage() {
 
       {isCreateActivityModalOpen && (
         <CreateActivityModal
+          trip={trip}
           closeCreateActivityModal={closeCreateActivityModal}
           showAlert={showAlert}
         />
@@ -153,6 +184,7 @@ export function TripDetailsPage() {
 
       {isConfirmPresenceModalOpen && (
         <ConfirmPresenceModal
+          trip={trip}
           closeConfirmPresenceModal={closeConfirmPresenceModal}
           showAlert={showAlert}
         />

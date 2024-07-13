@@ -1,30 +1,30 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Mail, SquareMousePointer, User } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Modal } from '../../../../components/modal';
 import { FormField } from '../../../../components/form-field';
 import { Button } from '../../../../components/button';
-import { Trip } from '../destination-and-date-header';
 import { api } from '../../../../lib/axios';
 import { Participant } from '../guests';
+import { Trip } from '../..';
 import { validateParticipantField } from '../../../../validations/validate-participant-field';
 
 interface ConfirmPresenceModalProps {
+  trip: Trip | undefined;
   closeConfirmPresenceModal: () => void;
   showAlert: (message: string) => void;
 }
 
 export function ConfirmPresenceModal({
+  trip,
   closeConfirmPresenceModal,
   showAlert,
 }: ConfirmPresenceModalProps) {
-  const { tripId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const [trip, setTrip] = useState<Trip | undefined>();
   const [participants, setParticipants] = useState<Participant[]>([]);
 
   const participantId = searchParams.get('participant');
@@ -68,12 +68,8 @@ export function ConfirmPresenceModal({
   }
 
   useEffect(() => {
-    api.get(`trips/${tripId}`).then((response) => setTrip(response.data.trip));
-  }, [tripId]);
-
-  useEffect(() => {
     if (!participantId) {
-      api.get(`trips/${tripId}/participants`).then((response) => {
+      api.get(`trips/${trip?.id}/participants`).then((response) => {
         let participants = response.data.participants as Participant[];
         participants = participants.filter(
           (participant) => participant.is_confirmed === false
@@ -81,7 +77,7 @@ export function ConfirmPresenceModal({
         setParticipants(participants);
       });
     }
-  }, [tripId]);
+  }, [trip]);
 
   const displayedDate = trip
     ? format(trip.starts_at, "d' de 'LLLL", { locale: ptBR })

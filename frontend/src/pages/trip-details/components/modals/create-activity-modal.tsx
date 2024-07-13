@@ -1,28 +1,27 @@
-import { FormEvent, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Calendar, Tag } from 'lucide-react';
+import { format } from 'date-fns';
 import dayjs from 'dayjs';
 import { Modal } from '../../../../components/modal';
 import { FormField } from '../../../../components/form-field';
 import { Button } from '../../../../components/button';
-import { Trip } from '../destination-and-date-header';
+import { Trip } from '../..';
 import { api } from '../../../../lib/axios';
-import { format } from 'date-fns';
 import { validateActivityField } from '../../../../validations/validate-activity-field';
 
 interface CreateActivityModalProps {
+  trip: Trip | undefined;
   closeCreateActivityModal: () => void;
   showAlert: (message: string) => void;
 }
 
 export function CreateActivityModal({
+  trip,
   closeCreateActivityModal,
   showAlert,
 }: CreateActivityModalProps) {
-  const { tripId } = useParams();
   const navigate = useNavigate();
-
-  const [trip, setTrip] = useState<Trip | undefined>();
 
   async function createActivity(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -54,7 +53,7 @@ export function CreateActivityModal({
       return;
     }
     try {
-      await api.post(`/trips/${tripId}/activities`, {
+      await api.post(`/trips/${trip?.id}/activities`, {
         title,
         occurs_at,
       });
@@ -65,10 +64,6 @@ export function CreateActivityModal({
       );
     }
   }
-
-  useEffect(() => {
-    api.get(`trips/${tripId}`).then((response) => setTrip(response.data.trip));
-  }, [tripId]);
 
   return (
     <Modal handleClose={closeCreateActivityModal}>

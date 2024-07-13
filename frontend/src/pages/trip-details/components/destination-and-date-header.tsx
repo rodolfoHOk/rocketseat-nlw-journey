@@ -1,49 +1,21 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { Calendar, MapPin, Settings2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Button } from '../../../components/button';
-import { api } from '../../../lib/axios';
 import { Loading } from '../../../components/loading';
-
-export interface Trip {
-  id: string;
-  destination: string;
-  starts_at: string;
-  ends_at: string;
-  is_confirmed: boolean;
-}
+import { Trip } from '..';
 
 interface DestinationAndDateHeaderProps {
+  isLoadingTrip: boolean;
+  trip: Trip | undefined;
   openUpdateTripModal: () => void;
-  showAlert: (message: string) => void;
 }
 
 export function DestinationAndDateHeader({
+  isLoadingTrip,
+  trip,
   openUpdateTripModal,
-  showAlert,
 }: DestinationAndDateHeaderProps) {
-  const { tripId } = useParams();
-  const [trip, setTrip] = useState<Trip | undefined>();
-
-  const [isLoadingData, setIsLoadingData] = useState(true);
-
-  async function fetchData() {
-    try {
-      const response = await api.get(`trips/${tripId}`);
-      setTrip(response.data.trip);
-      setIsLoadingData(false);
-    } catch (error) {
-      showAlert('Erro ao tentar buscar dados de links da viagem');
-      setIsLoadingData(false);
-    }
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, [tripId]);
-
   const displayedDate = trip
     ? format(trip.starts_at, "d' de 'LLL", { locale: ptBR })
         .concat(' até ')
@@ -56,7 +28,7 @@ export function DestinationAndDateHeader({
         <MapPin className="size-5 text-zinc-400" />
 
         <span className="text-zinc-100">
-          {isLoadingData ? <Loading color="secondary" /> : trip?.destination}
+          {isLoadingTrip ? <Loading color="secondary" /> : trip?.destination}
         </span>
       </div>
 
@@ -65,7 +37,7 @@ export function DestinationAndDateHeader({
           <Calendar className="size-5 text-zinc-400" />
 
           <span className="text-zinc-100">
-            {isLoadingData ? <Loading color="secondary" /> : displayedDate}
+            {isLoadingTrip ? <Loading color="secondary" /> : displayedDate}
           </span>
         </div>
 
