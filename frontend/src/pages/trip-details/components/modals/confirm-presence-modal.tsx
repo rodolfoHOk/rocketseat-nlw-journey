@@ -9,13 +9,16 @@ import { Button } from '../../../../components/button';
 import { Trip } from '../destination-and-date-header';
 import { api } from '../../../../lib/axios';
 import { Participant } from '../guests';
+import { validateParticipantField } from '../../../../validations/validate-participant-field';
 
 interface ConfirmPresenceModalProps {
   closeConfirmPresenceModal: () => void;
+  showAlert: (message: string) => void;
 }
 
 export function ConfirmPresenceModal({
   closeConfirmPresenceModal,
+  showAlert,
 }: ConfirmPresenceModalProps) {
   const { tripId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -36,18 +39,32 @@ export function ConfirmPresenceModal({
       id = data.get('selectedId')?.toString();
     }
     if (!id || !name?.trim() || !email?.trim()) {
-      console.log('erro');
+      showAlert('Preencha todos os campos.');
       return;
     }
-    await api.patch(`/participants/${id}/confirm`, {
-      name,
-      email,
-    });
-    if (participantId) {
-      searchParams.delete('participant');
-      setSearchParams(searchParams);
+    if (!validateParticipantField.name(name)) {
+      showAlert('Nome deve ter ao menos 3 caracteres');
+      return;
     }
-    navigate(0);
+    if (!validateParticipantField.email(email)) {
+      showAlert('E-mail informado inválido');
+      return;
+    }
+    try {
+      await api.patch(`/participants/${id}/confirm`, {
+        name,
+        email,
+      });
+      if (participantId) {
+        searchParams.delete('participant');
+        setSearchParams(searchParams);
+      }
+      navigate(0);
+    } catch (error) {
+      showAlert(
+        'Erro ao tentar confirmar presença. Tente novamente mais tarde'
+      );
+    }
   }
 
   useEffect(() => {

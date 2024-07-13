@@ -142,7 +142,7 @@ export function TripDetailsPage() {
       {isConfirmPresenceModalOpen && (
         <ConfirmPresenceModal
           closeConfirmPresenceModal={closeConfirmPresenceModal}
-          // showAlert={showAlert}
+          showAlert={showAlert}
         />
       )}
 
