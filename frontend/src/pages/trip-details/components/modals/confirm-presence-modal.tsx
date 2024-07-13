@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Mail, SquareMousePointer, User } from 'lucide-react';
 import { format } from 'date-fns';
@@ -26,6 +26,8 @@ export function ConfirmPresenceModal({
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
+  const [isConfirmingPresence, setIsConfirmingPresence] = useState(false);
+
   const participantId = searchParams.get('participant');
 
   async function confirmPresence(event: FormEvent<HTMLFormElement>) {
@@ -51,6 +53,7 @@ export function ConfirmPresenceModal({
       return;
     }
     try {
+      setIsConfirmingPresence(true);
       await api.patch(`/participants/${id}/confirm`, {
         name,
         email,
@@ -64,6 +67,8 @@ export function ConfirmPresenceModal({
       showAlert(
         'Erro ao tentar confirmar presença. Tente novamente mais tarde'
       );
+    } finally {
+      setIsConfirmingPresence(false);
     }
   }
 
@@ -136,7 +141,12 @@ export function ConfirmPresenceModal({
             />
           </FormField>
 
-          <Button variant="primary" size="full" type="submit">
+          <Button
+            variant="primary"
+            size="full"
+            type="submit"
+            isLoading={isConfirmingPresence}
+          >
             <span>
               {participantId
                 ? 'Confirmar minha presença'
