@@ -56,7 +56,35 @@
 
 ## Galeria de imagens
 
-- to do:
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-01.png" alt="NLW Journey Web 01" height="400" />
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-02.png" alt="NLW Journey Web 02" height="400" />
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-03.png" alt="NLW Journey Web 03" height="400" />
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-04.png" alt="NLW Journey Web 04" height="400" />
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-05.png" alt="NLW Journey Web 05" height="400" />
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-06.png" alt="NLW Journey Web 06" height="400" />
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-07.png" alt="NLW Journey Web 07" height="400" />
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-08.png" alt="NLW Journey Web 08" height="400" />
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-09.png" alt="NLW Journey Web 09" height="400" />
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-10.png" alt="NLW Journey Web 10" height="400" />
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-11.png" alt="NLW Journey Web 11" height="400" />
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-12.png" alt="NLW Journey Web 12" height="400" />
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-13.png" alt="NLW Journey Web 13" height="400" />
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-14.png" alt="NLW Journey Web 14" height="400" />
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-15.png" alt="NLW Journey Web 15" height="400" />
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-16.png" alt="NLW Journey Web 16" height="400" />
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-17.png" alt="NLW Journey Web 17" height="400" />
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-18.png" alt="NLW Journey Web 18" height="400" />
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-19.png" alt="NLW Journey Web 19" height="400" />
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-front-20.png" alt="NLW Journey Web 20" height="400" />
 
 ## Links
 
