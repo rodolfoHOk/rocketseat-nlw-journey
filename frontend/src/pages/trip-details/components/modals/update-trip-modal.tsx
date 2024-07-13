@@ -26,6 +26,7 @@ export function UpdateTripModal({
   const navigate = useNavigate();
 
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const [isUpdatingTrip, setIsUpdatingTrip] = useState(false);
 
   const [destination, setDestination] = useState('');
   const [tripStartAndEndDates, setTripStartAndEndDates] = useState<
@@ -66,6 +67,7 @@ export function UpdateTripModal({
       return;
     }
     try {
+      setIsUpdatingTrip(true);
       await api.put(`/trips/${trip?.id}`, {
         destination,
         starts_at: tripStartAndEndDates.from,
@@ -74,6 +76,8 @@ export function UpdateTripModal({
       navigate(0);
     } catch (error) {
       showAlert('Erro ao tentar atualizar viagem. Tente novamente mais tarde');
+    } finally {
+      setIsUpdatingTrip(false);
     }
   }
 
@@ -142,6 +146,7 @@ export function UpdateTripModal({
             variant="primary"
             size="full"
             onClick={updateTrip}
+            isLoading={isUpdatingTrip}
           >
             <span>Atualizar local/data</span>
           </Button>
