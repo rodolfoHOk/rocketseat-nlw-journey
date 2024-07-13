@@ -149,7 +149,7 @@ export function TripDetailsPage() {
       {isNewInviteModalOpen && (
         <NewInviteModal
           closeNewInviteModal={closeNewInviteModal}
-          // showAlert={showAlert}
+          showAlert={showAlert}
         />
       )}
 

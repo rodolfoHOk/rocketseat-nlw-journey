@@ -1,27 +1,58 @@
+import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { api } from '../../../../lib/axios';
-import { FormEvent } from 'react';
+import { Mail } from 'lucide-react';
 import { Modal } from '../../../../components/modal';
 import { FormField } from '../../../../components/form-field';
-import { Mail } from 'lucide-react';
 import { Button } from '../../../../components/button';
+import { Participant } from '../guests';
+import { api } from '../../../../lib/axios';
+import { validateInviteField } from '../../../../validations/validate-invite-field';
 
 interface NewInviteModalProps {
   closeNewInviteModal: () => void;
+  showAlert: (message: string) => void;
 }
 
-export function NewInviteModal({ closeNewInviteModal }: NewInviteModalProps) {
+export function NewInviteModal({
+  closeNewInviteModal,
+  showAlert,
+}: NewInviteModalProps) {
   const { tripId } = useParams();
   const navigate = useNavigate();
+
+  const [participants, setParticipants] = useState<Participant[]>([]);
+
+  useEffect(() => {
+    api
+      .get(`trips/${tripId}/participants`)
+      .then((response) => setParticipants(response.data.participants));
+  }, [tripId]);
 
   async function newInvite(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get('email')?.toString();
-    await api.post(`/trips/${tripId}/invites`, {
-      email,
-    });
-    navigate(0);
+    if (!email) {
+      showAlert('Preencha o e-mail');
+      return;
+    }
+    if (!validateInviteField.email(email)) {
+      showAlert('E-mail informado inválido');
+      return;
+    }
+    const emails = participants.map((participant) => participant.email);
+    if (emails.includes(email)) {
+      showAlert('E-mail informado já foi convidado');
+      return;
+    }
+    try {
+      await api.post(`/trips/${tripId}/invites`, {
+        email,
+      });
+      navigate(0);
+    } catch (error) {
+      showAlert('Erro ao tentar enviar convite. Tente novamente mais tarde');
+    }
   }
 
   return (
