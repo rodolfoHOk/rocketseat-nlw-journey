@@ -40,10 +40,23 @@
 - adicionado validações para o cadastro de links (novo recurso)
 - adicionado validações para o confirmar presença (novo recurso)
 - adicionado validações para o enviar novo convite (novo recurso)
+- adicionado componente Loading e usando no componente Button (novo recurso)
+- usando isLoading no botão de criar viagem (novo recurso)
+- usando loading no componente Activities (novo recurso)
+- usando loading no componente ImportantLinks (novo recurso)
+- usando loading no componente Guests (novo recurso)
+- usando loading no componente DestinationAndDateHeader (novo recurso)
+- mudança da busca de dados da viagem para a página de detalhes de viagem e remoção da busca dos components filhos (refatoração)
+- mudança da busca de dados dos participantes de uma viagem para a página de detalhes de viagem e remoção da busca dos components filhos (refatoração)
+- usando isLoading no botão de confirmar presença (novo recurso)
+- usando isLoading no botão de criar atividade (novo recurso)
+- usando isLoading no botão de criar link (novo recurso)
+- usando isLoading no botão de enviar convite (novo recurso)
+- usando isLoading no botão de atualizar local data da viagem (novo recurso)
 
-## Ideias melhorias
+## Galeria de imagens
 
-- todo: estado de carregando/processando
+- to do:
 
 ## Links
 
