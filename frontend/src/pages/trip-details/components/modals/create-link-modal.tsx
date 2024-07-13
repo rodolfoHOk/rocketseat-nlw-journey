@@ -5,13 +5,16 @@ import { Modal } from '../../../../components/modal';
 import { FormField } from '../../../../components/form-field';
 import { Button } from '../../../../components/button';
 import { api } from '../../../../lib/axios';
+import { validateLinkField } from '../../../../validations/validate-link-field';
 
 interface CreateLinkModalProps {
   closeCreateLinkModal: () => void;
+  showAlert: (message: string) => void;
 }
 
 export function CreateLinkModal({
   closeCreateLinkModal,
+  showAlert,
 }: CreateLinkModalProps) {
   const { tripId } = useParams();
   const navigate = useNavigate();
@@ -21,11 +24,31 @@ export function CreateLinkModal({
     const data = new FormData(event.currentTarget);
     const title = data.get('title')?.toString();
     const url = data.get('url')?.toString();
-    await api.post(`/trips/${tripId}/links`, {
-      title,
-      url,
-    });
-    navigate(0);
+    if (!title) {
+      showAlert('Preencha o título do link');
+      return;
+    }
+    if (!url) {
+      showAlert('Preencha a url do link');
+      return;
+    }
+    if (!validateLinkField.title(title)) {
+      showAlert('Título do link deve ter ao menos 4 caracteres');
+      return;
+    }
+    if (!validateLinkField.url(url)) {
+      showAlert('URL informada inválida');
+      return;
+    }
+    try {
+      await api.post(`/trips/${tripId}/links`, {
+        title,
+        url,
+      });
+      navigate(0);
+    } catch (error) {
+      showAlert('Erro ao tentar cadastrar link. Tente novamente mais tarde');
+    }
   }
 
   return (

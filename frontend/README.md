@@ -36,7 +36,7 @@
 - adicionado validações para o cadastro da viagem (novo recurso)
 - adicionado validações para o atualização da viagem (novo recurso)
 - adicionado validações para o cadastro de atividades (novo recurso)
-  <!-- - adicionado validações para o cadastro de links (novo recurso) -->
+- adicionado validações para o cadastro de links (novo recurso)
   <!-- - adicionado validações para o confirmar presença (novo recurso) -->
   <!-- - adicionado validações para o enviar novo convite (novo recurso) -->
 

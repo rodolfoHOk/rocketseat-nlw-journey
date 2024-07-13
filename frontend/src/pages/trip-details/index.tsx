@@ -127,7 +127,7 @@ export function TripDetailsPage() {
       {isCreateLinkModalOpen && (
         <CreateLinkModal
           closeCreateLinkModal={closeCreateLinkModal}
-          // showAlert={showAlert}
+          showAlert={showAlert}
         />
       )}
 
