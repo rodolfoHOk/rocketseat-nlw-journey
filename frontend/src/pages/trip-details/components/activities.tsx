@@ -36,7 +36,7 @@ export function Activities({
       setActivities(response.data.activities);
       setIsLoadingData(false);
     } catch (error) {
-      showAlert('Erro ao tentar buscar dados de atividades');
+      showAlert('Erro ao tentar buscar dados de atividades da viagem');
       setIsLoadingData(false);
     }
   }

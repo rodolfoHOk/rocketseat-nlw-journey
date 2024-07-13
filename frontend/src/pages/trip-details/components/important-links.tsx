@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link2, Plus } from 'lucide-react';
 import { Button } from '../../../components/button';
+import { Loading } from '../../../components/loading';
 import { api } from '../../../lib/axios';
 
 interface Link {
@@ -12,21 +13,38 @@ interface Link {
 
 interface ImportantLinksProps {
   openCreateLinkModal: () => void;
+  showAlert: (message: string) => void;
 }
 
-export function ImportantLinks({ openCreateLinkModal }: ImportantLinksProps) {
+export function ImportantLinks({
+  openCreateLinkModal,
+  showAlert,
+}: ImportantLinksProps) {
   const { tripId } = useParams();
   const [links, setLinks] = useState<Link[]>([]);
 
+  const [isLoadingData, setIsLoadingData] = useState(true);
+
+  async function fetchData() {
+    try {
+      const response = await api.get(`trips/${tripId}/links`);
+      setLinks(response.data.links);
+      setIsLoadingData(false);
+    } catch (error) {
+      showAlert('Erro ao tentar buscar dados de links da viagem');
+      setIsLoadingData(false);
+    }
+  }
+
   useEffect(() => {
-    api
-      .get(`trips/${tripId}/links`)
-      .then((response) => setLinks(response.data.links));
+    fetchData();
   }, [tripId]);
 
   return (
     <div className="space-y-6">
       <h2 className="font-semibold text-xl">Links importantes</h2>
+
+      {isLoadingData && <Loading color="secondary" size="lg" />}
 
       <div className="space-y-5">
         {links.map((link) => (

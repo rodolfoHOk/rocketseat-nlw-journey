@@ -99,10 +99,16 @@ export function TripDetailsPage() {
       <DestinationAndDateHeader openUpdateTripModal={openUpdateTripModal} />
 
       <main className="flex gap-16 px-4">
-        <Activities openCreateActivityModal={openCreateActivityModal} />
+        <Activities
+          openCreateActivityModal={openCreateActivityModal}
+          showAlert={showAlert}
+        />
 
         <div className="w-80 space-y-6">
-          <ImportantLinks openCreateLinkModal={openCreateLinkModal} />
+          <ImportantLinks
+            openCreateLinkModal={openCreateLinkModal}
+            showAlert={showAlert}
+          />
 
           <div className="w-full h-px bg-zinc-800" />
 
