@@ -9,6 +9,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/rodolfoHOk/rocketseat.nlw-journey/planner-go/internal/api/spec"
 	"github.com/rodolfoHOk/rocketseat.nlw-journey/planner-go/internal/pgstore"
@@ -30,7 +31,7 @@ type store interface {
 	// GetTripActivities(context.Context, uuid.UUID) ([]pgstore.GetTripActivitiesRow, error)
 	// GetTripLinks(context.Context, uuid.UUID) ([]pgstore.GetTripLinksRow, error)
 	// InsertTrip(context.Context, pgstore.InsertTripParams) (uuid.UUID, error)
-	// UpdateTrip(context.Context, pgstore.UpdateTripParams) error
+	UpdateTrip(context.Context, pgstore.UpdateTripParams) error
 }
 
 type API struct {
@@ -135,7 +136,32 @@ func (api API) GetTripsTripID(w http.ResponseWriter, r *http.Request, tripID str
 // Update a trip.
 // (PUT /trips/{tripId})
 func (api API) PutTripsTripID(w http.ResponseWriter, r *http.Request, tripID string) *spec.Response {
-	panic("not implemented") // TODO: Implement
+	id, err := uuid.Parse(tripID)
+	if err != nil {
+		return spec.PutTripsTripIDJSON400Response(spec.Error{Message: "invalid uuid"})
+	}
+	trip, err := api.store.GetTrip(r.Context(), id)
+	if err != nil {
+		return spec.PutTripsTripIDJSON400Response(spec.Error{Message: "not found"})
+	}
+	var body spec.UpdateTripRequest
+	err = json.NewDecoder(r.Body).Decode(&body)
+	if err != nil {
+		return spec.PutTripsTripIDJSON400Response(spec.Error{Message: "invalid json"})
+	}
+	if err = api.validator.Struct(body); err != nil {
+		return spec.PutTripsTripIDJSON400Response(spec.Error{Message: "invalid input: " + err.Error()})
+	}
+	if err = api.store.UpdateTrip(r.Context(), pgstore.UpdateTripParams{
+		ID:          trip.ID,
+		Destination: body.Destination,
+		StartsAt:    pgtype.Timestamp{Valid: true, Time: body.StartsAt},
+		EndsAt:      pgtype.Timestamp{Valid: true, Time: body.EndsAt},
+		IsConfirmed: trip.IsConfirmed,
+	}); err != nil {
+		spec.PutTripsTripIDJSON400Response(spec.Error{Message: "something went wrong, try again"})
+	}
+	return spec.PutTripsTripIDJSON204Response(spec.Response{Code: 204})
 }
 
 // Get a trip activities.
