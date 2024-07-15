@@ -61,6 +61,24 @@ Content-Type: application/json
   "occurs_at": "2024-07-17T12:00:00Z"
 }
 
+### Create trip activity 2
+POST http://localhost:8080/trips/{{tripId}}/activities
+Content-Type: application/json
+
+{
+  "title": "Jantar",
+  "occurs_at": "2024-07-17T20:00:00Z"
+}
+
+### Create trip activity 3
+POST http://localhost:8080/trips/{{tripId}}/activities
+Content-Type: application/json
+
+{
+  "title": "Café da manhã",
+  "occurs_at": "2024-07-18T07:30:00Z"
+}
+
 ### List trip activities
 GET http://localhost:8080/trips/{{tripId}}/activities
 

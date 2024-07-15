@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"sort"
+	"time"
 
 	"github.com/discord-gophers/goapi-gen/types"
 	"github.com/go-playground/validator/v10"
@@ -29,7 +31,7 @@ type store interface {
 	GetParticipant(context.Context, uuid.UUID) (pgstore.GetParticipantRow, error)
 	GetParticipants(context.Context, uuid.UUID) ([]pgstore.GetParticipantsRow, error)
 	GetTrip(context.Context, uuid.UUID) (pgstore.GetTripRow, error)
-	// GetTripActivities(context.Context, uuid.UUID) ([]pgstore.GetTripActivitiesRow, error)
+	GetTripActivities(context.Context, uuid.UUID) ([]pgstore.GetTripActivitiesRow, error)
 	// GetTripLinks(context.Context, uuid.UUID) ([]pgstore.GetTripLinksRow, error)
 	// InviteParticipantsToTrip(context.Context, []pgstore.InviteParticipantsToTripParams) (int64, error)
 	UpdateTrip(context.Context, pgstore.UpdateTripParams) error
@@ -158,7 +160,49 @@ func (api API) PutTripsTripID(w http.ResponseWriter, r *http.Request, tripID str
 // Get a trip activities.
 // (GET /trips/{tripId}/activities)
 func (api API) GetTripsTripIDActivities(w http.ResponseWriter, r *http.Request, tripID string) *spec.Response {
-	panic("not implemented") // TODO: Implement
+	trip, err := api.getTripById(r.Context(), tripID)
+	if err != nil {
+		return spec.GetTripsTripIDActivitiesJSON400Response(spec.Error{Message: err.Error()})
+	}
+	activities, err := api.store.GetTripActivities(r.Context(), trip.ID)
+	if err != nil {
+		return spec.GetTripsTripIDActivitiesJSON400Response(spec.Error{Message: "something went wrong, try again"})
+	}
+	sort.SliceStable(activities, func(i, j int) bool {
+		return activities[i].OccursAt.Time.Before(activities[j].OccursAt.Time)
+	})
+
+	format := "2006-02-01"
+	var responseBody []spec.GetTripActivitiesResponseOuterArray
+	var lastDate time.Time = activities[0].OccursAt.Time
+	innerResponse := make([]spec.GetTripActivitiesResponseInnerArray, 0)
+	for _, activity := range activities {
+		if lastDate.Format(format) == activity.OccursAt.Time.Format(format) {
+			innerResponse = append(innerResponse, spec.GetTripActivitiesResponseInnerArray{
+				ID:       activity.ID.String(),
+				Title:    activity.Title,
+				OccursAt: activity.OccursAt.Time,
+			})
+		} else {
+			responseBody = append(responseBody, spec.GetTripActivitiesResponseOuterArray{
+				Date:       lastDate,
+				Activities: innerResponse,
+			})
+			innerResponse = make([]spec.GetTripActivitiesResponseInnerArray, 0)
+			lastDate = activity.OccursAt.Time
+			innerResponse = append(innerResponse, spec.GetTripActivitiesResponseInnerArray{
+				ID:       activity.ID.String(),
+				Title:    activity.Title,
+				OccursAt: activity.OccursAt.Time,
+			})
+		}
+	}
+	responseBody = append(responseBody, spec.GetTripActivitiesResponseOuterArray{
+		Date:       lastDate,
+		Activities: innerResponse,
+	})
+
+	return spec.GetTripsTripIDActivitiesJSON200Response(spec.GetTripActivitiesResponse{Activities: responseBody})
 }
 
 // Create a trip activity.

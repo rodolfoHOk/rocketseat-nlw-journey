@@ -31,6 +31,9 @@
 - implementado endpoint de update trip by id
 - implementado endpoint de get trip participants by trip id
 - arrumado erro no spec, queries e endpoint de confirm participant presence
+- implementado endpoint de create trip activity
+- implementado endpoint de get trip activities by trip id
+-
 
 ## Guia
 
