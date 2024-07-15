@@ -42,7 +42,7 @@ Content-Type: application/json
 }
 
 ### Participant ID
-@participantId = e6f6f003-d472-46f7-94fa-3b65eeccb49c
+@participantId = 7abaecb5-c879-4954-b262-86b77a5e70ea
 
 ### Confirm participant by ID
 PATCH http://localhost:8080/participants/{{participantId}}/confirm

@@ -50,6 +50,16 @@
       "patch": {
         "summary": "Confirms a participant on a trip.",
         "tags": ["participants"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmParticipantRequest"
+              }
+            }
+          },
+          "required": true
+        },
         "parameters": [
           {
             "schema": {
@@ -486,6 +496,20 @@
         "required": ["message"],
         "additionalProperties": false,
         "description": "Bad request"
+      },
+      "ConfirmParticipantRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 3,
+            "x-go-extra-tags": {
+              "validate": "required,min=3"
+            }
+          }
+        },
+        "required": ["name"],
+        "additionalProperties": false
       },
       "InviteParticipantRequest": {
         "type": "object",

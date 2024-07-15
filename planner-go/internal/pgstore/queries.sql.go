@@ -13,15 +13,21 @@ import (
 )
 
 const confirmParticipant = `-- name: ConfirmParticipant :exec
-SELECT
-  "id", "trip_id", "email", "is_confirmed"
-FROM participants
+UPDATE participants
+SET
+  "name" = $1,
+  "is_confirmed" = true
 WHERE
-  id = $1
+  id = $2
 `
 
-func (q *Queries) ConfirmParticipant(ctx context.Context, id uuid.UUID) error {
-	_, err := q.db.Exec(ctx, confirmParticipant, id)
+type ConfirmParticipantParams struct {
+	Name string    `db:"name" json:"name"`
+	ID   uuid.UUID `db:"id" json:"id"`
+}
+
+func (q *Queries) ConfirmParticipant(ctx context.Context, arg ConfirmParticipantParams) error {
+	_, err := q.db.Exec(ctx, confirmParticipant, arg.Name, arg.ID)
 	return err
 }
 
@@ -69,7 +75,7 @@ func (q *Queries) CreateTripLink(ctx context.Context, arg CreateTripLinkParams) 
 
 const getParticipant = `-- name: GetParticipant :one
 SELECT
-  "id", "trip_id", "email", "is_confirmed"
+  "id", "trip_id", "name", "email", "is_confirmed"
 FROM participants
 WHERE
   id = $1
@@ -78,6 +84,7 @@ WHERE
 type GetParticipantRow struct {
 	ID          uuid.UUID `db:"id" json:"id"`
 	TripID      uuid.UUID `db:"trip_id" json:"trip_id"`
+	Name        string    `db:"name" json:"name"`
 	Email       string    `db:"email" json:"email"`
 	IsConfirmed bool      `db:"is_confirmed" json:"is_confirmed"`
 }
@@ -88,6 +95,7 @@ func (q *Queries) GetParticipant(ctx context.Context, id uuid.UUID) (GetParticip
 	err := row.Scan(
 		&i.ID,
 		&i.TripID,
+		&i.Name,
 		&i.Email,
 		&i.IsConfirmed,
 	)
@@ -96,7 +104,7 @@ func (q *Queries) GetParticipant(ctx context.Context, id uuid.UUID) (GetParticip
 
 const getParticipants = `-- name: GetParticipants :many
 SELECT
-  "id", "trip_id", "email", "is_confirmed"
+  "id", "trip_id", "name", "email", "is_confirmed"
 FROM participants
 WHERE
   trip_id = $1
@@ -105,6 +113,7 @@ WHERE
 type GetParticipantsRow struct {
 	ID          uuid.UUID `db:"id" json:"id"`
 	TripID      uuid.UUID `db:"trip_id" json:"trip_id"`
+	Name        string    `db:"name" json:"name"`
 	Email       string    `db:"email" json:"email"`
 	IsConfirmed bool      `db:"is_confirmed" json:"is_confirmed"`
 }
@@ -121,6 +130,7 @@ func (q *Queries) GetParticipants(ctx context.Context, tripID uuid.UUID) ([]GetP
 		if err := rows.Scan(
 			&i.ID,
 			&i.TripID,
+			&i.Name,
 			&i.Email,
 			&i.IsConfirmed,
 		); err != nil {

@@ -24,21 +24,22 @@ WHERE
 
 -- name: GetParticipant :one
 SELECT
-  "id", "trip_id", "email", "is_confirmed"
+  "id", "trip_id", "name", "email", "is_confirmed"
 FROM participants
 WHERE
   id = $1;
 
 -- name: ConfirmParticipant :exec
-SELECT
-  "id", "trip_id", "email", "is_confirmed"
-FROM participants
+UPDATE participants
+SET
+  "name" = $1,
+  "is_confirmed" = true
 WHERE
-  id = $1;
+  id = $2;
 
 -- name: GetParticipants :many
 SELECT
-  "id", "trip_id", "email", "is_confirmed"
+  "id", "trip_id", "name", "email", "is_confirmed"
 FROM participants
 WHERE
   trip_id = $1;
