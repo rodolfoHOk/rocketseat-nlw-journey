@@ -25,6 +25,11 @@
 - github.com/jackc/tern/v2@latest
 - github.com/sqlc-dev/sqlc
 
+## Diferenças em relação ao evento
+
+- adicionado endpoint get trip by id
+-
+
 ## Guia
 
 ### go init

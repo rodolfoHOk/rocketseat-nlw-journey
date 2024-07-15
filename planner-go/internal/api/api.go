@@ -26,7 +26,7 @@ type store interface {
 	// CreateTripLink(context.Context, pgstore.CreateTripLinkParams) (uuid.UUID, error)
 	GetParticipant(context.Context, uuid.UUID) (pgstore.GetParticipantRow, error)
 	// GetParticipants(context.Context, uuid.UUID) ([]pgstore.GetParticipantsRow, error)
-	// GetTrip(context.Context, uuid.UUID) (pgstore.GetTripRow, error)
+	GetTrip(context.Context, uuid.UUID) (pgstore.GetTripRow, error)
 	// GetTripActivities(context.Context, uuid.UUID) ([]pgstore.GetTripActivitiesRow, error)
 	// GetTripLinks(context.Context, uuid.UUID) ([]pgstore.GetTripLinksRow, error)
 	// InsertTrip(context.Context, pgstore.InsertTripParams) (uuid.UUID, error)
@@ -115,7 +115,21 @@ func (api API) PostTrips(w http.ResponseWriter, r *http.Request) *spec.Response 
 // Get a trip details.
 // (GET /trips/{tripId})
 func (api API) GetTripsTripID(w http.ResponseWriter, r *http.Request, tripID string) *spec.Response {
-	panic("not implemented") // TODO: Implement
+	id, err := uuid.Parse(tripID)
+	if err != nil {
+		return spec.GetTripsTripIDJSON400Response(spec.Error{Message: "invalid uuid"})
+	}
+	trip, err := api.store.GetTrip(r.Context(), id)
+	if err != nil {
+		return spec.GetTripsTripIDJSON400Response(spec.Error{Message: "something went wrong, try again"})
+	}
+	return spec.GetTripsTripIDJSON200Response(spec.GetTripDetailsResponse{Trip: spec.GetTripDetailsResponseTripObj{
+		ID:          trip.ID.String(),
+		Destination: trip.Destination,
+		StartsAt:    trip.StartsAt.Time,
+		EndsAt:      trip.EndsAt.Time,
+		IsConfirmed: trip.IsConfirmed,
+	}})
 }
 
 // Update a trip.
