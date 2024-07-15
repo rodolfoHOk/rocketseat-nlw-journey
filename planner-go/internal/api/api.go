@@ -32,7 +32,7 @@ type store interface {
 	GetParticipants(context.Context, uuid.UUID) ([]pgstore.GetParticipantsRow, error)
 	GetTrip(context.Context, uuid.UUID) (pgstore.GetTripRow, error)
 	GetTripActivities(context.Context, uuid.UUID) ([]pgstore.GetTripActivitiesRow, error)
-	// GetTripLinks(context.Context, uuid.UUID) ([]pgstore.GetTripLinksRow, error)
+	GetTripLinks(context.Context, uuid.UUID) ([]pgstore.GetTripLinksRow, error)
 	// InviteParticipantsToTrip(context.Context, []pgstore.InviteParticipantsToTripParams) (int64, error)
 	UpdateTrip(context.Context, pgstore.UpdateTripParams) error
 }
@@ -242,7 +242,23 @@ func (api API) PostTripsTripIDInvites(w http.ResponseWriter, r *http.Request, tr
 // Get a trip links.
 // (GET /trips/{tripId}/links)
 func (api API) GetTripsTripIDLinks(w http.ResponseWriter, r *http.Request, tripID string) *spec.Response {
-	panic("not implemented") // TODO: Implement
+	trip, err := api.getTripById(r.Context(), tripID)
+	if err != nil {
+		return spec.GetTripsTripIDLinksJSON400Response(spec.Error{Message: err.Error()})
+	}
+	links, err := api.store.GetTripLinks(r.Context(), trip.ID)
+	if err != nil {
+		return spec.GetTripsTripIDLinksJSON400Response(spec.Error{Message: "something went wrong, try again"})
+	}
+	var responseBody []spec.GetLinksResponseArray
+	for _, link := range links {
+		responseBody = append(responseBody, spec.GetLinksResponseArray{
+			ID:    link.ID.String(),
+			Title: link.Title,
+			URL:   link.Url,
+		})
+	}
+	return spec.GetTripsTripIDLinksJSON200Response(spec.GetLinksResponse{Links: responseBody})
 }
 
 // Create a trip link.

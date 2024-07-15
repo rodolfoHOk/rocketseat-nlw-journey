@@ -33,6 +33,8 @@
 - arrumado erro no spec, queries e endpoint de confirm participant presence
 - implementado endpoint de create trip activity
 - implementado endpoint de get trip activities by trip id
+- implementado endpoint de create trip link
+- implementado endpoint de get trip links by trip id
 -
 
 ## Guia
