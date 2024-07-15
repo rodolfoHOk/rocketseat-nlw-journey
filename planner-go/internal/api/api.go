@@ -27,7 +27,7 @@ type store interface {
 	ConfirmParticipant(context.Context, pgstore.ConfirmParticipantParams) error
 	CreateActivity(context.Context, pgstore.CreateActivityParams) (uuid.UUID, error)
 	CreateTrip(context.Context, *pgxpool.Pool, spec.CreateTripRequest) (uuid.UUID, error)
-	// CreateTripLink(context.Context, pgstore.CreateTripLinkParams) (uuid.UUID, error)
+	CreateTripLink(context.Context, pgstore.CreateTripLinkParams) (uuid.UUID, error)
 	GetParticipant(context.Context, uuid.UUID) (pgstore.GetParticipantRow, error)
 	GetParticipants(context.Context, uuid.UUID) ([]pgstore.GetParticipantsRow, error)
 	GetTrip(context.Context, uuid.UUID) (pgstore.GetTripRow, error)
@@ -75,8 +75,7 @@ func (api API) PatchParticipantsParticipantIDConfirm(w http.ResponseWriter, r *h
 		return spec.PatchParticipantsParticipantIDConfirmJSON400Response(spec.Error{Message: "participant already confirmed"})
 	}
 	var body spec.ConfirmParticipantRequest
-	err = json.NewDecoder(r.Body).Decode(&body)
-	if err != nil {
+	if err = json.NewDecoder(r.Body).Decode(&body); err != nil {
 		spec.PatchParticipantsParticipantIDConfirmJSON400Response(spec.Error{Message: "invalid json: " + err.Error()})
 	}
 	if err = api.store.ConfirmParticipant(r.Context(), pgstore.ConfirmParticipantParams{Name: body.Name, ID: participant.ID}); err != nil {
@@ -90,8 +89,7 @@ func (api API) PatchParticipantsParticipantIDConfirm(w http.ResponseWriter, r *h
 // (POST /trips)
 func (api API) PostTrips(w http.ResponseWriter, r *http.Request) *spec.Response {
 	var body spec.CreateTripRequest
-	err := json.NewDecoder(r.Body).Decode(&body)
-	if err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 		spec.PostTripsJSON400Response(spec.Error{Message: "invalid json: " + err.Error()})
 	}
 	if err := api.validator.Struct(body); err != nil {
@@ -138,8 +136,7 @@ func (api API) PutTripsTripID(w http.ResponseWriter, r *http.Request, tripID str
 		return spec.PutTripsTripIDJSON400Response(spec.Error{Message: err.Error()})
 	}
 	var body spec.UpdateTripRequest
-	err = json.NewDecoder(r.Body).Decode(&body)
-	if err != nil {
+	if err = json.NewDecoder(r.Body).Decode(&body); err != nil {
 		return spec.PutTripsTripIDJSON400Response(spec.Error{Message: "invalid json"})
 	}
 	if err = api.validator.Struct(body); err != nil {
@@ -171,7 +168,6 @@ func (api API) GetTripsTripIDActivities(w http.ResponseWriter, r *http.Request, 
 	sort.SliceStable(activities, func(i, j int) bool {
 		return activities[i].OccursAt.Time.Before(activities[j].OccursAt.Time)
 	})
-
 	format := "2006-02-01"
 	var responseBody []spec.GetTripActivitiesResponseOuterArray
 	var lastDate time.Time = activities[0].OccursAt.Time
@@ -201,7 +197,6 @@ func (api API) GetTripsTripIDActivities(w http.ResponseWriter, r *http.Request, 
 		Date:       lastDate,
 		Activities: innerResponse,
 	})
-
 	return spec.GetTripsTripIDActivitiesJSON200Response(spec.GetTripActivitiesResponse{Activities: responseBody})
 }
 
@@ -213,8 +208,7 @@ func (api API) PostTripsTripIDActivities(w http.ResponseWriter, r *http.Request,
 		return spec.PostTripsTripIDActivitiesJSON400Response(spec.Error{Message: err.Error()})
 	}
 	var requestBody spec.CreateActivityRequest
-	err = json.NewDecoder(r.Body).Decode(&requestBody)
-	if err != nil {
+	if err = json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
 		return spec.PostTripsTripIDActivitiesJSON400Response(spec.Error{Message: "json invalid"})
 	}
 	if err = api.validator.Struct(requestBody); err != nil {
@@ -254,7 +248,26 @@ func (api API) GetTripsTripIDLinks(w http.ResponseWriter, r *http.Request, tripI
 // Create a trip link.
 // (POST /trips/{tripId}/links)
 func (api API) PostTripsTripIDLinks(w http.ResponseWriter, r *http.Request, tripID string) *spec.Response {
-	panic("not implemented") // TODO: Implement
+	trip, err := api.getTripById(r.Context(), tripID)
+	if err != nil {
+		return spec.PostTripsTripIDLinksJSON400Response(spec.Error{Message: err.Error()})
+	}
+	var requestBody spec.CreateLinkRequest
+	if err = json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
+		return spec.PostTripsTripIDLinksJSON400Response(spec.Error{Message: "invalid json"})
+	}
+	if err = api.validator.Struct(requestBody); err != nil {
+		return spec.PostTripsTripIDLinksJSON400Response(spec.Error{Message: "invalid input: " + err.Error()})
+	}
+	linkId, err := api.store.CreateTripLink(r.Context(), pgstore.CreateTripLinkParams{
+		TripID: trip.ID,
+		Title:  requestBody.Title,
+		Url:    requestBody.URL,
+	})
+	if err != nil {
+		return spec.PostTripsTripIDLinksJSON400Response(spec.Error{Message: "something went wrong, try again"})
+	}
+	return spec.PostTripsTripIDLinksJSON201Response(spec.CreateLinkResponse{LinkID: linkId.String()})
 }
 
 // Get a trip participants.
