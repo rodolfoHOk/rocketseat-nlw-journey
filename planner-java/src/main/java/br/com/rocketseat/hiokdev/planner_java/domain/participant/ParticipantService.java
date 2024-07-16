@@ -1,8 +1,7 @@
 package br.com.rocketseat.hiokdev.planner_java.domain.participant;
 
-import br.com.rocketseat.hiokdev.planner_java.api.participant.dto.ParticipantCreateResponse;
-import br.com.rocketseat.hiokdev.planner_java.api.participant.dto.ParticipantData;
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.Trip;
+import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,29 +13,27 @@ import java.util.UUID;
 public class ParticipantService {
 
     private final ParticipantRepository participantRepository;
+    private final TripService tripService;
 
-    public void registerParticipantsToTrip(List<String> participantsToInvite, Trip trip) {
-        List<Participant> participants = participantsToInvite.stream()
+    public void registerParticipantsToTrip(List<String> emailsToInvite, Trip trip) {
+        List<Participant> participants = emailsToInvite.stream()
                 .map(email -> new Participant(email, trip)).toList();
         this.participantRepository.saveAll(participants);
         Participant ownerParticipant = new Participant(trip);
         this.participantRepository.save(ownerParticipant);
     }
 
-    public List<ParticipantData> getAllParticipantsByTripId(UUID tripId){
-        return this.participantRepository.findByTripId(tripId).stream()
-                .map(participant -> new ParticipantData(
-                        participant.getId(),
-                        participant.getName(),
-                        participant.getEmail(),
-                        participant.getIsConfirmed()))
-                .toList();
+    public List<Participant> getAllParticipantsByTripId(UUID tripId) {
+        return this.participantRepository.findByTripId(tripId);
     }
 
-    public ParticipantCreateResponse registerParticipantToTrip(String email, Trip trip) {
+    public Participant registerParticipantToTrip(String email, UUID tripId) {
+        var trip = this.tripService.getById(tripId);
         Participant participant = new Participant(email, trip);
-        participant = this.participantRepository.save(participant);
-        return new ParticipantCreateResponse(participant.getId());
+        if(trip.getIsConfirmed()) {
+            this.triggerConfirmationEmailToParticipant(email);
+        }
+        return this.participantRepository.save(participant);
     }
 
     public void triggerConfirmationEmailToParticipants(UUID tripId) {

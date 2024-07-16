@@ -8,7 +8,6 @@ import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripCreateRequestPayl
 import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripData;
 import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripUpdateRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.domain.activity.ActivityService;
-import br.com.rocketseat.hiokdev.planner_java.domain.trip.Trip;
 import br.com.rocketseat.hiokdev.planner_java.api.link.dto.LinkData;
 import br.com.rocketseat.hiokdev.planner_java.api.link.dto.LinkRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.api.link.dto.LinkResponse;
@@ -74,18 +73,17 @@ public class TripController {
 
     @GetMapping("/{id}/participants")
     public ResponseEntity<List<ParticipantData>> getAllParticipants(@PathVariable UUID id){
-        List<ParticipantData> participantList = this.participantService.getAllParticipantsByTripId(id);
-        return ResponseEntity.ok(participantList);
+        var participants = this.participantService.getAllParticipantsByTripId(id);
+        return ResponseEntity.ok(participants.stream().map(ParticipantData::toResponse).toList());
     }
 
     @PostMapping("/{id}/invite")
-    public ResponseEntity<ParticipantCreateResponse> inviteParticipant(@PathVariable UUID id, @RequestBody ParticipantRequestPayload payload) {
-        var trip = this.tripService.getById(id);
-        var participantResponse = this.participantService.registerParticipantToTrip(payload.email(), trip);
-        if(trip.getIsConfirmed()) {
-            this.participantService.triggerConfirmationEmailToParticipant(payload.email());
-        }
-        return ResponseEntity.ok(participantResponse);
+    public ResponseEntity<ParticipantCreateResponse> inviteParticipant(
+            @PathVariable UUID id,
+            @RequestBody ParticipantRequestPayload payload
+    ) {
+        var participant = this.participantService.registerParticipantToTrip(payload.email(), id);
+        return ResponseEntity.ok(new ParticipantCreateResponse(participant.getId()));
     }
 
     // Trip activities endpoints
