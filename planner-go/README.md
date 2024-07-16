@@ -35,7 +35,8 @@
 - implementado endpoint de get trip activities by trip id
 - implementado endpoint de create trip link
 - implementado endpoint de get trip links by trip id
--
+- implementado endpoint de confirm trip
+- implementado endpoint de invite participant to trip
 
 ## Guia
 
