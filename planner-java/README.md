@@ -27,6 +27,7 @@
 - Remoção da camada de domínio as dependências da camada de api no ParticipantService (refatoração)
 - Remoção da camada de domínio as dependências da camada de api no ActivityService (refatoração)
 - Remoção da camada de domínio as dependências da camada de api no LinkService (refatoração)
+- Movido lógica de negócio da camada de api para a camada de domínio no confirm participant endpoint (refatoração)
 - 
 
 ## Feature extras

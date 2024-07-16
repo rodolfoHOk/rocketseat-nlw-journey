@@ -1,5 +1,6 @@
 package br.com.rocketseat.hiokdev.planner_java.domain.participant;
 
+import br.com.rocketseat.hiokdev.planner_java.domain.common.exception.NotFoundException;
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.Trip;
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,12 @@ public class ParticipantService {
             this.triggerConfirmationEmailToParticipant(email);
         }
         return this.participantRepository.save(participant);
+    }
+
+    public Participant confirmParticipant(UUID id, Participant participant) {
+        var entity = this.participantRepository.findById(id).orElseThrow(() -> new NotFoundException("Participant not found"));
+        entity.setIsConfirmed(true);
+        return this.participantRepository.save(entity);
     }
 
     public void triggerConfirmationEmailToParticipants(UUID tripId) {
