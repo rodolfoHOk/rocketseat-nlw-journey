@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ### Trip Id
-@tripId = d38ff568-74f0-4520-aa44-2d3546972721
+@tripId = cf063ab8-445b-4eca-abc9-3b31e089ad7c
 
 ### Get trip by ID
 GET http://localhost:8080/trips/{{tripId}}
@@ -42,7 +42,7 @@ Content-Type: application/json
 }
 
 ### Participant ID
-@participantId = 9d7031cb-a842-4a8c-9fd7-f94b1e7aa94b
+@participantId = 1f1dc671-6137-49a4-87bd-f3838360c121
 
 ### Confirm participant by ID
 POST http://localhost:8080/participants/{{participantId}}/confirm
