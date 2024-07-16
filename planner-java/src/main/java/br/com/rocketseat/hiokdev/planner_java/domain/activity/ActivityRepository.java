@@ -7,6 +7,6 @@ import java.util.UUID;
 
 public interface ActivityRepository extends JpaRepository<Activity, UUID> {
 
-    List<Activity> findByTripId(UUID tripId);
+    List<Activity> findByTripIdOrderByOccursAtAsc(UUID tripId);
 
 }

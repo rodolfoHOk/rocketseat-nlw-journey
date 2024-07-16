@@ -1,5 +1,6 @@
 package br.com.rocketseat.hiokdev.planner_java.api.trip;
 
+import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivitiesResponse;
 import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivityData;
 import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivityRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivityCreateResponse;
@@ -18,6 +19,7 @@ import br.com.rocketseat.hiokdev.planner_java.api.participant.dto.ParticipantReq
 import br.com.rocketseat.hiokdev.planner_java.domain.participant.ParticipantService;
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripQueryService;
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -95,9 +97,12 @@ public class TripController {
     }
 
     @GetMapping("/{id}/activities")
-    public ResponseEntity<List<ActivityData>> getAllActivities(@PathVariable UUID id){
+    public ResponseEntity<ActivitiesResponse> getAllActivities(@PathVariable UUID id) throws JsonProcessingException {
         var activities = this.activityService.getAllActivitiesByTripId(id);
-        return ResponseEntity.ok(activities.stream().map(ActivityData::toResponse).toList());
+        return ResponseEntity.ok(new ActivitiesResponse(activities
+                .stream()
+                .map(ActivityData::toResponse)
+                .toList()));
     }
 
     // Trip links endpoints

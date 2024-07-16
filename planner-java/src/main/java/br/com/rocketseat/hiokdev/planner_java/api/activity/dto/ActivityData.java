@@ -1,6 +1,7 @@
 package br.com.rocketseat.hiokdev.planner_java.api.activity.dto;
 
 import br.com.rocketseat.hiokdev.planner_java.domain.activity.Activity;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ import java.util.UUID;
 public record ActivityData(
         UUID id,
         String title,
-        LocalDateTime occursAt
+        @JsonProperty("occurs_at") LocalDateTime occursAt
 ) {
 
     @Builder

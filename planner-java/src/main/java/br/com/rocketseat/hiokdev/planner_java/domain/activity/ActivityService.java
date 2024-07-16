@@ -21,7 +21,7 @@ public class ActivityService {
     }
 
     public List<Activity> getAllActivitiesByTripId(UUID tripId) {
-        return this.activityRepository.findByTripId(tripId);
+        return this.activityRepository.findByTripIdOrderByOccursAtAsc(tripId);
     }
 
 }

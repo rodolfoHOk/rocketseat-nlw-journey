@@ -28,6 +28,8 @@
 - Remoção da camada de domínio as dependências da camada de api no ActivityService (refatoração)
 - Remoção da camada de domínio as dependências da camada de api no LinkService (refatoração)
 - Movido lógica de negócio da camada de api para a camada de domínio no confirm participant endpoint (refatoração)
+- Separação trip service em trip query service e trip service (refatoração)
+- Ajustado os formatos de respostas das requisições para o frontend e mobile (fix)
 - 
 
 ## Feature extras
@@ -37,8 +39,6 @@
     - Data de começo de viagem é depois da data atual
     - Data de final da viagem é depois da data de começo
     - Data da atividade está entre as datas da viagem
-
-- Adicionar uma camada de trip service
 
 - Mapeamento das exceções da aplicação
 
