@@ -90,15 +90,14 @@ public class TripController {
 
     @PostMapping("/{id}/activities")
     public ResponseEntity<ActivityResponse> registerActivity(@PathVariable UUID id, @RequestBody ActivityRequestPayload payload) {
-        var trip = this.tripService.getById(id);
-        var activityResponse = this.activityService.registerActivity(payload, trip);
-        return ResponseEntity.ok(activityResponse);
+        var activity = this.activityService.registerActivity(ActivityRequestPayload.toDomain(payload), id);
+        return ResponseEntity.ok(new ActivityResponse(activity.getId()));
     }
 
     @GetMapping("/{id}/activities")
     public ResponseEntity<List<ActivityData>> getAllActivities(@PathVariable UUID id){
-        List<ActivityData> activityDataList = this.activityService.getAllActivitiesByTripId(id);
-        return ResponseEntity.ok(activityDataList);
+        var activities = this.activityService.getAllActivitiesByTripId(id);
+        return ResponseEntity.ok(activities.stream().map(ActivityData::toResponse).toList());
     }
 
     // Trip links endpoints
