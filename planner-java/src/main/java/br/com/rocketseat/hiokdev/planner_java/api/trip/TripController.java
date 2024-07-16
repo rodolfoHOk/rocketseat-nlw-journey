@@ -16,6 +16,7 @@ import br.com.rocketseat.hiokdev.planner_java.api.participant.dto.ParticipantCre
 import br.com.rocketseat.hiokdev.planner_java.api.participant.dto.ParticipantData;
 import br.com.rocketseat.hiokdev.planner_java.api.participant.dto.ParticipantRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.domain.participant.ParticipantService;
+import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripQueryService;
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,7 @@ import java.util.UUID;
 public class TripController {
 
     private final TripService tripService;
+    private final TripQueryService tripQueryService;
     private final ParticipantService participantService;
     private final ActivityService activityService;
     private final LinkService linkService;
@@ -51,7 +53,7 @@ public class TripController {
 
     @GetMapping("/{id}")
     public ResponseEntity<TripData> getTripDetails(@PathVariable UUID id){
-        var trip = this.tripService.getById(id);
+        var trip = this.tripQueryService.getById(id);
         return ResponseEntity.ok(TripData.toResponse(trip));
     }
 

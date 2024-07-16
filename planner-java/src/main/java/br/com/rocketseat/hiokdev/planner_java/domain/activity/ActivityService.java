@@ -1,6 +1,6 @@
 package br.com.rocketseat.hiokdev.planner_java.domain.activity;
 
-import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripService;
+import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +12,10 @@ import java.util.UUID;
 public class ActivityService {
 
     private final ActivityRepository activityRepository;
-    private final TripService tripService;
+    private final TripQueryService tripQueryService;
 
     public Activity registerActivity(Activity activity, UUID tripId) {
-        var trip = this.tripService.getById(tripId);
+        var trip = this.tripQueryService.getById(tripId);
         activity.setTrip(trip);
         return this.activityRepository.save(activity);
     }

@@ -2,7 +2,7 @@ package br.com.rocketseat.hiokdev.planner_java.domain.participant;
 
 import br.com.rocketseat.hiokdev.planner_java.domain.common.exception.NotFoundException;
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.Trip;
-import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripService;
+import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.UUID;
 public class ParticipantService {
 
     private final ParticipantRepository participantRepository;
-    private final TripService tripService;
+    private final TripQueryService tripQueryService;
 
     public void registerParticipantsToTrip(List<String> emailsToInvite, Trip trip) {
         List<Participant> participants = emailsToInvite.stream()
@@ -29,7 +29,7 @@ public class ParticipantService {
     }
 
     public Participant registerParticipantToTrip(String email, UUID tripId) {
-        var trip = this.tripService.getById(tripId);
+        var trip = this.tripQueryService.getById(tripId);
         Participant participant = new Participant(email, trip);
         if(trip.getIsConfirmed()) {
             this.triggerConfirmationEmailToParticipant(email);

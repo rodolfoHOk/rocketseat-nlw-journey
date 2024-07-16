@@ -1,6 +1,5 @@
 package br.com.rocketseat.hiokdev.planner_java.domain.trip;
 
-import br.com.rocketseat.hiokdev.planner_java.domain.common.exception.NotFoundException;
 import br.com.rocketseat.hiokdev.planner_java.domain.participant.ParticipantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +13,7 @@ import java.util.UUID;
 public class TripService {
 
     private final TripRepository tripRepository;
+    private final TripQueryService tripQueryService;
     private final ParticipantService participantService;
 
     @Transactional
@@ -23,12 +23,8 @@ public class TripService {
         return entity;
     }
 
-    public Trip getById(UUID id) {
-        return this.tripRepository.findById(id).orElseThrow(() -> new NotFoundException("Trip not found"));
-    }
-
     public Trip update(UUID id, Trip trip) {
-        var entity = this.getById(id);
+        var entity = this.tripQueryService.getById(id);
         entity.setDestination(trip.getDestination());
         entity.setStartsAt(trip.getStartsAt());
         entity.setEndsAt(trip.getEndsAt());
@@ -36,7 +32,7 @@ public class TripService {
     }
 
     public Trip confirm(UUID id) {
-        var entity = this.getById(id);
+        var entity = this.tripQueryService.getById(id);
         entity.setIsConfirmed(true);
         entity = tripRepository.save(entity);
         this.participantService.triggerConfirmationEmailToParticipants(entity.getId());
