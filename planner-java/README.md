@@ -25,6 +25,9 @@
 - Criação da camada de trip service (refatoração)
 - Criação do DTO TripData para não retornar diretamente o modelo de domínio (refatoração)
 - Remoção da camada de domínio as dependências da camada de api no ParticipantService (refatoração)
+- Remoção da camada de domínio as dependências da camada de api no ActivityService (refatoração)
+- Remoção da camada de domínio as dependências da camada de api no LinkService (refatoração)
+- 
 
 ## Feature extras
 
