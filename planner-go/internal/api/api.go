@@ -21,6 +21,7 @@ import (
 
 type mailer interface {
 	SendConfirmTripEmailToTripOwner(uuid.UUID) error
+	SendEmailToInviteToTheTrip(pgstore.GetTripRow, pgstore.GetParticipantsRow) error
 }
 
 type store interface {
@@ -230,7 +231,31 @@ func (api API) PostTripsTripIDActivities(w http.ResponseWriter, r *http.Request,
 // Confirm a trip and send e-mail invitations.
 // (GET /trips/{tripId}/confirm)
 func (api API) GetTripsTripIDConfirm(w http.ResponseWriter, r *http.Request, tripID string) *spec.Response {
-	panic("not implemented") // TODO: Implement
+	trip, err := api.getTripById(r.Context(), tripID)
+	if err != nil {
+		return spec.GetTripsTripIDConfirmJSON400Response(spec.Error{Message: err.Error()})
+	}
+	err = api.store.UpdateTrip(r.Context(), pgstore.UpdateTripParams{
+		ID:          trip.ID,
+		Destination: trip.Destination,
+		StartsAt:    trip.StartsAt,
+		EndsAt:      trip.EndsAt,
+		IsConfirmed: true,
+	})
+	if err != nil {
+		return spec.GetTripsTripIDConfirmJSON400Response(spec.Error{Message: "something went wrong, try again"})
+	}
+	participants, err := api.store.GetParticipants(r.Context(), trip.ID)
+	if err != nil {
+		return spec.GetTripsTripIDConfirmJSON400Response(spec.Error{Message: "something went wrong, try again"})
+	}
+
+	for _, participant := range participants {
+		if participant.Email != trip.OwnerEmail {
+			go api.sendEmail(*trip, participant)
+		}
+	}
+	return spec.GetTripsTripIDConfirmJSON204Response(spec.Response{Code: 204})
 }
 
 // Invite someone to the trip.
@@ -323,4 +348,14 @@ func (api *API) getTripById(context context.Context, tripID string) (*pgstore.Ge
 		return nil, errors.New("something went wrong, try again")
 	}
 	return &trip, nil
+}
+
+func (api *API) sendEmail(trip pgstore.GetTripRow, participant pgstore.GetParticipantsRow) {
+	if err := api.mailer.SendEmailToInviteToTheTrip(trip, participant); err != nil {
+		api.logger.Error(
+			"failed to send email on ConfirmTrip",
+			zap.Error(err),
+			zap.String("trip_id", trip.ID.String()),
+		)
+	}
 }
