@@ -2,7 +2,7 @@ package br.com.rocketseat.hiokdev.planner_java.api.trip;
 
 import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivityData;
 import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivityRequestPayload;
-import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivityResponse;
+import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivityCreateResponse;
 import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripCreateResponse;
 import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripCreateRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripData;
@@ -10,7 +10,7 @@ import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripUpdateRequestPayl
 import br.com.rocketseat.hiokdev.planner_java.domain.activity.ActivityService;
 import br.com.rocketseat.hiokdev.planner_java.api.link.dto.LinkData;
 import br.com.rocketseat.hiokdev.planner_java.api.link.dto.LinkRequestPayload;
-import br.com.rocketseat.hiokdev.planner_java.api.link.dto.LinkResponse;
+import br.com.rocketseat.hiokdev.planner_java.api.link.dto.LinkCreateResponse;
 import br.com.rocketseat.hiokdev.planner_java.domain.link.LinkService;
 import br.com.rocketseat.hiokdev.planner_java.api.participant.dto.ParticipantCreateResponse;
 import br.com.rocketseat.hiokdev.planner_java.api.participant.dto.ParticipantData;
@@ -87,9 +87,9 @@ public class TripController {
     // Trip activities endpoints
 
     @PostMapping("/{id}/activities")
-    public ResponseEntity<ActivityResponse> registerActivity(@PathVariable UUID id, @RequestBody ActivityRequestPayload payload) {
+    public ResponseEntity<ActivityCreateResponse> registerActivity(@PathVariable UUID id, @RequestBody ActivityRequestPayload payload) {
         var activity = this.activityService.registerActivity(ActivityRequestPayload.toDomain(payload), id);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ActivityResponse(activity.getId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ActivityCreateResponse(activity.getId()));
     }
 
     @GetMapping("/{id}/activities")
@@ -101,9 +101,9 @@ public class TripController {
     // Trip links endpoints
 
     @PostMapping("/{id}/links")
-    public ResponseEntity<LinkResponse> registerLink(@PathVariable UUID id, @RequestBody LinkRequestPayload payload) {
+    public ResponseEntity<LinkCreateResponse> registerLink(@PathVariable UUID id, @RequestBody LinkRequestPayload payload) {
         var link = this.linkService.registerLink(LinkRequestPayload.toDomain(payload), id);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new LinkResponse(link.getId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new LinkCreateResponse(link.getId()));
     }
 
     @GetMapping("/{id}/links")

@@ -2,7 +2,7 @@ package br.com.rocketseat.hiokdev.planner_java.api.activity.dto;
 
 import java.util.UUID;
 
-public record ActivityResponse(
+public record ActivityCreateResponse(
         UUID activityId
 ) {
 }
