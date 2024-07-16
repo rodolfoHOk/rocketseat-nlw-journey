@@ -34,7 +34,7 @@ type store interface {
 	GetTrip(context.Context, uuid.UUID) (pgstore.GetTripRow, error)
 	GetTripActivities(context.Context, uuid.UUID) ([]pgstore.GetTripActivitiesRow, error)
 	GetTripLinks(context.Context, uuid.UUID) ([]pgstore.GetTripLinksRow, error)
-	// InviteParticipantsToTrip(context.Context, []pgstore.InviteParticipantsToTripParams) (int64, error)
+	InviteParticipantsToTrip(context.Context, []pgstore.InviteParticipantsToTripParams) (int64, error)
 	UpdateTrip(context.Context, pgstore.UpdateTripParams) error
 }
 
@@ -249,10 +249,17 @@ func (api API) GetTripsTripIDConfirm(w http.ResponseWriter, r *http.Request, tri
 	if err != nil {
 		return spec.GetTripsTripIDConfirmJSON400Response(spec.Error{Message: "something went wrong, try again"})
 	}
-
 	for _, participant := range participants {
 		if participant.Email != trip.OwnerEmail {
 			go api.sendEmail(*trip, participant)
+		} else {
+			err = api.store.ConfirmParticipant(r.Context(), pgstore.ConfirmParticipantParams{
+				Name: trip.OwnerName,
+				ID:   participant.ID,
+			})
+			if err != nil {
+				return spec.GetTripsTripIDConfirmJSON400Response(spec.Error{Message: "something went wrong, try again"})
+			}
 		}
 	}
 	return spec.GetTripsTripIDConfirmJSON204Response(spec.Response{Code: 204})
@@ -261,7 +268,46 @@ func (api API) GetTripsTripIDConfirm(w http.ResponseWriter, r *http.Request, tri
 // Invite someone to the trip.
 // (POST /trips/{tripId}/invites)
 func (api API) PostTripsTripIDInvites(w http.ResponseWriter, r *http.Request, tripID string) *spec.Response {
-	panic("not implemented") // TODO: Implement
+	trip, err := api.getTripById(r.Context(), tripID)
+	if err != nil {
+		return spec.PostTripsTripIDInvitesJSON400Response(spec.Error{Message: err.Error()})
+	}
+	var requestBody spec.InviteParticipantRequest
+	if err = json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
+		return spec.PostTripsTripIDInvitesJSON400Response(spec.Error{Message: "invalid json"})
+	}
+	if err = api.validator.Struct(requestBody); err != nil {
+		return spec.PostTripsTripIDInvitesJSON400Response(spec.Error{Message: "invalid input: " + err.Error()})
+	}
+	participants, err := api.store.GetParticipants(r.Context(), trip.ID)
+	if err != nil {
+		return spec.PostTripsTripIDInvitesJSON400Response(spec.Error{Message: "something went wrong, try again"})
+	}
+	for _, participant := range participants {
+		if participant.Email == string(requestBody.Email) {
+			return spec.PostTripsTripIDInvitesJSON400Response(spec.Error{Message: "e-mail has already been invited"})
+		}
+	}
+	var emailsToInvite []pgstore.InviteParticipantsToTripParams
+	emailsToInvite = append(emailsToInvite, pgstore.InviteParticipantsToTripParams{
+		TripID: trip.ID,
+		Email:  string(requestBody.Email),
+	})
+	_, err = api.store.InviteParticipantsToTrip(r.Context(), emailsToInvite)
+	if err != nil {
+		return spec.PostTripsTripIDInvitesJSON400Response(spec.Error{Message: "something went wrong, try again"})
+	}
+	if trip.IsConfirmed {
+		var participantToSendEmail pgstore.GetParticipantsRow
+		for _, participant := range participants {
+			if participant.Email == string(requestBody.Email) {
+				participantToSendEmail = participant
+				break
+			}
+		}
+		go api.sendEmail(*trip, participantToSendEmail)
+	}
+	return spec.PostTripsTripIDInvitesJSON201Response(spec.Response{Code: 201})
 }
 
 // Get a trip links.

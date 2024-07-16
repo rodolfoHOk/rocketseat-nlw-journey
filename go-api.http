@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ### Trip Id
-@tripId = 164ec57d-01fd-4e88-b5f0-8e4eb2920d2d
+@tripId = 16fef42a-9e76-40fd-bbd3-71ca9a94d4a4
 
 ### Get trip by ID
 GET http://localhost:8080/trips/{{tripId}}
@@ -34,7 +34,7 @@ GET http://localhost:8080/trips/{{tripId}}/confirm
 GET http://localhost:8080/trips/{{tripId}}/participants
 
 ### Invite participant
-POST http://localhost:8080/trips/{{tripId}}/invite
+POST http://localhost:8080/trips/{{tripId}}/invites
 Content-Type: application/json
 
 {
