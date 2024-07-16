@@ -6,13 +6,13 @@ Content-Type: application/json
   "destination": "Florianópolis, SC",
   "starts_at": "2024-07-15T10:30:00.0000",
   "ends_at": "2024-07-19T12:00:00.0000",
-  "emails_to_invite": ["mayk.brito@email.com"],
+  "emails_to_invite": ["mayk.brito@email.com", "rodrigo.goncalves@email.com"],
   "owner_name": "Fernanda Kipper",
   "owner_email": "fernanda.kipper@email.com"
 }
 
 ### Trip Id
-@tripId = cf063ab8-445b-4eca-abc9-3b31e089ad7c
+@tripId = f8da6731-05e0-4bd4-b241-f4829bbae408
 
 ### Get trip by ID
 GET http://localhost:8080/trips/{{tripId}}
@@ -42,7 +42,7 @@ Content-Type: application/json
 }
 
 ### Participant ID
-@participantId = 1f1dc671-6137-49a4-87bd-f3838360c121
+@participantId = 4cddeb7f-16e8-4aaa-8fc0-953cd9b9dca2
 
 ### Confirm participant by ID
 POST http://localhost:8080/participants/{{participantId}}/confirm
