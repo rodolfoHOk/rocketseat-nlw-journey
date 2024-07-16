@@ -5,6 +5,7 @@ import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivityRequestPa
 import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivityResponse;
 import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripCreateResponse;
 import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripCreateRequestPayload;
+import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripData;
 import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripUpdateRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.domain.activity.ActivityService;
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.Trip;
@@ -51,9 +52,9 @@ public class TripController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Trip> getTripDetails(@PathVariable UUID id){
+    public ResponseEntity<TripData> getTripDetails(@PathVariable UUID id){
         var trip = this.tripService.getById(id);
-        return ResponseEntity.ok(trip);
+        return ResponseEntity.ok(TripData.toResponse(trip));
     }
 
     @PutMapping("/{id}")
