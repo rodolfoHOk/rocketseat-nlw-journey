@@ -4,15 +4,15 @@ Content-Type: application/json
 
 {
   "destination": "Florianópolis, SC",
-  "starts_at": "2024-07-15T10:30:00.0000",
-  "ends_at": "2024-07-19T12:00:00.0000",
+  "starts_at": "2024-07-24T10:30:00Z",
+  "ends_at": "2024-07-29T12:00:00Z",
   "emails_to_invite": ["mayk.brito@email.com", "rodrigo.goncalves@email.com"],
   "owner_name": "Fernanda Kipper",
   "owner_email": "fernanda.kipper@email.com"
 }
 
 ### Trip Id
-@tripId = fcfac623-4a01-4a7e-8961-c9fb056c9e7a
+@tripId = ba48e8be-4307-4e39-ab57-dfded7147d03
 
 ### Get trip by ID
 GET http://localhost:8080/trips/{{tripId}}
@@ -23,8 +23,8 @@ Content-Type: application/json
 
 {
   "destination": "Porto Alegre, RS",
-  "starts_at": "2024-07-17T10:30:00.0000",
-  "ends_at": "2024-07-22T12:00:00.0000"
+  "starts_at": "2024-07-25T10:30:00Z",
+  "ends_at": "2024-07-29T12:00:00Z"
 }
 
 ### Confirm trip by ID
@@ -42,7 +42,7 @@ Content-Type: application/json
 }
 
 ### Participant ID
-@participantId = 753dfe85-b73f-44c1-a2f7-aa6413d86fe2
+@participantId = 376aeec4-e086-48c4-8ca8-9e91d8f4e397
 
 ### Confirm participant by ID
 POST http://localhost:8080/participants/{{participantId}}/confirm
@@ -58,7 +58,7 @@ Content-Type: application/json
 
 {
   "title": "Check-in no hotel",
-  "occurs_at": "2024-07-17T12:00:00.000"
+  "occurs_at": "2024-07-17T12:00:00Z"
 }
 
 ### Create trip activity 2
@@ -94,3 +94,68 @@ Content-Type: application/json
 
 ### List trip link 
 GET http://localhost:8080/trips/{{tripId}}/links
+
+# Error tests
+
+### 404 NoResourceFoundException
+GET http://localhost:8080/not_found
+
+### 405 HttpRequestMethodNotSupportedException
+GET http://localhost:8080/trips
+
+### 400 MethodArgumentTypeMismatchException
+GET http://localhost:8080/trips/invalid-uuid
+
+### 415 HttpMediaTypeNotSupportedException
+POST http://localhost:8080/trips
+Content-Type: application/soap+xml
+
+### 400 HttpMessageNotReadableException
+POST http://localhost:8080/trips/{{tripId}}/activities
+Content-Type: application/json
+
+{
+  "title": "Café da manhã",
+  "occurs_at": "2024-07-18T07:30:00Z",
+}
+
+# Validation tests
+
+### 400 TripCreateRequestPayload
+POST http://localhost:8080/trips
+Content-Type: application/json
+
+{
+  "destination": "",
+  "starts_at": "",
+  "ends_at": "",
+  "emails_to_invite": [],
+  "owner_name": "",
+  "owner_email": "fernanda.kipper#email.com"
+}
+
+### 400 TripCreateRequestPayload 2
+POST http://localhost:8080/trips
+Content-Type: application/json
+
+{
+  "destination": "Florianópolis, SC",
+  "starts_at": "2024-07-15T10:30:00Z",
+  "ends_at": "2024-07-29T12:00:00Z",
+  "emails_to_invite": ["mayk.brito@email.com", "rodrigo.goncalves@email.com"],
+  "owner_name": "Fernanda Kipper",
+  "owner_email": "fernanda.kipper@email.com"
+}
+
+### 400 TripCreateRequestPayload 3
+POST http://localhost:8080/trips
+Content-Type: application/json
+
+{
+  "destination": "Florianópolis, SC",
+  "starts_at": "2024-07-25T10:30:00Z",
+  "ends_at": "2024-07-25T10:00:00Z",
+  "emails_to_invite": ["mayk.brito@email.com", "rodrigo.goncalves@email.com"],
+  "owner_name": "Fernanda Kipper",
+  "owner_email": "fernanda.kipper@email.com"
+}

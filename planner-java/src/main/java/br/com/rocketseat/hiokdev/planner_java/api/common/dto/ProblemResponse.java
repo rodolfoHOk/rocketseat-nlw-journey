@@ -9,6 +9,7 @@ import java.util.List;
 public record ProblemResponse(
         Integer status,
         String description,
+        String path,
         LocalDateTime timestamp,
         @JsonInclude(JsonInclude.Include.NON_NULL) List<FieldErrorResponse> fields
 ) {

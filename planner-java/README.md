@@ -30,6 +30,8 @@
 - Movido lógica de negócio da camada de api para a camada de domínio no confirm participant endpoint (refatoração)
 - Separação trip service em trip query service e trip service (refatoração)
 - Ajustado os formatos de respostas das requisições para o frontend e mobile (fix)
+- Adicionado api exception handler (novo recurso)
+- Adicionado validação para TripCreateRequestPayload
 - 
 
 ## Feature extras
@@ -42,6 +44,6 @@
 
 - Mapeamento das exceções da aplicação
 
-    - Tratativa de erros personalizadas
+    - Tratativa de erros personalizadas (parcial)
 
 - Envio de e-mails para um servidor smtp em docker

@@ -20,6 +20,7 @@ import br.com.rocketseat.hiokdev.planner_java.domain.participant.ParticipantServ
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripQueryService;
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +49,7 @@ public class TripController {
     // Trips endpoints
 
     @PostMapping
-    public ResponseEntity<TripCreateResponse> createTrip(@RequestBody TripCreateRequestPayload payload) {
+    public ResponseEntity<TripCreateResponse> createTrip(@RequestBody @Valid TripCreateRequestPayload payload) {
         var trip = this.tripService.create(TripCreateRequestPayload.toDomain(payload), payload.emails_to_invite());
         return ResponseEntity.status(HttpStatus.CREATED).body(new TripCreateResponse(trip.getId()));
     }

@@ -1,22 +1,27 @@
 package br.com.rocketseat.hiokdev.planner_java.api.trip.dto;
 
+import br.com.rocketseat.hiokdev.planner_java.config.validation.ValidDateTime;
+import br.com.rocketseat.hiokdev.planner_java.domain.common.exception.ValidationException;
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.Trip;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public record TripCreateRequestPayload(
-        String destination,
-        String starts_at,
-        String ends_at,
-        String owner_email,
-        String owner_name,
-        List<String> emails_to_invite
+        @NotBlank @Size(min = 4, max = 255) String destination,
+        @NotBlank @ValidDateTime String starts_at,
+        @NotBlank @ValidDateTime String ends_at,
+        @NotBlank @Email String owner_email,
+        @NotBlank String owner_name,
+        @Size(min = 1) List<@Email String> emails_to_invite
 ) {
 
     public static Trip toDomain(TripCreateRequestPayload payload) {
-        return Trip.builder()
+        var trip = Trip.builder()
                 .destination(payload.destination)
                 .startsAt(LocalDateTime.parse(payload.starts_at(), DateTimeFormatter.ISO_DATE_TIME))
                 .endsAt(LocalDateTime.parse(payload.ends_at(), DateTimeFormatter.ISO_DATE_TIME))
@@ -24,6 +29,16 @@ public record TripCreateRequestPayload(
                 .ownerName(payload.owner_name())
                 .ownerEmail(payload.owner_email())
                 .build();
+        if (trip.getStartsAt().isBefore(LocalDateTime.now())) {
+            throw new ValidationException("starts_at", "data informada já passou");
+        }
+        if (trip.getEndsAt().isBefore(LocalDateTime.now())) {
+            throw new ValidationException("ends_at", "data informada já passou");
+        }
+        if (trip.getEndsAt().isBefore(trip.getStartsAt())) {
+            throw new ValidationException("ends_at", "deve ser depois da data starts_at");
+        }
+        return trip;
     }
 
 }
