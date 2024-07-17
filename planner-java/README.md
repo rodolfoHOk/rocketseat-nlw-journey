@@ -10,6 +10,9 @@
 
 - spring-boot-starter-web
 - spring-boot-starter-data-jpa
+- spring-boot-starter-validation
+- spring-boot-starter-freemarker
+- spring-boot-starter-mail
 - spring-boot-devtools
 - flyway-core
 - h2
@@ -37,8 +40,8 @@
 - Adicionado validação para o endpoint de invite participant
 - Adicionado validação para o endpoint de register activity
 - Adicionado validação para o endpoint de register link
-- 
-
-## Feature extras
-
-- Envio de e-mails para um servidor smtp em docker
+- Adicionado SMTP mail service
+- todo: confirm trip email template
+- todo: invite participant email template
+- todo: use mail gateway in domain services
+-
