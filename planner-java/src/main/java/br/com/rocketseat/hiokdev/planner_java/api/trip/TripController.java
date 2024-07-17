@@ -112,7 +112,10 @@ public class TripController {
     // Trip links endpoints
 
     @PostMapping("/{id}/links")
-    public ResponseEntity<LinkCreateResponse> registerLink(@PathVariable UUID id, @RequestBody LinkRequestPayload payload) {
+    public ResponseEntity<LinkCreateResponse> registerLink(
+            @PathVariable UUID id,
+            @RequestBody @Valid LinkRequestPayload payload
+    ) {
         var link = this.linkService.registerLink(LinkRequestPayload.toDomain(payload), id);
         return ResponseEntity.status(HttpStatus.CREATED).body(new LinkCreateResponse(link.getId()));
     }

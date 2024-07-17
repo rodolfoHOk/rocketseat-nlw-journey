@@ -36,6 +36,7 @@
 - Adicionado validação para o endpoint de confirm participant
 - Adicionado validação para o endpoint de invite participant
 - Adicionado validação para o endpoint de register activity
+- Adicionado validação para o endpoint de register link
 - 
 
 ## Feature extras
