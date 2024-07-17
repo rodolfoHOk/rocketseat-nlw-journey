@@ -80,7 +80,7 @@ public class TripController {
         return ResponseEntity.ok(participants.stream().map(ParticipantData::toResponse).toList());
     }
 
-    @PostMapping("/{id}/invite")
+    @PostMapping("/{id}/invites")
     public ResponseEntity<ParticipantCreateResponse> inviteParticipant(
             @PathVariable UUID id,
             @RequestBody ParticipantRequestPayload payload

@@ -3,6 +3,7 @@ package br.com.rocketseat.hiokdev.planner_java.api.participant;
 import br.com.rocketseat.hiokdev.planner_java.api.participant.dto.ParticipantRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.domain.participant.Participant;
 import br.com.rocketseat.hiokdev.planner_java.domain.participant.ParticipantService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +22,7 @@ public class ParticipantController {
     private final ParticipantService participantService;
 
     @PostMapping("/{id}/confirm")
-    public ResponseEntity<Participant> confirmParticipant(@PathVariable UUID id, @RequestBody ParticipantRequestPayload payload){
+    public ResponseEntity<Participant> confirmParticipant(@PathVariable UUID id, @RequestBody @Valid ParticipantRequestPayload payload){
         var participant = this.participantService.confirmParticipant(id, ParticipantRequestPayload.toDomain(payload));
         return ResponseEntity.noContent().build();
     }

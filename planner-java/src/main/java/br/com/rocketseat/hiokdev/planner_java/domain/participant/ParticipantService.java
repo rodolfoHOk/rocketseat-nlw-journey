@@ -39,6 +39,10 @@ public class ParticipantService {
 
     public Participant confirmParticipant(UUID id, Participant participant) {
         var entity = this.participantRepository.findById(id).orElseThrow(() -> new NotFoundException("Participant not found"));
+        entity.setName(participant.getName());
+        if (participant.getEmail() != null) {
+            entity.setEmail(participant.getEmail());
+        }
         entity.setIsConfirmed(true);
         return this.participantRepository.save(entity);
     }

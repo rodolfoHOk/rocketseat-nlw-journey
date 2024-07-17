@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ### Trip Id
-@tripId = ba48e8be-4307-4e39-ab57-dfded7147d03
+@tripId = b1781c32-738b-4773-b307-4ccbaca2f9a2
 
 ### Get trip by ID
 GET http://localhost:8080/trips/{{tripId}}
@@ -34,7 +34,7 @@ GET http://localhost:8080/trips/{{tripId}}/confirm
 GET http://localhost:8080/trips/{{tripId}}/participants
 
 ### Invite participant
-POST http://localhost:8080/trips/{{tripId}}/invite
+POST http://localhost:8080/trips/{{tripId}}/invites
 Content-Type: application/json
 
 {
@@ -42,14 +42,15 @@ Content-Type: application/json
 }
 
 ### Participant ID
-@participantId = 376aeec4-e086-48c4-8ca8-9e91d8f4e397
+@participantId = d0e15750-67a1-4999-a79e-46e6b4df20f9
 
 ### Confirm participant by ID
 POST http://localhost:8080/participants/{{participantId}}/confirm
 Content-Type: application/json
 
 {
-  "name": "Mayk Brito"
+  "name": "Mayk Brito",
+  "email": "mayk.brito@mail.com"
 }
 
 ### Create trip activity
@@ -188,4 +189,13 @@ Content-Type: application/json
   "destination": "Florianópolis, SC",
   "starts_at": "2024-07-25T10:30:00Z",
   "ends_at": "2024-07-25T10:00:00Z"
+}
+
+### 400 ParticipantRequestPayload
+POST http://localhost:8080/participants/{{participantId}}/confirm
+Content-Type: application/json
+
+{
+  "name": "",
+  "email": "mayk.britomail.com"
 }
