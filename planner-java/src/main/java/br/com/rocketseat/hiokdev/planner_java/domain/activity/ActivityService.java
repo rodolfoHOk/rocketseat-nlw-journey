@@ -1,5 +1,6 @@
 package br.com.rocketseat.hiokdev.planner_java.domain.activity;
 
+import br.com.rocketseat.hiokdev.planner_java.domain.common.exception.ValidationException;
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,12 @@ public class ActivityService {
     public Activity registerActivity(Activity activity, UUID tripId) {
         var trip = this.tripQueryService.getById(tripId);
         activity.setTrip(trip);
+        if (activity.getOccursAt().isBefore(trip.getStartsAt())) {
+            throw new ValidationException("occurs_at", "não está dentro do período da viagem");
+        }
+        if (activity.getOccursAt().isAfter(trip.getEndsAt())) {
+            throw new ValidationException("occurs_at", "não está dentro do período da viagem");
+        }
         return this.activityRepository.save(activity);
     }
 

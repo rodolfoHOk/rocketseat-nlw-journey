@@ -31,10 +31,11 @@
 - Separação trip service em trip query service e trip service (refatoração)
 - Ajustado os formatos de respostas das requisições para o frontend e mobile (fix)
 - Adicionado api exception handler (novo recurso)
-- Adicionado validação para TripCreateRequestPayload
-- Adicionado validação para TripUpdateRequestPayload
-- Adicionado validação para ParticipantRequestPayload
-- Adicionado validação para InviteParticipantRequestPayload
+- Adicionado validação para o endpoint de create trip
+- Adicionado validação para o endpoint de update trip
+- Adicionado validação para o endpoint de confirm participant
+- Adicionado validação para o endpoint de invite participant
+- Adicionado validação para o endpoint de register activity
 - 
 
 ## Feature extras

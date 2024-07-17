@@ -21,7 +21,7 @@ public record TripCreateRequestPayload(
 ) {
 
     public static Trip toDomain(TripCreateRequestPayload payload) {
-        var trip = Trip.builder()
+        return Trip.builder()
                 .destination(payload.destination)
                 .startsAt(LocalDateTime.parse(payload.starts_at(), DateTimeFormatter.ISO_DATE_TIME))
                 .endsAt(LocalDateTime.parse(payload.ends_at(), DateTimeFormatter.ISO_DATE_TIME))
@@ -29,16 +29,6 @@ public record TripCreateRequestPayload(
                 .ownerName(payload.owner_name())
                 .ownerEmail(payload.owner_email())
                 .build();
-        if (trip.getStartsAt().isBefore(LocalDateTime.now())) {
-            throw new ValidationException("starts_at", "data informada já passou");
-        }
-        if (trip.getEndsAt().isBefore(LocalDateTime.now())) {
-            throw new ValidationException("ends_at", "data informada já passou");
-        }
-        if (trip.getEndsAt().isBefore(trip.getStartsAt())) {
-            throw new ValidationException("ends_at", "deve ser depois da data starts_at");
-        }
-        return trip;
     }
 
 }

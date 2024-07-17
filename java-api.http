@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ### Trip Id
-@tripId = 0deccbe0-55e2-4da4-90b9-06e41307d6f9
+@tripId = 01944206-83e6-49af-be55-79cc6f29f789
 
 ### Get trip by ID
 GET http://localhost:8080/trips/{{tripId}}
@@ -214,4 +214,31 @@ Content-Type: application/json
 
 {
   "email": "mayk.britomail.com"
+}
+
+### 400 ActivityRequestPayload 1
+POST http://localhost:8080/trips/{{tripId}}/activities
+Content-Type: application/json
+
+{
+  "title": "",
+  "occurs_at": ""
+}
+
+### 400 ActivityRequestPayload 2
+POST http://localhost:8080/trips/{{tripId}}/activities
+Content-Type: application/json
+
+{
+  "title": "Check-in no hotel",
+  "occurs_at": "2024-07-15T12:00:00Z"
+}
+
+### 400 ActivityRequestPayload 3
+POST http://localhost:8080/trips/{{tripId}}/activities
+Content-Type: application/json
+
+{
+  "title": "Check-out no hotel",
+  "occurs_at": "2024-07-31T12:00:00Z"
 }
