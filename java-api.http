@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ### Trip Id
-@tripId = b1781c32-738b-4773-b307-4ccbaca2f9a2
+@tripId = 0deccbe0-55e2-4da4-90b9-06e41307d6f9
 
 ### Get trip by ID
 GET http://localhost:8080/trips/{{tripId}}
@@ -42,7 +42,7 @@ Content-Type: application/json
 }
 
 ### Participant ID
-@participantId = d0e15750-67a1-4999-a79e-46e6b4df20f9
+@participantId = f6011ab0-9d32-477c-95fd-9db358e2012a
 
 ### Confirm participant by ID
 POST http://localhost:8080/participants/{{participantId}}/confirm
@@ -197,5 +197,21 @@ Content-Type: application/json
 
 {
   "name": "",
+  "email": "mayk.britomail.com"
+}
+
+### 400 InviteParticipantRequestPayload 1
+POST http://localhost:8080/trips/{{tripId}}/invites
+Content-Type: application/json
+
+{
+  "email": ""
+}
+
+### 400 InviteParticipantRequestPayload 2
+POST http://localhost:8080/trips/{{tripId}}/invites
+Content-Type: application/json
+
+{
   "email": "mayk.britomail.com"
 }

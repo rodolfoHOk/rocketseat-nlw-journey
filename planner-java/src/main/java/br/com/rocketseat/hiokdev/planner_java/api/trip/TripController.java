@@ -4,6 +4,7 @@ import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivitiesRespons
 import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivityData;
 import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivityRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivityCreateResponse;
+import br.com.rocketseat.hiokdev.planner_java.api.participant.dto.InviteParticipantRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripCreateResponse;
 import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripCreateRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripData;
@@ -83,7 +84,7 @@ public class TripController {
     @PostMapping("/{id}/invites")
     public ResponseEntity<ParticipantCreateResponse> inviteParticipant(
             @PathVariable UUID id,
-            @RequestBody ParticipantRequestPayload payload
+            @RequestBody @Valid InviteParticipantRequestPayload payload
     ) {
         var participant = this.participantService.registerParticipantToTrip(payload.email(), id);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ParticipantCreateResponse(participant.getId()));

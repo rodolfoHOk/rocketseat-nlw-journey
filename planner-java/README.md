@@ -32,6 +32,9 @@
 - Ajustado os formatos de respostas das requisições para o frontend e mobile (fix)
 - Adicionado api exception handler (novo recurso)
 - Adicionado validação para TripCreateRequestPayload
+- Adicionado validação para TripUpdateRequestPayload
+- Adicionado validação para ParticipantRequestPayload
+- Adicionado validação para InviteParticipantRequestPayload
 - 
 
 ## Feature extras
