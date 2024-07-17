@@ -41,14 +41,4 @@
 
 ## Feature extras
 
-- Adicionar validações nos campos de dados:
-
-    - Data de começo de viagem é depois da data atual
-    - Data de final da viagem é depois da data de começo
-    - Data da atividade está entre as datas da viagem
-
-- Mapeamento das exceções da aplicação
-
-    - Tratativa de erros personalizadas (parcial)
-
 - Envio de e-mails para um servidor smtp em docker
