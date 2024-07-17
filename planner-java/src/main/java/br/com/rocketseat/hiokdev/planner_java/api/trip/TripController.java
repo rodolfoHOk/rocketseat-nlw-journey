@@ -61,7 +61,7 @@ public class TripController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateTrip(@PathVariable UUID id, @RequestBody TripUpdateRequestPayload payload) {
+    public ResponseEntity<Void> updateTrip(@PathVariable UUID id, @RequestBody @Valid TripUpdateRequestPayload payload) {
         var trip = this.tripService.update(id, TripUpdateRequestPayload.toDomain(payload));
         return ResponseEntity.noContent().build();
     }

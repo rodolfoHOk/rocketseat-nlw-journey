@@ -159,3 +159,33 @@ Content-Type: application/json
   "owner_name": "Fernanda Kipper",
   "owner_email": "fernanda.kipper@email.com"
 }
+
+### 400 TripUpdateRequestPayload 1
+PUT http://localhost:8080/trips/{{tripId}}
+Content-Type: application/json
+
+{
+  "destination": "",
+  "starts_at": "",
+  "ends_at": ""
+}
+
+### 400 TripUpdateRequestPayload 2
+PUT http://localhost:8080/trips/{{tripId}}
+Content-Type: application/json
+
+{
+  "destination": "Florianópolis, SC",
+  "starts_at": "2024-07-15T10:30:00Z",
+  "ends_at": "2024-07-29T12:00:00Z"
+}
+
+### 400 TripUpdateRequestPayload 3
+PUT http://localhost:8080/trips/{{tripId}}
+Content-Type: application/json
+
+{
+  "destination": "Florianópolis, SC",
+  "starts_at": "2024-07-25T10:30:00Z",
+  "ends_at": "2024-07-25T10:00:00Z"
+}
