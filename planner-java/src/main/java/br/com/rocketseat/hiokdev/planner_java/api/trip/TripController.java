@@ -112,6 +112,9 @@ public class TripController implements TripControllerOpenApi {
     @GetMapping("/{id}/activities")
     public ResponseEntity<ActivitiesResponse> getAllActivities(@PathVariable UUID id) throws JsonProcessingException {
         var activities = this.activityService.getAllActivitiesByTripId(id);
+        if (activities.isEmpty()) {
+            return ResponseEntity.ok(ActivitiesResponse.empty());
+        }
         return ResponseEntity.ok(new ActivitiesResponse(activities
                 .stream()
                 .map(ActivityData::toResponse)

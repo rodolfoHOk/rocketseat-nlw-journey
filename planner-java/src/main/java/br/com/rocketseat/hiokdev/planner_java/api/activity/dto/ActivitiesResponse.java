@@ -1,6 +1,7 @@
 package br.com.rocketseat.hiokdev.planner_java.api.activity.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class ActivitiesResponse {
 
     private List<DayActivities> activities;
@@ -31,6 +33,12 @@ public class ActivitiesResponse {
         }
         toResponse.add(new DayActivities(currentDay, dayActivities));
         this.activities = toResponse;
+    }
+
+    public static ActivitiesResponse empty() {
+        var response = new ActivitiesResponse();
+        response.setActivities(List.of());
+        return response;
     }
 
 }
