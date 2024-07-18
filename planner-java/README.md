@@ -43,4 +43,5 @@
 - Adicionado SMTP mail service
 - Adicionado confirm trip email template
 - Adicionado confirm presence email template
+- Adicionado método trigger confirmation email to trip owner no trip service
 - todo: use mail gateway in domain services

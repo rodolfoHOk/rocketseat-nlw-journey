@@ -14,4 +14,4 @@ spring:
 
 planner:
   mail:
-    sender: AlgaFood <dev.tests@email.com>
+    sender: confirm@planner.com
