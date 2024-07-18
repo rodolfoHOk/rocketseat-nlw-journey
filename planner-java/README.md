@@ -45,6 +45,7 @@
 - Adicionado dependência do spring doc e configuração do spring doc
 - Adicionado documentação open api para o trip controller
 - Adicionado documentação open api para o problem response dtos
+- Adicionado documentação open api para trip dtos
 - 
 
 ## Links
