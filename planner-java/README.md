@@ -18,10 +18,6 @@
 - h2
 - lombok
 
-## Links
-
-[Spring Initializr](https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.3.1&packaging=jar&jvmVersion=21&groupId=br.com.rocketseat.hiokdev&artifactId=planner-java&name=planner-java&description=Planner%20-%20Backend%20Java&packageName=br.com.rocketseat.hiokdev.planner-java&dependencies=web,flyway,devtools,lombok,data-jpa,h2)
-
 ## Melhorias
 
 - Separação do projeto em camada de domain e camada de api (refatoração)
@@ -46,4 +42,9 @@
 - Adicionado método trigger confirmation email to trip owner no trip service
 - Implementado o método trigger confirmation email to participant no participant service
 - Implementado o método trigger confirmation email to participants no participant service
-- todo: openapi docs
+- Adicionado dependência do spring doc e configuração do spring doc
+- 
+
+## Links
+
+[Spring Initializr](https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.3.1&packaging=jar&jvmVersion=21&groupId=br.com.rocketseat.hiokdev&artifactId=planner-java&name=planner-java&description=Planner%20-%20Backend%20Java&packageName=br.com.rocketseat.hiokdev.planner-java&dependencies=web,flyway,devtools,lombok,data-jpa,h2)
