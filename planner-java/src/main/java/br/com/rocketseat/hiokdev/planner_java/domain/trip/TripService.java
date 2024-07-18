@@ -47,7 +47,7 @@ public class TripService {
         var entity = this.tripQueryService.getById(id);
         entity.setIsConfirmed(true);
         entity = tripRepository.save(entity);
-        this.participantService.triggerConfirmationEmailToParticipants(entity.getId());
+        this.participantService.triggerConfirmationEmailToParticipants(entity);
         return entity;
     }
 

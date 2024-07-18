@@ -1,12 +1,16 @@
 <html lang="pt-br">
 <body>
     <div style="font-family: sans-serif; font-size: 16px; line-height: 1.6;">
-        <p>Você foi convidado(a) pelo(a) ${mailData.ownerName}, para participar de uma viagem para <strong>${mailData.destination}</strong> nas datas de <strong>${mailData.startDate} até ${mailData.endDate}</strong>.</p>
+        <p>Você foi convidado(a) pelo(a) ${mailData.ownerName()}, para participar de uma viagem para <strong>${mailData.destination()}</strong> nas datas de <strong>${mailData.startDate()} até ${mailData.endDate()}</strong>.</p>
         <p></p>
         <p>Para confirmar sua presença na viagem, clique no link abaixo:</p>
         <p></p>
         <p>
-            <a href="${mailData.confirmationLink}">Confirmar viagem</a>
+            <a href="${mailData.confirmationLink()}">Confirmar presença na viagem</a>
+        </p>
+        <p>ou acesse pelo aplicativo clicando abaixo</p>
+        <p>
+            <a href="${mailData.confirmationApp()}">Confirmar presença na viagem</a>
         </p>
         <p>Caso você não saiba do que se trata esse e-mail, apenas ignore esse e-mail.</p>
     </div>

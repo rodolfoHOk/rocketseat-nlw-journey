@@ -10,7 +10,8 @@ public record MailData(
         String destination,
         String startDate,
         String endDate,
-        String confirmationLink
+        String confirmationLink,
+        String confirmationApp
 ) {
 
     @Builder
@@ -26,6 +27,19 @@ public record MailData(
                 .startDate(startDate)
                 .endDate(endDate)
                 .confirmationLink(confirmationLink)
+                .build();
+    }
+
+    public static MailData create(Trip trip, String confirmationLink, String confirmationApp) {
+        String startDate = trip.getStartsAt().format(DateTimeFormatter.ofPattern("d' de 'MMM"));
+        String endDate = trip.getEndsAt().format(DateTimeFormatter.ofPattern("d' de 'MMM' de 'yyyy"));
+        return MailData.builder()
+                .ownerName(trip.getOwnerName())
+                .destination(trip.getDestination())
+                .startDate(startDate)
+                .endDate(endDate)
+                .confirmationLink(confirmationLink)
+                .confirmationApp(confirmationApp)
                 .build();
     }
 
