@@ -41,7 +41,6 @@
 - Adicionado validação para o endpoint de register activity
 - Adicionado validação para o endpoint de register link
 - Adicionado SMTP mail service
-- todo: confirm trip email template
-- todo: invite participant email template
+- Adicionado confirm trip email template
+- Adicionado confirm presence email template
 - todo: use mail gateway in domain services
--
