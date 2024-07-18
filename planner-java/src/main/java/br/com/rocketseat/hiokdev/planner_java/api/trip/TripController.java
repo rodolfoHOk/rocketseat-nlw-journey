@@ -5,6 +5,7 @@ import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivityData;
 import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivityRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.api.activity.dto.ActivityCreateResponse;
 import br.com.rocketseat.hiokdev.planner_java.api.participant.dto.InviteParticipantRequestPayload;
+import br.com.rocketseat.hiokdev.planner_java.api.trip.documentation.TripControllerOpenApi;
 import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripCreateResponse;
 import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripCreateRequestPayload;
 import br.com.rocketseat.hiokdev.planner_java.api.trip.dto.TripData;
@@ -38,7 +39,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/trips")
 @RequiredArgsConstructor
-public class TripController {
+public class TripController implements TripControllerOpenApi {
 
     private final TripService tripService;
     private final TripQueryService tripQueryService;
@@ -48,24 +49,28 @@ public class TripController {
 
     // Trips endpoints
 
+    @Override
     @PostMapping
     public ResponseEntity<TripCreateResponse> createTrip(@RequestBody @Valid TripCreateRequestPayload payload) {
         var trip = this.tripService.create(TripCreateRequestPayload.toDomain(payload), payload.emails_to_invite());
         return ResponseEntity.status(HttpStatus.CREATED).body(new TripCreateResponse(trip.getId()));
     }
 
+    @Override
     @GetMapping("/{id}")
     public ResponseEntity<TripData> getTripDetails(@PathVariable UUID id){
         var trip = this.tripQueryService.getById(id);
         return ResponseEntity.ok(TripData.toResponse(trip));
     }
 
+    @Override
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateTrip(@PathVariable UUID id, @RequestBody @Valid TripUpdateRequestPayload payload) {
         var trip = this.tripService.update(id, TripUpdateRequestPayload.toDomain(payload));
         return ResponseEntity.noContent().build();
     }
 
+    @Override
     @GetMapping("/{id}/confirm")
     public ResponseEntity<Void> confirmTrip(@PathVariable UUID id) {
         var trip = this.tripService.confirm(id);
@@ -74,12 +79,14 @@ public class TripController {
 
     // Trip participants endpoints
 
+    @Override
     @GetMapping("/{id}/participants")
     public ResponseEntity<List<ParticipantData>> getAllParticipants(@PathVariable UUID id){
         var participants = this.participantService.getAllParticipantsByTripId(id);
         return ResponseEntity.ok(participants.stream().map(ParticipantData::toResponse).toList());
     }
 
+    @Override
     @PostMapping("/{id}/invites")
     public ResponseEntity<ParticipantCreateResponse> inviteParticipant(
             @PathVariable UUID id,
@@ -91,6 +98,7 @@ public class TripController {
 
     // Trip activities endpoints
 
+    @Override
     @PostMapping("/{id}/activities")
     public ResponseEntity<ActivityCreateResponse> registerActivity(
             @PathVariable UUID id,
@@ -100,6 +108,7 @@ public class TripController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ActivityCreateResponse(activity.getId()));
     }
 
+    @Override
     @GetMapping("/{id}/activities")
     public ResponseEntity<ActivitiesResponse> getAllActivities(@PathVariable UUID id) throws JsonProcessingException {
         var activities = this.activityService.getAllActivitiesByTripId(id);
@@ -111,6 +120,7 @@ public class TripController {
 
     // Trip links endpoints
 
+    @Override
     @PostMapping("/{id}/links")
     public ResponseEntity<LinkCreateResponse> registerLink(
             @PathVariable UUID id,
@@ -120,6 +130,7 @@ public class TripController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new LinkCreateResponse(link.getId()));
     }
 
+    @Override
     @GetMapping("/{id}/links")
     public ResponseEntity<List<LinkData>> getAllLinks(@PathVariable UUID id){
         var links = this.linkService.getAllLinksByTripId(id);

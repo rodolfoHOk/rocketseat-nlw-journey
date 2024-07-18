@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition(
         info = @Info(
                 title = "Planner API", description = "Planner API - Plan your trips", version = "1.0.0",
-                contact = @Contact(name = "Planner Support", email = "fake-support@planner.com.br"),
+                contact = @Contact(name = "Planner Support", email = "hioktec@gmail.com"),
                 license = @License(name = "Licence: Contact us")
         ),
         servers = {@Server(url = "http://localhost:8080", description = "local")},
