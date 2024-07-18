@@ -19,7 +19,7 @@
 - dayjs
 - clsx
 
-## Diferenças em relação ao evento
+## Melhorias
 
 - criado componente CloseButton (refatoração)
 - criado componente FormField (refatoração)

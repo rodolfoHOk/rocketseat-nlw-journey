@@ -25,7 +25,7 @@
 - github.com/jackc/tern/v2@latest
 - github.com/sqlc-dev/sqlc
 
-## Diferenças em relação ao evento
+## Melhorias
 
 - implementado endpoint de get trip by id
 - implementado endpoint de update trip by id
