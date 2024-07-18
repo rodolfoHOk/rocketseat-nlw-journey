@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.rocketseat.hiokdev</groupId>
 	<artifactId>planner-java</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>planner-java</name>
 	<description>Planner - Backend Java</description>
 	<url/>

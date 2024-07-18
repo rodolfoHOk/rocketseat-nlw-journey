@@ -50,6 +50,32 @@
 - Adicionado documentação open api para activity dtos
 - Adicionado documentação open api para link dtos
 
+## Imagens
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-java-01.png" alt="NLW Journey Java API 01" width="600" />
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-java-02.png" alt="NLW Journey Java API 02" width="600" />
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-java-03.png" alt="NLW Journey Java API 03" width="600" />
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-java-04.png" alt="NLW Journey Java API 04" width="600" />
+
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-java-05.png" alt="NLW Journey Java API 05" width="600" />
+<img src="https://raw.githubusercontent.com/rodolfoHOk/portfolio-img/main/images/nlw-journey-java-06.png" alt="NLW Journey Java API 06" width="600" />
+
+## Rodar
+
+### Requisitos
+
+- Java 21
+- Docker
+
+### Comandos
+
+- dentro da pasta: planner-java
+- docker compose up -d
+- ./mvnw package
+- java -jar target/planner-java-1.0.0.jar
+- no navegador web preferido: http://localhost:8080/swagger-ui/index.html
+
 ## Links
 
 [Spring Initializr](https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.3.1&packaging=jar&jvmVersion=21&groupId=br.com.rocketseat.hiokdev&artifactId=planner-java&name=planner-java&description=Planner%20-%20Backend%20Java&packageName=br.com.rocketseat.hiokdev.planner-java&dependencies=web,flyway,devtools,lombok,data-jpa,h2)
