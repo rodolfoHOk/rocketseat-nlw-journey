@@ -86,7 +86,7 @@ public interface TripControllerOpenApi {
     );
 
     @Operation(
-            summary = "Confirm trip by ID and send invitation emails",
+            summary = "Confirms trip by ID and send invitation emails",
             responses = {
                     @ApiResponse(responseCode = "204", description = "No content"),
                     @ApiResponse(responseCode = "400", description = "Bad request",

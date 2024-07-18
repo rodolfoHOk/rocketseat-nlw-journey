@@ -1,7 +1,6 @@
 package br.com.rocketseat.hiokdev.planner_java.api.participant;
 
 import br.com.rocketseat.hiokdev.planner_java.api.participant.dto.ParticipantRequestPayload;
-import br.com.rocketseat.hiokdev.planner_java.domain.participant.Participant;
 import br.com.rocketseat.hiokdev.planner_java.domain.participant.ParticipantService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +16,13 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/participants")
 @RequiredArgsConstructor
-public class ParticipantController {
+public class ParticipantController implements ParticipantControllerOpenApi {
 
     private final ParticipantService participantService;
 
+    @Override
     @PostMapping("/{id}/confirm")
-    public ResponseEntity<Participant> confirmParticipant(@PathVariable UUID id, @RequestBody @Valid ParticipantRequestPayload payload){
+    public ResponseEntity<Void> confirmParticipant(@PathVariable UUID id, @RequestBody @Valid ParticipantRequestPayload payload){
         var participant = this.participantService.confirmParticipant(id, ParticipantRequestPayload.toDomain(payload));
         return ResponseEntity.noContent().build();
     }
