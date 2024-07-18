@@ -56,11 +56,17 @@ public class ParticipantService {
     }
 
     public void triggerConfirmationEmailToParticipants(Trip trip) {
+        var participants = this.getAllParticipantsByTripId(trip.getId());
+        participants.forEach(participant -> {
+            if (!participant.getEmail().equals(trip.getOwnerEmail())) {
+                triggerConfirmationEmailToParticipant(trip, participant);
+            }
+        });
     }
 
     public void triggerConfirmationEmailToParticipant(Trip trip, Participant participant) {
         String confirmationLink = BASE_URL + "/trips/" + trip.getId() + "?participant=" + participant.getId();
-        String confirmationApp = BASE_URL + "planner://trip/" + trip.getId() + "?participant=" + participant.getId();
+        String confirmationApp = "planner://trip/" + trip.getId() + "?participant=" + participant.getId();
         var mailData = MailData.create(trip, confirmationLink, confirmationApp);
         var mailMessage = MailGateway.MailMessage.builder()
                 .destination(participant.getEmail())

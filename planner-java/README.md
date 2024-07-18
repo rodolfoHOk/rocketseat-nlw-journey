@@ -44,4 +44,6 @@
 - Adicionado confirm trip email template
 - Adicionado confirm presence email template
 - Adicionado método trigger confirmation email to trip owner no trip service
-- todo: use mail gateway in domain services
+- Implementado o método trigger confirmation email to participant no participant service
+- Implementado o método trigger confirmation email to participants no participant service
+- 
