@@ -46,7 +46,7 @@
 - Adicionado documentação open api para o trip controller
 - Adicionado documentação open api para o problem response dtos
 - Adicionado documentação open api para trip dtos
-- 
+- Adicionado documentação open api para participants dtos
 
 ## Links
 
