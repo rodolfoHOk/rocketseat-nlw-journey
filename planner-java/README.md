@@ -49,7 +49,12 @@
 - Adicionado documentação open api para participant dtos
 - Adicionado documentação open api para activity dtos
 - Adicionado documentação open api para link dtos
-- 
+- Adicionado testes para trip query service
+- Adicionado testes para trip service
+- Adicionado testes para participant service
+- to do: Adicionado testes para activity service
+- to do: Adicionado testes para link service
+- to do: Adicionado testes os controllers
 
 ## Imagens
 
