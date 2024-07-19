@@ -29,19 +29,19 @@ public class TripQueryServiceTest {
     private TripQueryService tripQueryService;
 
     @Test
-    void shouldReturnTripWhenCallWithExistingId() {
+    void shouldReturnTripWhenGetByIdWithExistingId() {
         var existingId = UUID.randomUUID();
         var expectTrip = TripFactory.getTripWithId(existingId);
         when(tripRepository.findById(any())).thenReturn(Optional.of(expectTrip));
 
-        var resultTrip = tripQueryService.getById(existingId);
+        var sutTrip = tripQueryService.getById(existingId);
 
-        assertThat(resultTrip).isEqualTo(expectTrip);
+        assertThat(sutTrip).isEqualTo(expectTrip);
         verify(tripRepository).findById(any());
     }
 
     @Test
-    void shouldThrowNotFoundExceptionWhenCallWithNonExistingId() {
+    void shouldThrowNotFoundExceptionWhenGetByIdWithNonExistingId() {
         when(tripRepository.findById(any())).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> tripQueryService.getById(UUID.randomUUID())).isInstanceOf(NotFoundException.class);
