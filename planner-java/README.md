@@ -49,6 +49,7 @@
 - Adicionado documentação open api para participant dtos
 - Adicionado documentação open api para activity dtos
 - Adicionado documentação open api para link dtos
+- 
 
 ## Imagens
 
