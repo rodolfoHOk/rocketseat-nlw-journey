@@ -53,6 +53,7 @@
 - Adicionado testes para trip service
 - Adicionado testes para participant service
 - Adicionado testes para activity service
+- Adicionado testes para link service
 - 
 
 ## Imagens
