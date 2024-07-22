@@ -52,9 +52,8 @@
 - Adicionado testes para trip query service
 - Adicionado testes para trip service
 - Adicionado testes para participant service
-- to do: Adicionado testes para activity service
-- to do: Adicionado testes para link service
-- to do: Adicionado testes os controllers
+- Adicionado testes para activity service
+- 
 
 ## Imagens
 

@@ -15,35 +15,35 @@ public class TripFactory {
 
     public static Trip getTripWithInvalidStartsAt() {
         return getTripWithoutId().toBuilder()
-                .startsAt(LocalDateTime.of(2023, 12, 5, 10, 30))
+                .startsAt(LocalDateTime.now().minusMinutes(1))
                 .build();
     }
 
     public static Trip getTripWithInvalidEndsAt() {
         return getTripWithoutId().toBuilder()
-                .endsAt(LocalDateTime.of(2023, 12, 10, 10, 30))
+                .endsAt(LocalDateTime.now().minusMinutes(1))
                 .build();
     }
 
     public static Trip getTripWithEndsAtBeforeStartsAt() {
         return getTripWithoutId().toBuilder()
-                .endsAt(LocalDateTime.of(2024, 12, 5, 10, 0))
+                .endsAt(LocalDateTime.now().plusHours(23).minusMinutes(59))
                 .build();
     }
 
     public static Trip getTripToUpdate() {
         return Trip.builder()
                 .destination("Guarujá, SP")
-                .startsAt(LocalDateTime.of(2024, 12, 4, 10, 30))
-                .endsAt(LocalDateTime.of(2024, 12, 9, 11, 0))
+                .startsAt(LocalDateTime.now().plusDays(2))
+                .endsAt(LocalDateTime.now().plusDays(7))
                 .build();
     }
 
     public static Trip getTripWithoutId() {
         return Trip.builder()
                 .destination("São Paulo, SP")
-                .startsAt(LocalDateTime.of(2024, 12, 5, 10, 30))
-                .endsAt(LocalDateTime.of(2024, 12, 10, 11, 0))
+                .startsAt(LocalDateTime.now().plusDays(1))
+                .endsAt(LocalDateTime.now().plusDays(6))
                 .isConfirmed(false)
                 .ownerName("João Batista")
                 .ownerEmail("batista@email.com")
