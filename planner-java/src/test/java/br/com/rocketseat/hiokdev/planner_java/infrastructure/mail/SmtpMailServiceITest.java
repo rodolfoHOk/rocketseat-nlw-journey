@@ -1,8 +1,8 @@
 package br.com.rocketseat.hiokdev.planner_java.infrastructure.mail;
 
 import br.com.rocketseat.hiokdev.planner_java.domain.common.exception.EmailException;
-import br.com.rocketseat.hiokdev.planner_java.factory.ParticipantFactory;
-import br.com.rocketseat.hiokdev.planner_java.factory.TripFactory;
+import br.com.rocketseat.hiokdev.planner_java.factory.domain.ParticipantFactory;
+import br.com.rocketseat.hiokdev.planner_java.factory.domain.TripFactory;
 import com.icegreen.greenmail.junit5.GreenMailExtension;
 import com.icegreen.greenmail.store.FolderException;
 import com.icegreen.greenmail.util.ServerSetupTest;

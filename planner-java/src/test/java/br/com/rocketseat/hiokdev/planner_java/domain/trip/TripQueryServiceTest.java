@@ -1,7 +1,7 @@
 package br.com.rocketseat.hiokdev.planner_java.domain.trip;
 
 import br.com.rocketseat.hiokdev.planner_java.domain.common.exception.NotFoundException;
-import br.com.rocketseat.hiokdev.planner_java.factory.TripFactory;
+import br.com.rocketseat.hiokdev.planner_java.factory.domain.TripFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

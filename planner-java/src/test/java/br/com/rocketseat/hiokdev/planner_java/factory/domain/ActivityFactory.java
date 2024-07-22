@@ -1,4 +1,4 @@
-package br.com.rocketseat.hiokdev.planner_java.factory;
+package br.com.rocketseat.hiokdev.planner_java.factory.domain;
 
 import br.com.rocketseat.hiokdev.planner_java.domain.activity.Activity;
 

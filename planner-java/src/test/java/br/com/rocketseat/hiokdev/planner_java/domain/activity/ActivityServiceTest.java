@@ -2,8 +2,8 @@ package br.com.rocketseat.hiokdev.planner_java.domain.activity;
 
 import br.com.rocketseat.hiokdev.planner_java.domain.common.exception.ValidationException;
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripQueryService;
-import br.com.rocketseat.hiokdev.planner_java.factory.ActivityFactory;
-import br.com.rocketseat.hiokdev.planner_java.factory.TripFactory;
+import br.com.rocketseat.hiokdev.planner_java.factory.domain.ActivityFactory;
+import br.com.rocketseat.hiokdev.planner_java.factory.domain.TripFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

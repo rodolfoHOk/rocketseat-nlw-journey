@@ -1,12 +1,12 @@
 package br.com.rocketseat.hiokdev.planner_java.api.trip.dto;
 
 import br.com.rocketseat.hiokdev.planner_java.config.validation.ValidDateTime;
-import br.com.rocketseat.hiokdev.planner_java.domain.common.exception.ValidationException;
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.Trip;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +21,10 @@ public record TripCreateRequestPayload(
         @Schema(example = "[\"mayk.brito@email.com\", \"rodrigo.goncalves@email.com\"]")
         @Size(min = 1) List<@Email String> emails_to_invite
 ) {
+
+    @Builder(toBuilder = true)
+    public TripCreateRequestPayload {
+    }
 
     public static Trip toDomain(TripCreateRequestPayload payload) {
         return Trip.builder()

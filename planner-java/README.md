@@ -54,6 +54,7 @@
 - Adicionado testes para participant service
 - Adicionado testes para activity service
 - Adicionado testes para link service
+- Adicionado testes de integração para smtp mail service
 - 
 
 ## Imagens
