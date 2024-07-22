@@ -10,7 +10,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
   mail:
     host: localhost
-    port: 1025
+    port: 3025
 
 planner:
   mail:
