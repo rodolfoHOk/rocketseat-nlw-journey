@@ -14,6 +14,16 @@ public class LinkFactory {
                 .build();
     }
 
+    public static Link getLinkWithTripIdAndId(UUID tripId, UUID id) {
+        var trip = TripFactory.getTripWithId(tripId);
+        return Link.builder()
+                .id(id)
+                .title("Hospedagem booking")
+                .url("https://www.booking.com/city/br/guaruja.pt-br.html")
+                .trip(trip)
+                .build();
+    }
+
     public static List<Link> getLinkList(UUID tripId) {
         var trip = TripFactory.getTripWithId(tripId);
         return List.of(
