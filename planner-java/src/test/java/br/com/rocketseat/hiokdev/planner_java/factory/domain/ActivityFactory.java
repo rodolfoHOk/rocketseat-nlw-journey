@@ -44,13 +44,13 @@ public class ActivityFactory {
                 Activity.builder()
                         .id(UUID.randomUUID())
                         .title("Conference day 1")
-                        .occursAt(LocalDateTime.now().plusDays(1).plusHours(8))
+                        .occursAt(LocalDateTime.now().plusDays(1).plusHours(4).plusMinutes(1))
                         .trip(trip)
                         .build(),
                 Activity.builder()
                         .id(UUID.randomUUID())
                         .title("Conference day 2")
-                        .occursAt(LocalDateTime.now().plusDays(2).plusHours(8))
+                        .occursAt(LocalDateTime.now().plusDays(2).plusHours(4))
                         .trip(trip)
                         .build()
         );
