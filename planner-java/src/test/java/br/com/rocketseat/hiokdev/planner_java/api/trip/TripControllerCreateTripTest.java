@@ -77,7 +77,7 @@ public class TripControllerCreateTripTest {
                 .andExpect(jsonPath("$.tripId").value(tripId.toString()));
     }
 
-    private static Stream<Arguments> providesTripCreateRequestPayload() {
+    private static Stream<Arguments> providesTripCreateRequestPayloads() {
         return Stream.of(
                 Arguments.of(TripCreateRequestPayloadFactory.getPayloadWithBlankDestination(), "destination"),
                 Arguments.of(TripCreateRequestPayloadFactory.getPayloadWithBlankStartsAt(), "starts_at"),
@@ -94,13 +94,15 @@ public class TripControllerCreateTripTest {
         );
     }
 
-    @MethodSource("providesTripCreateRequestPayload")
+    @MethodSource("providesTripCreateRequestPayloads")
     @ParameterizedTest
-    void shouldReturnBadRequestAndFieldWithProblemWhenCreateWithInvalidPayload(TripCreateRequestPayload payload, String fieldName) throws Exception {
+    void shouldReturnBadRequestAndFieldWithProblemWhenCreateTripWithInvalidPayload(TripCreateRequestPayload payload, String fieldName) throws Exception {
         mockMvc.perform(post("/trips")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody(payload)))
                 .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.path").value("/trips"))
                 .andExpect(jsonPath("$.fields[0].name").value(fieldName));
     }
 
