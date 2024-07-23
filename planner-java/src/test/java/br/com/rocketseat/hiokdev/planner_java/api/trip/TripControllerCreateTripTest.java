@@ -64,7 +64,7 @@ public class TripControllerCreateTripTest {
     }
 
     @Test
-    void shouldReturnOkAnTripIdWhenCreateTrip() throws Exception {
+    void shouldReturnCreatedAndTripIdWhenCreateTrip() throws Exception {
         var tripId = UUID.randomUUID();
         var trip = TripFactory.getTripWithId(tripId);
         when(tripService.create(any(), any())).thenReturn(trip);
