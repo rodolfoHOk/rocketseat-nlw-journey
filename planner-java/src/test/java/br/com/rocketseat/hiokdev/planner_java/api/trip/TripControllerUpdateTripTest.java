@@ -66,7 +66,7 @@ public class TripControllerUpdateTripTest {
     }
 
     @Test
-    void shouldReturnOkWhenUpdateTrip() throws Exception {
+    void shouldReturnNoContentWhenUpdateTrip() throws Exception {
         var tripId = UUID.randomUUID();
         var trip = TripFactory.getTripWithId(tripId);
         when(tripService.update(any(), any())).thenReturn(trip);
