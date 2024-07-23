@@ -108,8 +108,6 @@ public interface TripControllerOpenApi {
                     @ApiResponse(responseCode = "200", description = "Ok"),
                     @ApiResponse(responseCode = "400", description = "Bad request",
                             content = @Content(schema = @Schema(implementation = ProblemResponse.class))),
-                    @ApiResponse(responseCode = "404", description = "Not Found",
-                            content = @Content(schema = @Schema(implementation = ProblemResponse.class))),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error",
                             content = @Content(schema = @Schema(implementation = ProblemResponse.class)))
             }
@@ -161,8 +159,6 @@ public interface TripControllerOpenApi {
                     @ApiResponse(responseCode = "200", description = "Ok"),
                     @ApiResponse(responseCode = "400", description = "Bad request",
                             content = @Content(schema = @Schema(implementation = ProblemResponse.class))),
-                    @ApiResponse(responseCode = "404", description = "Not Found",
-                            content = @Content(schema = @Schema(implementation = ProblemResponse.class))),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error",
                             content = @Content(schema = @Schema(implementation = ProblemResponse.class)))
             }
@@ -195,8 +191,6 @@ public interface TripControllerOpenApi {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Ok"),
                     @ApiResponse(responseCode = "400", description = "Bad request",
-                            content = @Content(schema = @Schema(implementation = ProblemResponse.class))),
-                    @ApiResponse(responseCode = "404", description = "Not Found",
                             content = @Content(schema = @Schema(implementation = ProblemResponse.class))),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error",
                             content = @Content(schema = @Schema(implementation = ProblemResponse.class)))

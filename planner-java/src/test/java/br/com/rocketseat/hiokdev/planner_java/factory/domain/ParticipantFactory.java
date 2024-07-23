@@ -40,6 +40,17 @@ public class ParticipantFactory {
                 .build();
     }
 
+    public static Participant getParticipantWithTripIdAndId(UUID tripId, UUID id) {
+        var trip = TripFactory.getTripWithId(tripId);
+        return Participant.builder()
+                .id(id)
+                .name("")
+                .email("mariatest@email.com")
+                .isConfirmed(false)
+                .trip(trip)
+                .build();
+    }
+
     public static Participant getParticipantToConfirm() {
         return Participant.builder()
                 .name("Maria Santos")
