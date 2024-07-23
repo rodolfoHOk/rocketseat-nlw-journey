@@ -18,6 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -65,6 +66,16 @@ public class TripControllerGetAllActivitiesTest {
                 .andExpect(jsonPath("$.activities[0].activities[0].id").value(activities.getFirst().getId().toString()))
                 .andExpect(jsonPath("$.activities[0].activities[0].title").value(activities.getFirst().getTitle()))
                 .andExpect(jsonPath("$.activities[0].activities[0].occurs_at").value(activities.getFirst().getOccursAt().toString()));
+    }
+
+    @Test
+    void shouldReturnOkAndEmptyListWhenGetAllActivities() throws Exception {
+        var tripId = UUID.randomUUID();
+        when(activityService.getAllActivitiesByTripId(tripId)).thenReturn(List.of());
+
+        mockMvc.perform(get("/trips/" + tripId + "/activities"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.activities", hasSize(0)));
     }
 
     @Test

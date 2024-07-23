@@ -49,8 +49,8 @@
 - Implementado o método trigger confirmation email to participant no participant service
 - Implementado o método trigger confirmation email to participants no participant service
 - Adicionado dependência do spring doc e configuração do spring doc
-- Adicionado documentação open api para o trip controller
-- Adicionado documentação open api para o problem response dtos
+- Adicionado documentação open api para trip controller
+- Adicionado documentação open api para problem response dtos
 - Adicionado documentação open api para trip dtos
 - Adicionado documentação open api para participant dtos
 - Adicionado documentação open api para activity dtos
@@ -61,6 +61,8 @@
 - Adicionado testes para activity service
 - Adicionado testes para link service
 - Adicionado testes de integração para smtp mail service
+- Adicionado testes para trip controller
+- Adicionado testes para participant controller
 - 
 
 ## Imagens
