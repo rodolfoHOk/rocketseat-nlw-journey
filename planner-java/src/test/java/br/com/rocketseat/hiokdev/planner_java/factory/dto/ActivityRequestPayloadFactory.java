@@ -41,7 +41,7 @@ public class ActivityRequestPayloadFactory {
                 .build();
     }
 
-    public static ActivityRequestPayload getPayloadWithLInvalidaOccursAt() {
+    public static ActivityRequestPayload getPayloadWithLInvalidOccursAt() {
         return ActivityRequestPayload.builder()
                 .title("Check-in in Hotel")
                 .occurs_at("InvalidOccursAt")

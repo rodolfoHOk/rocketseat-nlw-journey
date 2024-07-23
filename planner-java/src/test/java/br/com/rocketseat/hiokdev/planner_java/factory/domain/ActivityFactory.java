@@ -12,6 +12,11 @@ public class ActivityFactory {
         return getActivityWithoutId().toBuilder().id(id).build();
     }
 
+    public static Activity getActivityWithTripIdAndId(UUID tripId, UUID id) {
+        var trip = TripFactory.getTripWithId(tripId);
+        return getActivityWithoutId().toBuilder().id(id).trip(trip).build();
+    }
+
     public static Activity getActivityWithBeforeTripDate() {
         return getActivityWithoutId().toBuilder().occursAt(LocalDateTime.now().plusHours(23).plusMinutes(59)).build();
     }
