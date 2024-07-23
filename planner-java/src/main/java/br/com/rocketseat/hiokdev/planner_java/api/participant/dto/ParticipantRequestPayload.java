@@ -12,7 +12,7 @@ public record ParticipantRequestPayload(
         @Schema(example = "mayk.brito@mail.com") @Email String email
 ) {
 
-    @Builder(toBuilder = true)
+    @Builder
     public ParticipantRequestPayload {
     }
 
