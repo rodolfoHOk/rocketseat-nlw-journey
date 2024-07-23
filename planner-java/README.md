@@ -5,6 +5,9 @@
 - Java 21
 - Spring Framework / Spring Boot (3.3.1)
 - H2 Database
+- OpenApi / Swagger UI
+- Unit Tests
+- Integration Tests
 
 ### Bibliotecas
 
@@ -17,6 +20,9 @@
 - flyway-core
 - h2
 - lombok
+- springdoc-openapi-starter-webmvc-ui
+- greenmail-junit5
+- jacoco-maven-plugin
 
 ## Melhorias
 
