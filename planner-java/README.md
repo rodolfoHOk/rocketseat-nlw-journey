@@ -63,7 +63,7 @@
 - Adicionado testes de integração para smtp mail service
 - Adicionado testes para trip controller
 - Adicionado testes para participant controller
-- 
+- Adicionado testes para api exception handler
 
 ## Imagens
 

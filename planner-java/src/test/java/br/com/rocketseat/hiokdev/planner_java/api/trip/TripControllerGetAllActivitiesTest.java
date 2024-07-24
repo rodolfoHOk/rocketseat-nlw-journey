@@ -6,10 +6,6 @@ import br.com.rocketseat.hiokdev.planner_java.domain.participant.ParticipantServ
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripQueryService;
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripService;
 import br.com.rocketseat.hiokdev.planner_java.factory.domain.ActivityFactory;
-import br.com.rocketseat.hiokdev.planner_java.factory.domain.EmailFactory;
-import br.com.rocketseat.hiokdev.planner_java.factory.domain.ParticipantFactory;
-import br.com.rocketseat.hiokdev.planner_java.factory.domain.TripFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -17,7 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,9 +43,6 @@ public class TripControllerGetAllActivitiesTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    ObjectMapper objectMapper;
 
     @Test
     void shouldReturnOkAndActivitiesWhenGetAllActivities() throws Exception {

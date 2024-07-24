@@ -48,4 +48,11 @@ public class ActivityRequestPayloadFactory {
                 .build();
     }
 
+    public static ActivityRequestPayload getPayloadWithOutTripDate() {
+        return ActivityRequestPayload.builder()
+                .title("Check-in in Hotel")
+                .occurs_at(LocalDateTime.now().plusDays(6).plusMinutes(1).toString())
+                .build();
+    }
+
 }

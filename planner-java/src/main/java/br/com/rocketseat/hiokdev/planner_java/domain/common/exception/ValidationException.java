@@ -1,7 +1,6 @@
 package br.com.rocketseat.hiokdev.planner_java.domain.common.exception;
 
 import lombok.Getter;
-import org.springframework.validation.BindingResult;
 
 @Getter
 public class ValidationException extends PlannerException {

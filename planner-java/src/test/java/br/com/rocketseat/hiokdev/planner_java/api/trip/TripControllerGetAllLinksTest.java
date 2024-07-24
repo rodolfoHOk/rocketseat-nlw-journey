@@ -6,7 +6,6 @@ import br.com.rocketseat.hiokdev.planner_java.domain.participant.ParticipantServ
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripQueryService;
 import br.com.rocketseat.hiokdev.planner_java.domain.trip.TripService;
 import br.com.rocketseat.hiokdev.planner_java.factory.domain.LinkFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -43,9 +42,6 @@ public class TripControllerGetAllLinksTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    ObjectMapper objectMapper;
 
     @Test
     void shouldReturnOkAndLinksWhenGetAllLinks() throws Exception {

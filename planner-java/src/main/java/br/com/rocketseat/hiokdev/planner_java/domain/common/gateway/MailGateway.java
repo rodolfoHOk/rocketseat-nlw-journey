@@ -8,7 +8,6 @@ public interface MailGateway {
 
     void send(MailMessage mail);
 
-
     record MailMessage(
             String destination,
             String subject,
