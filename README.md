@@ -1,6 +1,8 @@
 # NLW Journey: Plann.er
 
-> Evento NLW Journey da RocketSeat (2024-07-08 a 11)
+> Evento NLW Journey da RocketSeat (08 a 11/07/2024)
+
+Obs: Implementado melhorias de 11 a 24/07/2024
 
 ## Trilhas feitas
 
